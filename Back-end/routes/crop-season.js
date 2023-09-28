@@ -1,0 +1,128 @@
+const express = require("express");
+const mongoose = require("mongoose");
+const router = express.Router();
+const CropSeason = require("../models/crop-season");
+const FieldSample = require("../models/field-sample");
+const Strain = require("../models/rice");
+
+// Middleware for handling errors
+function handleErrors(res, err) {
+    console.error(err);
+    res.status(500).json({ message: "An error occurred" });
+}
+
+// Get all crop seasons
+router.get("/crop-season", async (req, res) => {
+    try {
+        const cropSeasons = await CropSeason.find();
+        res.json(cropSeasons);
+    } catch (err) {
+        handleErrors(res, err);
+    }
+});
+
+// Create a new crop season
+router.post("/create/crop-season", async (req, res) => {
+    try {
+        const cropSeason = new CropSeason(req.body);
+        const newCropSeason = await cropSeason.save();
+        res.status(201).json(newCropSeason);
+    } catch (err) {
+        handleErrors(res, err);
+    }
+});
+
+// Get a specific crop season
+router.get("/crop-season/:id", getCropSeason, (req, res) => {
+    res.json(res.cropSeason);
+});
+
+// Update a crop season
+router.patch("/update/crop-season/:id", getCropSeason, async (req, res) => {
+    if (req.body.cropSeasonCode != null) {
+        res.cropSeason.cropSeasonCode = req.body.cropSeasonCode;
+    }
+    if (req.body.cropSeasonName != null) {
+        res.cropSeason.cropSeasonName = req.body.cropSeasonName;
+    }
+
+// Update riceVariety (strainName)
+if (req.body.riceVariety != null) {
+    try {
+        const riceVariety = await Strain.findOne({ strainName: req.body.riceVariety });
+        if (!riceVariety) {
+            return res.status(400).json({ message: "Rice variety not found" });
+        }
+        res.cropSeason.riceVariety = new mongoose.Types.ObjectId(riceVariety._id);
+    } catch (err) {
+        return res.status(500).json({ message: err.message });
+    }
+}
+
+// Update fieldSample
+if (req.body.fieldSample != null) {
+    try {
+        const fieldSample = await FieldSample.findOne({ fieldCode: req.body.fieldSample });
+        if (!fieldSample) {
+            return res.status(400).json({ message: "Field sample not found" });
+        }
+        res.cropSeason.fieldSample = new mongoose.Types.ObjectId(fieldSample._id);
+    } catch (err) {
+        return res.status(500).json({ message: err.message });
+    }
+}
+
+
+    // Update seasonType
+    if (req.body.seasonType != null) {
+        res.cropSeason.seasonType = req.body.seasonType;
+    }
+
+    // Update yield
+    if (req.body.yield != null) {
+        res.cropSeason.yield = req.body.yield;
+    }
+
+    // Update plantingDate
+    if (req.body.plantingDate != null) {
+        res.cropSeason.plantingDate = new Date(req.body.plantingDate);
+    }
+
+    // Update harvestDate
+    if (req.body.harvestDate != null) {
+        res.cropSeason.harvestDate = new Date(req.body.harvestDate);
+    }
+
+    try {
+        const updatedCropSeason = await res.cropSeason.save();
+        res.json(updatedCropSeason);
+    } catch (err) {
+        res.status(400).json({ message: err.message });
+    }
+});
+
+
+// Delete a crop season
+router.delete("/delete/crop-season/:id", getCropSeason, async (req, res) => {
+    try {
+        await CropSeason.findByIdAndRemove(req.params.id);
+        res.json({ message: "Deleted crop season" });
+    } catch (err) {
+        res.status(500).json({ message: err.message });
+    }
+});
+
+async function getCropSeason(req, res, next) {
+    try {
+        const cropSeason = await CropSeason.findById(req.params.id);
+        if (cropSeason == null) {
+            return res.status(404).json({ message: "Crop season not found" });
+        }
+        res.cropSeason = cropSeason;
+        next();
+    } catch (err) {
+        return res.status(500).json({ message: err.message });
+    }
+}
+
+module.exports = router;
