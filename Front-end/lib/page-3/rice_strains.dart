@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'dart:math';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:myapp/page-3/rice_strain_detail.dart';
 
 import 'catatalog-list.dart';
 
@@ -60,7 +61,13 @@ class RiceStrains extends StatelessWidget {
               borderRadius: BorderRadius.circular(30),
               clipBehavior: Clip.antiAlias,
               child: InkWell(
-                onTap: () {},
+                onTap: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => RiceStrainDetail(),
+                    ),
+                  );
+                },
                 overlayColor: const MaterialStatePropertyAll<Color>(
                   Color(0x0c7f7f7f),
                 ),
@@ -86,7 +93,13 @@ class RiceStrains extends StatelessWidget {
               borderRadius: BorderRadius.circular(20),
               clipBehavior: Clip.antiAlias,
               child: InkWell(
-                onTap: () {},
+                onTap: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => RiceStrainDetail(),
+                    ),
+                  );
+                },
                 overlayColor: const MaterialStatePropertyAll<Color>(
                   Color(0x0c7f7f7f),
                 ),

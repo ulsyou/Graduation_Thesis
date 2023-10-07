@@ -101,14 +101,14 @@ class _SceneState extends State<Scene> {
         body: SingleChildScrollView(
       child: Container(
         width: double.infinity,
-        height: 780 * fem,
+        height: 915,
         decoration: const BoxDecoration(
           color: Color(0x72e0e0e0),
           image: DecorationImage(
             image: AssetImage(
               'assets/page-1/images/polina-kuzovkova-_OQ17__L06U-unsplash.jpg',
             ),
-            fit: BoxFit.fill,
+            fit: BoxFit.cover,
           ),
         ),
         child: Container(
