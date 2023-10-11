@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:google_fonts/google_fonts.dart';
 
 import 'catatalog-list.dart';
+import 'fertilizer_detail.dart';
 
 class Fertilizers extends StatelessWidget {
   const Fertilizers({super.key});
@@ -60,7 +61,13 @@ class Fertilizers extends StatelessWidget {
               borderRadius: BorderRadius.circular(30),
               clipBehavior: Clip.antiAlias,
               child: InkWell(
-                onTap: () {},
+                onTap: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => FertilizerDetail(),
+                    ),
+                  );
+                },
                 overlayColor: const MaterialStatePropertyAll<Color>(
                   Color(0x0c7f7f7f),
                 ),

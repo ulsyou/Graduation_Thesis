@@ -635,7 +635,7 @@ class Profile extends StatelessWidget {
                     onTap: () {
                       Navigator.of(context).push(
                         MaterialPageRoute(
-                          builder: (context) => Profile(), // Thay thế EmployeeHomeScreen() bằng tên class của bạn
+                          builder: (context) => Profile(),
                         ),
                       );
                     },

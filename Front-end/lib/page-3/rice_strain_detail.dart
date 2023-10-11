@@ -1,9 +1,31 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+
 import 'package:myapp/page-3/rice_strains.dart';
 
-class RiceStrainDetail extends StatelessWidget {
+class RiceStrainDetail extends StatefulWidget {
   const RiceStrainDetail({super.key});
+
+  @override
+  _RiceStrainDetailState createState() => _RiceStrainDetailState();
+}
+
+class _RiceStrainDetailState extends State<RiceStrainDetail> {
+  bool isHidden = true;
+
+// Hàm để hiển thị phần xác nhận xóa
+  void showPositioned() {
+    setState(() {
+      isHidden = false;
+    });
+  }
+
+// Hàm để ẩn phần xác nhận xóa
+  void hidePositioned() {
+    setState(() {
+      isHidden = true;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -388,36 +410,25 @@ class RiceStrainDetail extends StatelessWidget {
               borderRadius: BorderRadius.circular(25),
               clipBehavior: Clip.antiAlias,
               child: InkWell(
-                onTap: () {},
-                overlayColor: const MaterialStatePropertyAll<Color>(
-                  Color(0x0c7f7f7f),
-                ),
-                child: Ink(
-                  color: const Color(0xFFFFF9C7),
+                onTap: () {
+                  // Add your onTap logic here
+                },
+                overlayColor: MaterialStateProperty.all<Color>(Color(0x0c7f7f7f)),
+                child: Container(
                   width: 141,
                   height: 47,
-                ),
-              ),
-            ),
-          ),
-          Positioned(
-            left: 78,
-            top: 841,
-            child: Material(
-              type: MaterialType.transparency,
-              child: InkWell(
-                onTap: () {},
-                overlayColor: const MaterialStatePropertyAll<Color>(
-                  Color(0x0c7f7f7f),
-                ),
-                child: Text(
-                  'Cập nhật',
-                  textAlign: TextAlign.center,
-                  style: GoogleFonts.getFont(
-                    'Noto Sans',
-                    color: Colors.black,
-                    fontSize: 16,
-                    fontWeight: FontWeight.w600,
+                  color: const Color(0xFFFFF9C7),
+                  child: Center(
+                    child: Text(
+                      'Cập nhật',
+                      textAlign: TextAlign.center,
+                      style: GoogleFonts.getFont(
+                        'Noto Sans',
+                        color: Colors.black,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
                   ),
                 ),
               ),
@@ -431,111 +442,156 @@ class RiceStrainDetail extends StatelessWidget {
               borderRadius: BorderRadius.circular(25),
               clipBehavior: Clip.antiAlias,
               child: InkWell(
-                onTap: () {},
-                overlayColor: const MaterialStatePropertyAll<Color>(
-                  Color(0x0c7f7f7f),
-                ),
+                onTap: () {
+                  showPositioned();
+                },
                 child: Ink(
                   color: const Color(0xFFFF3838),
                   width: 141,
                   height: 47,
-                ),
-              ),
-            ),
-          ),
-          Positioned(
-            left: 341,
-            top: 841,
-            child: Container(
-              width: 24,
-              height: 24,
-              clipBehavior: Clip.hardEdge,
-              decoration: const BoxDecoration(),
-              child: Stack(
-                clipBehavior: Clip.none,
-                children: [
-                  Positioned(
-                    left: 2,
-                    top: 2,
-                    child: Material(
-                      type: MaterialType.transparency,
-                      clipBehavior: Clip.antiAlias,
-                      child: InkWell(
-                        onTap: () {},
-                        overlayColor: const MaterialStatePropertyAll<Color>(
-                          Color(0x0c7f7f7f),
-                        ),
-                        child: Ink(
-                          width: 20,
-                          height: 20,
-                          decoration: const BoxDecoration(
-                            image: DecorationImage(
-                              image: NetworkImage(
-                                'https://storage.googleapis.com/codeless-dev.appspot.com/uploads%2Fimages%2FTeD8q4fMRDdW3VSyJEbH%2F463e314fadee8c2dcb74cc8452af9f34.png',
-                              ),
-                              fit: BoxFit.contain,
-                            ),
-                          ),
-                        ),
+                  child: Center(
+                    child: Text(
+                      'Xoá',
+                      style: GoogleFonts.getFont(
+                        'Noto Sans',
+                        color: Colors.white,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
                       ),
                     ),
-                  )
-                ],
-              ),
-            ),
-          ),
-          Positioned(
-            left: 248,
-            top: 838,
-            child: Material(
-              type: MaterialType.transparency,
-              borderRadius: BorderRadius.circular(25),
-              clipBehavior: Clip.antiAlias,
-              child: InkWell(
-                onTap: () {},
-                overlayColor: const MaterialStatePropertyAll<Color>(
-                  Color(0x0c7f7f7f),
-                ),
-                child: Ink(
-                  color: Colors.white,
-                  width: 59,
-                  height: 30,
-                ),
-              ),
-            ),
-          ),
-          Positioned(
-            left: 262,
-            top: 841,
-            child: Material(
-              type: MaterialType.transparency,
-              child: InkWell(
-                onTap: () {},
-                overlayColor: const MaterialStatePropertyAll<Color>(
-                  Color(0x0c7f7f7f),
-                ),
-                child: Text(
-                  'Xoá',
-                  style: GoogleFonts.getFont(
-                    'Noto Sans',
-                    color: Colors.black,
-                    fontSize: 16,
-                    fontWeight: FontWeight.w600,
                   ),
                 ),
               ),
             ),
           ),
           Positioned(
-            left: 325,
-            top: 838,
-            child: Image.network(
-              'https://storage.googleapis.com/codeless-dev.appspot.com/uploads%2Fimages%2FTeD8q4fMRDdW3VSyJEbH%2Fcdee8630b6a5f6a443dda5106daafabc.png',
-              width: 4,
-              height: 30,
-              fit: BoxFit.contain,
+            left: 47,
+            top: 352,
+            child: Container(
+              width: 318,
+              height: 211,
+              clipBehavior: Clip.hardEdge,
+              decoration: const BoxDecoration(),
+              child: Stack(
+                clipBehavior: Clip.none,
+                children: [
+                  if (!isHidden)
+                    Positioned(
+                      left: 0,
+                      top: 0,
+                      child: Container(
+                        width: 318,
+                        height: 211,
+                        clipBehavior: Clip.hardEdge,
+                        decoration: BoxDecoration(
+                          color: const Color(0xE5FFD79C),
+                          borderRadius: BorderRadius.circular(35),
+                        ),
+                      ),
+                    ),
+                  if (!isHidden)
+                    Positioned(
+                      left: 42,
+                      top: 62,
+                      child: Text(
+                        'Xác nhận xóa ?',
+                        style: GoogleFonts.getFont(
+                          'Noto Sans',
+                          color: Colors.black,
+                          fontSize: 32,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ),
+                  if (!isHidden)
+                    GestureDetector(
+                      onTap: () {},
+                      child: Stack(
+                        children: [
+                          Positioned(
+                            left: 43,
+                            top: 133,
+                            child: Material(
+                              type: MaterialType.transparency,
+                              borderRadius: BorderRadius.circular(15),
+                              clipBehavior: Clip.antiAlias,
+                              child: Ink(
+                                color: const Color(0xFF65FF3F),
+                                width: 84,
+                                height: 36,
+                              ),
+                            ),
+                          ),
+                          Positioned(
+                            left: 50,
+                            top: 140,
+                            child: Material(
+                              type: MaterialType.transparency,
+                              child: InkWell(
+                                onTap: () {},
+                                overlayColor:
+                                    const MaterialStatePropertyAll<Color>(
+                                  Color(0x0c7f7f7f),
+                                ),
+                                child: Text(
+                                  'Xác nhận',
+                                  style: GoogleFonts.getFont(
+                                    'Noto Sans',
+                                    color: Colors.black,
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  if (!isHidden)
+                    GestureDetector(
+                      onTap: () {
+                        hidePositioned();
+                      },
+                      child: Stack(
+                        children: [
+                          Positioned(
+                            left: 183,
+                            top: 133,
+                            child: Material(
+                              type: MaterialType.transparency,
+                              borderRadius: BorderRadius.circular(15),
+                              clipBehavior: Clip.antiAlias,
+                              child: Ink(
+                                color: const Color(0xFFD9D9D9),
+                                width: 84,
+                                height: 36,
+                              ),
+                            ),
+                          ),
+                          Positioned(
+                            left: 208,
+                            top: 139,
+                            child: Material(
+                              type: MaterialType.transparency,
+                              child: Text(
+                                'Hủy',
+                                style: GoogleFonts.getFont(
+                                  'Noto Sans',
+                                  color: Colors.black,
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                ],
+              ),
             ),
-          )
+          ),
         ],
       ),
     );
