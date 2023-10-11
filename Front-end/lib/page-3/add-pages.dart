@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'dart:math';
 import 'package:google_fonts/google_fonts.dart';
-import 'employee-home-screen.dart';
+import 'expert-manager-page.dart';
 
 class AddPages extends StatelessWidget {
   const AddPages({super.key});
@@ -635,7 +635,7 @@ class AddPages extends StatelessWidget {
                     onTap: () {
                       Navigator.of(context).push(
                         MaterialPageRoute(
-                          builder: (context) => const EmployeeHomeScreen(),
+                          builder: (context) => const ExpertManagerPage(),
                         ),
                       );
                     },

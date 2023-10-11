@@ -94,8 +94,7 @@ class _updateEmployeeState extends State<updateEmployee> {
                   children: [
                     GestureDetector(
                       onTap: () {
-                        Navigator.pop(
-                            context);
+                        Navigator.pop(context);
                       },
                       child: Container(
                         margin: EdgeInsets.fromLTRB(

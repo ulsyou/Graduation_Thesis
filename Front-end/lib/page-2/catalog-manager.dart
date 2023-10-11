@@ -3,7 +3,7 @@ import 'package:myapp/page-2/Fertilizer/fertilizer-manager.dart';
 import 'package:myapp/utils.dart';
 
 import 'Rice Straint/strain-manager.dart';
-import 'expert-manager-page.dart';
+import 'employee-homescreen.dart';
 
 class CatalogtManagerPage extends StatelessWidget {
   @override
@@ -39,7 +39,7 @@ class CatalogtManagerPage extends StatelessWidget {
                         Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => ExpertManagerPage(),
+                            builder: (context) => EmployeeHomeScreen(),
                           ),
                         );
                       },

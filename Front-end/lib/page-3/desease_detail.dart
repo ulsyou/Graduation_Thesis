@@ -464,10 +464,9 @@ class _DeseaseDetail extends State<DeseaseDetail> {
                   borderRadius: BorderRadius.circular(25),
                   clipBehavior: Clip.antiAlias,
                   child: InkWell(
-                    onTap: () {
-
-                    },
-                    overlayColor: MaterialStateProperty.all<Color>(Color(0x0c7f7f7f)),
+                    onTap: () {},
+                    overlayColor:
+                        MaterialStateProperty.all<Color>(Color(0x0c7f7f7f)),
                     child: Container(
                       width: 141,
                       height: 47,
@@ -584,7 +583,7 @@ class _DeseaseDetail extends State<DeseaseDetail> {
                                   child: InkWell(
                                     onTap: () {},
                                     overlayColor:
-                                    const MaterialStatePropertyAll<Color>(
+                                        const MaterialStatePropertyAll<Color>(
                                       Color(0x0c7f7f7f),
                                     ),
                                     child: Text(

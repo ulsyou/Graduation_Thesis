@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
-import '../expert-manager-page.dart';
+import '../employee-homescreen.dart';
 import 'season-add.dart';
 import 'season-information.dart';
 
@@ -105,7 +105,7 @@ class _SeasonManagerState extends State<SeasonManager> {
                         Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => ExpertManagerPage(),
+                            builder: (context) => EmployeeHomeScreen(),
                           ),
                         );
                       },

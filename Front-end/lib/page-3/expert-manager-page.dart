@@ -6,8 +6,8 @@ import 'catatalog-list.dart';
 import 'profile.dart';
 import 'season-list.dart';
 
-class EmployeeHomeScreen extends StatelessWidget {
-  const EmployeeHomeScreen({super.key});
+class ExpertManagerPage extends StatelessWidget {
+  const ExpertManagerPage({super.key});
 
   @override
   Widget build(BuildContext context) {

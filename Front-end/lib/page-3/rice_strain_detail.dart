@@ -413,7 +413,8 @@ class _RiceStrainDetailState extends State<RiceStrainDetail> {
                 onTap: () {
                   // Add your onTap logic here
                 },
-                overlayColor: MaterialStateProperty.all<Color>(Color(0x0c7f7f7f)),
+                overlayColor:
+                    MaterialStateProperty.all<Color>(Color(0x0c7f7f7f)),
                 child: Container(
                   width: 141,
                   height: 47,

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'dart:math';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:myapp/page-3/deseases.dart';
-import 'package:myapp/page-3/employee-home-screen.dart';
+import 'package:myapp/page-3/expert-manager-page.dart';
 import 'package:myapp/page-3/pesticides.dart';
 import 'package:myapp/page-3/rice_strains.dart';
 
@@ -515,7 +515,7 @@ class CatalogList extends StatelessWidget {
                     onTap: () {
                       Navigator.of(context).push(
                         MaterialPageRoute(
-                          builder: (context) => EmployeeHomeScreen(),
+                          builder: (context) => ExpertManagerPage(),
                         ),
                       );
                     },

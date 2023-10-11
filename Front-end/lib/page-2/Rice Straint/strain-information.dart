@@ -432,29 +432,31 @@ class _strainInformationState extends State<strainInformation> {
                         child: SizedBox(
                           width: 320 * fem,
                           child: Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(25 * fem),
-                            color: Color(0xffffffff),
-                          ),
-                          child: Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 10 * fem, vertical: 10 * fem),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  widget.strainData['characteristics'] ?? 'N/A',
-                                  style: SafeGoogleFont(
-                                    'Cabin',
-                                    fontSize: 14 * ffem,
-                                    fontWeight: FontWeight.w500,
-                                    height: 1.215 * ffem / fem,
-                                    color: Color(0xff000000),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(25 * fem),
+                              color: Color(0xffffffff),
+                            ),
+                            child: Padding(
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 10 * fem, vertical: 10 * fem),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    widget.strainData['characteristics'] ??
+                                        'N/A',
+                                    style: SafeGoogleFont(
+                                      'Cabin',
+                                      fontSize: 14 * ffem,
+                                      fontWeight: FontWeight.w500,
+                                      height: 1.215 * ffem / fem,
+                                      color: Color(0xff000000),
+                                    ),
                                   ),
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
                           ),
-                        ),
                         ),
                       ),
                     )

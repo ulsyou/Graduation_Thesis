@@ -34,7 +34,8 @@ class _fertilizerInformationState extends State<fertilizerInformation> {
 
       if (response.statusCode == 200) {
         setState(() {
-          fertilizers.removeWhere((fertilizer) => fertilizer['_id'] == fertilizerId);
+          fertilizers
+              .removeWhere((fertilizer) => fertilizer['_id'] == fertilizerId);
         });
       } else {
         print('Failed to delete fertilizer: ${response.statusCode}');
@@ -70,7 +71,7 @@ class _fertilizerInformationState extends State<fertilizerInformation> {
             children: [
               Container(
                 margin:
-                EdgeInsets.fromLTRB(19 * fem, 0 * fem, 32 * fem, 37 * fem),
+                    EdgeInsets.fromLTRB(19 * fem, 0 * fem, 32 * fem, 37 * fem),
                 width: double.infinity,
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -477,7 +478,8 @@ class _fertilizerInformationState extends State<fertilizerInformation> {
                             ),
                             child: Center(
                               child: Text(
-                                widget.fertilizerData['fertilizerCode'] ?? 'N/A',
+                                widget.fertilizerData['fertilizerCode'] ??
+                                    'N/A',
                                 style: SafeGoogleFont(
                                   'Cabin',
                                   fontSize: 14 * ffem,
@@ -506,7 +508,8 @@ class _fertilizerInformationState extends State<fertilizerInformation> {
                             ),
                             child: Center(
                               child: Text(
-                                widget.fertilizerData['fertilizerName'] ?? 'N/A',
+                                widget.fertilizerData['fertilizerName'] ??
+                                    'N/A',
                                 style: SafeGoogleFont(
                                   'Cabin',
                                   fontSize: 14 * ffem,
@@ -564,7 +567,8 @@ class _fertilizerInformationState extends State<fertilizerInformation> {
                             ),
                             child: Center(
                               child: Text(
-                                widget.fertilizerData['nutrients']['nitro'] ?? 'N/A',
+                                widget.fertilizerData['nutrients']['nitro'] ??
+                                    'N/A',
                                 style: SafeGoogleFont(
                                   'Cabin',
                                   fontSize: 14 * ffem,
@@ -593,7 +597,9 @@ class _fertilizerInformationState extends State<fertilizerInformation> {
                             ),
                             child: Center(
                               child: Text(
-                                widget.fertilizerData['nutrients']['phosphate'] ?? 'N/A',
+                                widget.fertilizerData['nutrients']
+                                        ['phosphate'] ??
+                                    'N/A',
                                 style: SafeGoogleFont(
                                   'Cabin',
                                   fontSize: 14 * ffem,
@@ -622,7 +628,8 @@ class _fertilizerInformationState extends State<fertilizerInformation> {
                             ),
                             child: Center(
                               child: Text(
-                                widget.fertilizerData['nutrients']['kali'] ?? 'N/A',
+                                widget.fertilizerData['nutrients']['kali'] ??
+                                    'N/A',
                                 style: SafeGoogleFont(
                                   'Cabin',
                                   fontSize: 14 * ffem,
@@ -651,7 +658,8 @@ class _fertilizerInformationState extends State<fertilizerInformation> {
                             ),
                             child: Center(
                               child: Text(
-                                widget.fertilizerData['nutrients']['others'] ?? 'N/A',
+                                widget.fertilizerData['nutrients']['others'] ??
+                                    'N/A',
                                 style: SafeGoogleFont(
                                   'Cabin',
                                   fontSize: 14 * ffem,

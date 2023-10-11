@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'dart:math';
 
-import 'package:myapp/page-3/employee-home-screen.dart';
+import 'package:myapp/page-3/expert-manager-page.dart';
 import 'season_detail.dart';
 
 class Seasons extends StatelessWidget {
@@ -339,7 +339,7 @@ class Seasons extends StatelessWidget {
                     onTap: () {
                       Navigator.of(context).push(
                         MaterialPageRoute(
-                          builder: (context) => EmployeeHomeScreen(),
+                          builder: (context) => ExpertManagerPage(),
                         ),
                       );
                     },

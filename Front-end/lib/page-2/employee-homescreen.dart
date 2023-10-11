@@ -7,7 +7,7 @@ import 'catalog-manager.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:line_icons/line_icons.dart';
 
-class ExpertManagerPage extends StatelessWidget {
+class EmployeeHomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     double baseWidth = 360;

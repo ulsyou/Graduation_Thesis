@@ -45,8 +45,8 @@ class _fertilizerManagerState extends State<fertilizerManager> {
   }
 
   Future<void> fetchRicefertilizers() async {
-    final response = await http
-        .get(Uri.parse('http://10.0.2.2:5000/fertilizer/fertilizer'));
+    final response =
+        await http.get(Uri.parse('http://10.0.2.2:5000/fertilizer/fertilizer'));
 
     if (response.statusCode == 200) {
       setState(() {
@@ -81,7 +81,7 @@ class _fertilizerManagerState extends State<fertilizerManager> {
             children: [
               Container(
                 margin:
-                EdgeInsets.fromLTRB(30 * fem, 0 * fem, 45 * fem, 33 * fem),
+                    EdgeInsets.fromLTRB(30 * fem, 0 * fem, 45 * fem, 33 * fem),
                 width: double.infinity,
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -121,7 +121,7 @@ class _fertilizerManagerState extends State<fertilizerManager> {
               ),
               Container(
                 padding:
-                EdgeInsets.fromLTRB(16 * fem, 13 * fem, 16 * fem, 18 * fem),
+                    EdgeInsets.fromLTRB(16 * fem, 13 * fem, 16 * fem, 18 * fem),
                 width: double.infinity,
                 decoration: BoxDecoration(
                   color: Color(0x8effffff),
@@ -170,11 +170,11 @@ class _fertilizerManagerState extends State<fertilizerManager> {
                                 border: InputBorder.none,
                                 suffixIcon: searchQuery.isNotEmpty
                                     ? IconButton(
-                                  icon: Icon(Icons.clear),
-                                  onPressed: () {
-                                    resetSearch();
-                                  },
-                                )
+                                        icon: Icon(Icons.clear),
+                                        onPressed: () {
+                                          resetSearch();
+                                        },
+                                      )
                                     : null,
                               ),
                             ),
@@ -183,8 +183,9 @@ class _fertilizerManagerState extends State<fertilizerManager> {
                       ),
                     ),
                     Column(
-                      children:
-                      (searchQuery.isEmpty ? fertilizers : filteredfertilizers)
+                      children: (searchQuery.isEmpty
+                              ? fertilizers
+                              : filteredfertilizers)
                           .map((fertilizer) {
                         return GestureDetector(
                           onTap: () async {
@@ -220,7 +221,7 @@ class _fertilizerManagerState extends State<fertilizerManager> {
                                   decoration: BoxDecoration(
                                     color: Color(0xffffffff),
                                     borderRadius:
-                                    BorderRadius.circular(25 * fem),
+                                        BorderRadius.circular(25 * fem),
                                   ),
                                   child: Container(
                                     padding: EdgeInsets.fromLTRB(16.67 * fem,
@@ -230,11 +231,11 @@ class _fertilizerManagerState extends State<fertilizerManager> {
                                     decoration: BoxDecoration(
                                       color: Color(0xceffffff),
                                       borderRadius:
-                                      BorderRadius.circular(25 * fem),
+                                          BorderRadius.circular(25 * fem),
                                     ),
                                     child: Column(
                                       crossAxisAlignment:
-                                      CrossAxisAlignment.center,
+                                          CrossAxisAlignment.center,
                                       children: [
                                         Container(
                                           margin: EdgeInsets.fromLTRB(0 * fem,
@@ -266,7 +267,7 @@ class _fertilizerManagerState extends State<fertilizerManager> {
                                   height: double.infinity,
                                   child: Column(
                                     crossAxisAlignment:
-                                    CrossAxisAlignment.center,
+                                        CrossAxisAlignment.center,
                                     children: [
                                       //Tên giống lúa
                                       Container(
@@ -275,7 +276,7 @@ class _fertilizerManagerState extends State<fertilizerManager> {
                                         decoration: BoxDecoration(
                                           color: Color(0xfffffafa),
                                           borderRadius:
-                                          BorderRadius.circular(25 * fem),
+                                              BorderRadius.circular(25 * fem),
                                         ),
                                         child: Center(
                                           child: Text(
@@ -301,7 +302,7 @@ class _fertilizerManagerState extends State<fertilizerManager> {
                                           decoration: BoxDecoration(
                                             color: Color(0xfffffafa),
                                             borderRadius:
-                                            BorderRadius.circular(25 * fem),
+                                                BorderRadius.circular(25 * fem),
                                           ),
                                           child: Center(
                                             child: Text(

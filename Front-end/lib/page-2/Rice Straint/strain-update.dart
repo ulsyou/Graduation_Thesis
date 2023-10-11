@@ -72,15 +72,14 @@ class _updateStrainState extends State<updateStrain> {
             children: [
               Container(
                 margin:
-                EdgeInsets.fromLTRB(19 * fem, 0 * fem, 45 * fem, 33 * fem),
+                    EdgeInsets.fromLTRB(19 * fem, 0 * fem, 45 * fem, 33 * fem),
                 width: double.infinity,
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     GestureDetector(
                       onTap: () {
-                        Navigator.pop(
-                            context);
+                        Navigator.pop(context);
                       },
                       child: Container(
                         margin: EdgeInsets.fromLTRB(
@@ -109,7 +108,7 @@ class _updateStrainState extends State<updateStrain> {
               ),
               Container(
                 padding:
-                EdgeInsets.fromLTRB(16 * fem, 21 * fem, 16 * fem, 72 * fem),
+                    EdgeInsets.fromLTRB(16 * fem, 21 * fem, 16 * fem, 72 * fem),
                 width: double.infinity,
                 decoration: BoxDecoration(
                   color: Color(0x8effffff),
@@ -128,7 +127,7 @@ class _updateStrainState extends State<updateStrain> {
                         borderRadius: BorderRadius.circular(75 * fem),
                       ),
                       child: Align(
-                        // group17PMB (97:28)
+                          // group17PMB (97:28)
                           alignment: Alignment.bottomRight,
                           child: InkWell(
                             onTap: () {

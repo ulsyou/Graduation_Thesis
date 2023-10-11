@@ -472,7 +472,8 @@ class _FieldDetail extends State<FieldDetail> {
                 onTap: () {
                   // Add your onTap logic here
                 },
-                overlayColor: MaterialStateProperty.all<Color>(Color(0x0c7f7f7f)),
+                overlayColor:
+                    MaterialStateProperty.all<Color>(Color(0x0c7f7f7f)),
                 child: Container(
                   width: 141,
                   height: 47,
@@ -589,7 +590,7 @@ class _FieldDetail extends State<FieldDetail> {
                               child: InkWell(
                                 onTap: () {},
                                 overlayColor:
-                                const MaterialStatePropertyAll<Color>(
+                                    const MaterialStatePropertyAll<Color>(
                                   Color(0x0c7f7f7f),
                                 ),
                                 child: Text(

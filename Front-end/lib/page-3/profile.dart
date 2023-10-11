@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'employee-home-screen.dart';
+import 'expert-manager-page.dart';
 import 'add-pages.dart';
 
 class Profile extends StatelessWidget {
@@ -424,7 +424,8 @@ class Profile extends StatelessWidget {
                     onTap: () {
                       Navigator.of(context).push(
                         MaterialPageRoute(
-                          builder: (context) => AddPages(), // Thay thế EmployeeHomeScreen() bằng tên class của bạn
+                          builder: (context) =>
+                              AddPages(), // Thay thế EmployeeHomeScreen() bằng tên class của bạn
                         ),
                       );
                     },
@@ -490,7 +491,7 @@ class Profile extends StatelessWidget {
                     onTap: () {
                       Navigator.of(context).push(
                         MaterialPageRoute(
-                          builder: (context) => EmployeeHomeScreen(),
+                          builder: (context) => ExpertManagerPage(),
                         ),
                       );
                     },

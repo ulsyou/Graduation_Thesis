@@ -6,8 +6,8 @@ import 'package:myapp/utils.dart';
 
 import 'main.dart';
 import 'page-1/admin-manager.dart';
-import 'page-2/expert-manager-page.dart';
-import 'page-3/employee-home-screen.dart';
+import 'page-2/employee-homescreen.dart';
+import 'page-3/expert-manager-page.dart';
 
 class Scene extends StatefulWidget {
   @override
