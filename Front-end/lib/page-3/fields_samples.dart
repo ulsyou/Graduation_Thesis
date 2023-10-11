@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'dart:math';
 
 import 'catatalog-list.dart';
+import 'field_detail.dart';
 
 class Fields extends StatelessWidget {
   const Fields({super.key});
@@ -60,7 +61,13 @@ class Fields extends StatelessWidget {
               borderRadius: BorderRadius.circular(30),
               clipBehavior: Clip.antiAlias,
               child: InkWell(
-                onTap: () {},
+                onTap: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => FieldDetail(),
+                    ),
+                  );
+                },
                 overlayColor: const MaterialStatePropertyAll<Color>(
                   Color(0x0c7f7f7f),
                 ),

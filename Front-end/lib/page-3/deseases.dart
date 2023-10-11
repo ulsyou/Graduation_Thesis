@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:google_fonts/google_fonts.dart';
 
 import 'catatalog-list.dart';
+import 'desease_detail.dart';
 
 class Deseases extends StatelessWidget {
   const Deseases({super.key});
@@ -60,7 +61,13 @@ class Deseases extends StatelessWidget {
               borderRadius: BorderRadius.circular(30),
               clipBehavior: Clip.antiAlias,
               child: InkWell(
-                onTap: () {},
+                onTap: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => DeseaseDetail(),
+                    ),
+                  );
+                },
                 overlayColor: const MaterialStatePropertyAll<Color>(
                   Color(0x0c7f7f7f),
                 ),

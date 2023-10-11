@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'dart:math';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:myapp/page-3/pesticide_detail.dart';
 
 import 'catatalog-list.dart';
 
@@ -60,7 +61,13 @@ class Pesticides extends StatelessWidget {
               borderRadius: BorderRadius.circular(30),
               clipBehavior: Clip.antiAlias,
               child: InkWell(
-                onTap: () {},
+                onTap: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => PesticideDetail(),
+                    ),
+                  );
+                },
                 overlayColor: const MaterialStatePropertyAll<Color>(
                   Color(0x0c7f7f7f),
                 ),
