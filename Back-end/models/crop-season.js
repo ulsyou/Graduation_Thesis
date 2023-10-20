@@ -34,7 +34,10 @@ const cropSeasonSchema = mongoose.Schema({
     },
     harvestDate: {
         type: Date
-    }
+    },
+    image: {
+        type: String, 
+    },
 });
 
 cropSeasonSchema.pre("save", async function (next) {

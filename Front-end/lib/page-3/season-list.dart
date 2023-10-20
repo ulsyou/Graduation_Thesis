@@ -1,10 +1,10 @@
-import 'package:flutter/material.dart';
-import 'dart:ui';
-import 'package:myapp/utils.dart';
-import 'expert-manager-page.dart';
-import 'season_detail.dart';
 import 'dart:convert';
+
+import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:myapp/utils.dart';
+
+import 'expert-manager-page.dart';
 
 class Seasons extends StatefulWidget {
   @override
@@ -24,7 +24,8 @@ class _SeasonsState extends State<Seasons> {
   }
 
   Future<void> fetchSeasons() async {
-    final response = await http.get(Uri.parse('http://10.0.2.2:5000/crops-season/crop-season'));
+    final response = await http
+        .get(Uri.parse('http://10.0.2.2:5000/crops-season/crop-season'));
 
     if (response.statusCode == 200) {
       setState(() {
@@ -96,9 +97,16 @@ class _SeasonsState extends State<Seasons> {
                         itemCount: filteredSeasons.length,
                         itemBuilder: (context, index) {
                           final season = filteredSeasons[index];
+                          EdgeInsets margin = EdgeInsets.symmetric(vertical: 0);
+
+                          if (index == 0) {
+                            margin = EdgeInsets.only(top: 130 * fem);
+                          }
+
                           return Container(
+                            margin: margin,
                             width: double.infinity,
-                            height: 600 * fem,
+                            height: 160 * fem,
                             child: Stack(
                               children: [
                                 Positioned(
@@ -111,7 +119,7 @@ class _SeasonsState extends State<Seasons> {
                                       child: Container(
                                         decoration: BoxDecoration(
                                           borderRadius:
-                                          BorderRadius.circular(30 * fem),
+                                              BorderRadius.circular(30 * fem),
                                           gradient: LinearGradient(
                                             begin: Alignment(1.217, -0.146),
                                             end: Alignment(-1.379, 0.131),
@@ -134,9 +142,10 @@ class _SeasonsState extends State<Seasons> {
                                       width: 165 * fem,
                                       height: 100 * fem,
                                       child: ClipRRect(
-                                        borderRadius: BorderRadius.circular(20 * fem),
+                                        borderRadius:
+                                            BorderRadius.circular(20 * fem),
                                         child: Image.network(
-                                          season['imageUrl'],
+                                          season['image'],
                                           fit: BoxFit.cover,
                                         ),
                                       ),
@@ -144,11 +153,11 @@ class _SeasonsState extends State<Seasons> {
                                   ),
                                 ),
                                 Positioned(
-                                  left: 169 * fem,
+                                  left: 180 * fem,
                                   top: 9 * fem,
                                   child: Align(
                                     child: SizedBox(
-                                      width: 120 * fem,
+                                      width: 200 * fem,
                                       height: 25 * fem,
                                       child: Text(
                                         season['cropSeasonName'],
@@ -164,7 +173,7 @@ class _SeasonsState extends State<Seasons> {
                                   ),
                                 ),
                                 Positioned(
-                                  left: 169 * fem,
+                                  left: 175 * fem,
                                   top: 84 * fem,
                                   child: Align(
                                     child: SizedBox(
@@ -184,7 +193,7 @@ class _SeasonsState extends State<Seasons> {
                                   ),
                                 ),
                                 Positioned(
-                                  left: 169 * fem,
+                                  left: 175 * fem,
                                   top: 40 * fem,
                                   child: Align(
                                     child: SizedBox(
@@ -228,7 +237,7 @@ class _SeasonsState extends State<Seasons> {
                                   top: 107 * fem,
                                   child: Align(
                                     child: SizedBox(
-                                      width: 44 * fem,
+                                      width: 80 * fem,
                                       height: 17 * fem,
                                       child: Text(
                                         season['seasonType'],
@@ -245,7 +254,7 @@ class _SeasonsState extends State<Seasons> {
                                 ),
                                 Positioned(
                                   left: 306 * fem,
-                                  top: 40 * fem,
+                                  top: 24 * fem,
                                   child: Align(
                                     child: SizedBox(
                                       width: 6 * fem,
@@ -254,9 +263,9 @@ class _SeasonsState extends State<Seasons> {
                                         decoration: BoxDecoration(
                                           color: Color(0xff60ff00),
                                           borderRadius: BorderRadius.only(
-                                            topRight: Radius.circular(50 * fem),
-                                            bottomRight:
-                                            Radius.circular(50 * fem),
+                                            topLeft: Radius.circular(50 * fem),
+                                            bottomLeft:
+                                                Radius.circular(50 * fem),
                                           ),
                                         ),
                                       ),
@@ -332,11 +341,11 @@ class _SeasonsState extends State<Seasons> {
                           ),
                         ),
                         Positioned(
-                          left: 150 * fem,
+                          left: 120 * fem,
                           top: 66 * fem,
                           child: Align(
                             child: SizedBox(
-                              width: 114 * fem,
+                              width: 200 * fem,
                               height: 33 * fem,
                               child: Text(
                                 'Theo dõi mùa vụ',

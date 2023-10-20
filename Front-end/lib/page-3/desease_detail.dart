@@ -5,6 +5,7 @@ import 'deseases.dart';
 
 class DeseaseDetail extends StatefulWidget {
   const DeseaseDetail({super.key});
+
   @override
   _DeseaseDetail createState() => _DeseaseDetail();
 }

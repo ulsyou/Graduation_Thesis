@@ -1,10 +1,50 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:http/http.dart' as http;
 import 'package:myapp/page-3/season_activities_manager.dart';
+
 import 'season-list.dart';
 
-class SeasonDetail extends StatelessWidget {
-  const SeasonDetail({super.key});
+class SeasonDetail extends StatefulWidget {
+  final Map<String, dynamic> seasonData;
+
+  SeasonDetail({required this.seasonData});
+
+  @override
+  _SeasonDetailState createState() => _SeasonDetailState();
+}
+
+class _SeasonDetailState extends State<SeasonDetail> {
+  List<Map<String, dynamic>> seasons = [];
+  String? selectedOption;
+  bool isDropdownOpen = false;
+
+  // Hàm gọi API để xóa mùa vụ
+  Future<void> deleteSeason() async {
+    final seasonId = widget.seasonData['_id'];
+    final apiUrl = Uri.parse(
+        'http://10.0.2.2:5000/crops-season/delete/crop-season/$seasonId');
+
+    try {
+      final response = await http.delete(
+        apiUrl,
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+      );
+
+      if (response.statusCode == 200) {
+        setState(() {
+          seasons.removeWhere((season) => season['_id'] == seasonId);
+        });
+      } else {
+        print('Failed to delete season: ${response.statusCode}');
+        print('Error response body: ${response.body}');
+      }
+    } catch (error) {
+      print('Error deleting season: $error');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {

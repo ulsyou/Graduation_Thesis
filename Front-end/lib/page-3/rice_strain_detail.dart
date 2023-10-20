@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-
 import 'package:myapp/page-3/rice_strains.dart';
 
 class RiceStrainDetail extends StatefulWidget {

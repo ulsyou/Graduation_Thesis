@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 import '../catalog-manager.dart';
-import 'fertilizer-add.dart';
 import 'fertilizer-information.dart';
 
 class fertilizerManager extends StatefulWidget {
