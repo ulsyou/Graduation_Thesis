@@ -4,14 +4,77 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:myapp/page-3/season_activities.dart';
 import 'package:myapp/page-3/season_deseases.dart';
+import 'package:myapp/page-3/season_detail.dart';
 import 'package:myapp/page-3/season_employees.dart';
 import 'package:myapp/page-3/season_fertilizer.dart';
 import 'package:myapp/page-3/season_images.dart';
 import 'package:myapp/page-3/season_pesticides.dart';
 
-class SeasonActivitiesManager extends StatelessWidget {
-  const SeasonActivitiesManager({super.key});
+class SeasonActivitiesManager extends StatefulWidget {
+  final Map<String, dynamic> seasonData;
 
+  SeasonActivitiesManager({required this.seasonData});
+
+  @override
+  _SeasonActivitiesManagerState createState() => _SeasonActivitiesManagerState();
+}
+
+class _SeasonActivitiesManagerState extends State<SeasonActivitiesManager> {
+  void navigateToSeasonFertilizer() {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => SeasonFertilizer(seasonData: widget.seasonData),
+      ),
+    );
+  }
+
+  void navigateToSeasonPesticides() {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => SeasonPesticides(seasonData: widget.seasonData),
+      ),
+    );
+  }
+
+  void navigateToSeasonImages() {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => SeasonImages(seasonData: widget.seasonData),
+      ),
+    );
+  }
+
+  void navigateToSeasonDeseases() {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => SeasonDeseases(seasonData: widget.seasonData),
+      ),
+    );
+  }
+
+  void navigateToSeasonEmployee() {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => SeasonEmployee(seasonData: widget.seasonData),
+      ),
+    );
+  }
+
+  void navigateToSeasonActivities() {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => SeasonActivities(seasonData: widget.seasonData),
+      ),
+    );
+  }
+
+  void navigateToSeasonDetail() {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => SeasonDetail(seasonData: widget.seasonData),
+      ),
+    );
+  }
   @override
   Widget build(BuildContext context) {
     return Material(
@@ -66,13 +129,7 @@ class SeasonActivitiesManager extends StatelessWidget {
                   type: MaterialType.transparency,
                   clipBehavior: Clip.antiAlias,
                   child: InkWell(
-                    onTap: () {
-                      Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (context) => SeasonFertilizer(),
-                        ),
-                      );
-                    },
+                    onTap: navigateToSeasonFertilizer,
                     overlayColor: const MaterialStatePropertyAll<Color>(
                       Color(0x0c7f7f7f),
                     ),
@@ -113,13 +170,7 @@ class SeasonActivitiesManager extends StatelessWidget {
                   type: MaterialType.transparency,
                   clipBehavior: Clip.antiAlias,
                   child: InkWell(
-                    onTap: () {
-                      Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (context) => SeasonPesticides(),
-                        ),
-                      );
-                    },
+                    onTap: navigateToSeasonPesticides,
                     overlayColor: const MaterialStatePropertyAll<Color>(
                       Color(0x0c7f7f7f),
                     ),
@@ -160,13 +211,7 @@ class SeasonActivitiesManager extends StatelessWidget {
                   type: MaterialType.transparency,
                   clipBehavior: Clip.antiAlias,
                   child: InkWell(
-                    onTap: () {
-                      Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (context) => SeasonImages(),
-                        ),
-                      );
-                    },
+                    onTap: navigateToSeasonImages,
                     overlayColor: const MaterialStatePropertyAll<Color>(
                       Color(0x0c7f7f7f),
                     ),
@@ -207,13 +252,7 @@ class SeasonActivitiesManager extends StatelessWidget {
                   type: MaterialType.transparency,
                   clipBehavior: Clip.antiAlias,
                   child: InkWell(
-                    onTap: () {
-                      Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (context) => SeasonDeseases(),
-                        ),
-                      );
-                    },
+                    onTap: navigateToSeasonDeseases,
                     overlayColor: const MaterialStatePropertyAll<Color>(
                       Color(0x0c7f7f7f),
                     ),
@@ -254,13 +293,7 @@ class SeasonActivitiesManager extends StatelessWidget {
                   type: MaterialType.transparency,
                   clipBehavior: Clip.antiAlias,
                   child: InkWell(
-                    onTap: () {
-                      Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (context) => SeasonEmployee(),
-                        ),
-                      );
-                    },
+                    onTap: navigateToSeasonEmployee,
                     overlayColor: const MaterialStatePropertyAll<Color>(
                       Color(0x0c7f7f7f),
                     ),
@@ -301,13 +334,7 @@ class SeasonActivitiesManager extends StatelessWidget {
                   type: MaterialType.transparency,
                   clipBehavior: Clip.antiAlias,
                   child: InkWell(
-                    onTap: () {
-                      Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (context) => SeasonActivities(),
-                        ),
-                      );
-                    },
+                    onTap: navigateToSeasonActivities,
                     overlayColor: const MaterialStatePropertyAll<Color>(
                       Color(0x0c7f7f7f),
                     ),
@@ -452,7 +479,7 @@ class SeasonActivitiesManager extends StatelessWidget {
                   type: MaterialType.transparency,
                   clipBehavior: Clip.antiAlias,
                   child: InkWell(
-                    onTap: () {},
+                    onTap: navigateToSeasonDetail,
                     overlayColor: const MaterialStatePropertyAll<Color>(
                       Color(0x0c7f7f7f),
                     ),

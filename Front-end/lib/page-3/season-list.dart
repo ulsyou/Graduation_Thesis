@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:myapp/page-3/season_detail.dart';
 import 'package:myapp/utils.dart';
 
 import 'expert-manager-page.dart';
@@ -57,6 +58,17 @@ class _SeasonsState extends State<Seasons> {
     searchFocus.unfocus();
   }
 
+  void navigateToSeasonDetail(Map<String, dynamic> seasonData) {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => SeasonDetail(
+          seasonData: seasonData,
+        ),
+      ),
+    );
+  }
+
+
   @override
   Widget build(BuildContext context) {
     double baseWidth = 412;
@@ -98,181 +110,185 @@ class _SeasonsState extends State<Seasons> {
                         itemBuilder: (context, index) {
                           final season = filteredSeasons[index];
                           EdgeInsets margin = EdgeInsets.symmetric(vertical: 0);
-
                           if (index == 0) {
                             margin = EdgeInsets.only(top: 130 * fem);
                           }
-
-                          return Container(
-                            margin: margin,
-                            width: double.infinity,
-                            height: 160 * fem,
-                            child: Stack(
-                              children: [
-                                Positioned(
-                                  left: 1 * fem,
-                                  top: 0 * fem,
-                                  child: Align(
-                                    child: SizedBox(
-                                      width: 311 * fem,
-                                      height: 130 * fem,
-                                      child: Container(
-                                        decoration: BoxDecoration(
+                          return InkWell(
+                            onTap: () {
+                              navigateToSeasonDetail(season);
+                            },
+                            child: Container(
+                              margin: margin,
+                              width: double.infinity,
+                              height: 160 * fem,
+                              child: Stack(
+                                children: [
+                                  Positioned(
+                                    left: 1 * fem,
+                                    top: 0 * fem,
+                                    child: Align(
+                                      child: SizedBox(
+                                        width: 311 * fem,
+                                        height: 130 * fem,
+                                        child: Container(
+                                          decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(30 * fem),
+                                            gradient: LinearGradient(
+                                              begin: Alignment(1.217, -0.146),
+                                              end: Alignment(-1.379, 0.131),
+                                              colors: <Color>[
+                                                Color(0xffffffff),
+                                                Color(0x00fffacd)
+                                              ],
+                                              stops: <double>[0, 1],
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  Positioned(
+                                    left: 0 * fem,
+                                    top: 15 * fem,
+                                    child: Align(
+                                      child: SizedBox(
+                                        width: 165 * fem,
+                                        height: 100 * fem,
+                                        child: ClipRRect(
                                           borderRadius:
-                                              BorderRadius.circular(30 * fem),
-                                          gradient: LinearGradient(
-                                            begin: Alignment(1.217, -0.146),
-                                            end: Alignment(-1.379, 0.131),
-                                            colors: <Color>[
-                                              Color(0xfffff8bf),
-                                              Color(0x00fffacd)
-                                            ],
-                                            stops: <double>[0, 1],
+                                              BorderRadius.circular(20 * fem),
+                                          child: Image.network(
+                                            season['image'],
+                                            fit: BoxFit.cover,
                                           ),
                                         ),
                                       ),
                                     ),
                                   ),
-                                ),
-                                Positioned(
-                                  left: 0 * fem,
-                                  top: 15 * fem,
-                                  child: Align(
-                                    child: SizedBox(
-                                      width: 165 * fem,
-                                      height: 100 * fem,
-                                      child: ClipRRect(
-                                        borderRadius:
-                                            BorderRadius.circular(20 * fem),
-                                        child: Image.network(
-                                          season['image'],
-                                          fit: BoxFit.cover,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                Positioned(
-                                  left: 180 * fem,
-                                  top: 9 * fem,
-                                  child: Align(
-                                    child: SizedBox(
-                                      width: 200 * fem,
-                                      height: 25 * fem,
-                                      child: Text(
-                                        season['cropSeasonName'],
-                                        style: SafeGoogleFont(
-                                          'Noto Sans',
-                                          fontSize: 18 * ffem,
-                                          fontWeight: FontWeight.w600,
-                                          height: 1.3625 * ffem / fem,
-                                          color: Color(0xff000000),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                Positioned(
-                                  left: 175 * fem,
-                                  top: 84 * fem,
-                                  child: Align(
-                                    child: SizedBox(
-                                      width: 77 * fem,
-                                      height: 20 * fem,
-                                      child: Text(
-                                        'Loại mùa vụ: ${season['seasonType']}',
-                                        style: SafeGoogleFont(
-                                          'Noto Sans',
-                                          fontSize: 14 * ffem,
-                                          fontWeight: FontWeight.w600,
-                                          height: 1.3625 * ffem / fem,
-                                          color: Color(0xff000000),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                Positioned(
-                                  left: 175 * fem,
-                                  top: 40 * fem,
-                                  child: Align(
-                                    child: SizedBox(
-                                      width: 94 * fem,
-                                      height: 20 * fem,
-                                      child: Text(
-                                        'Mã mùa vụ: ${season['cropSeasonCode']}',
-                                        style: SafeGoogleFont(
-                                          'Noto Sans',
-                                          fontSize: 14 * ffem,
-                                          fontWeight: FontWeight.w600,
-                                          height: 1.3625 * ffem / fem,
-                                          color: Color(0xff000000),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                Positioned(
-                                  left: 217 * fem,
-                                  top: 65 * fem,
-                                  child: Align(
-                                    child: SizedBox(
-                                      width: 50 * fem,
-                                      height: 17 * fem,
-                                      child: Text(
-                                        season['cropSeasonCode'],
-                                        style: SafeGoogleFont(
-                                          'Noto Sans',
-                                          fontSize: 12 * ffem,
-                                          fontWeight: FontWeight.w500,
-                                          height: 1.3625 * ffem / fem,
-                                          color: Color(0xff777777),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                Positioned(
-                                  left: 217 * fem,
-                                  top: 107 * fem,
-                                  child: Align(
-                                    child: SizedBox(
-                                      width: 80 * fem,
-                                      height: 17 * fem,
-                                      child: Text(
-                                        season['seasonType'],
-                                        style: SafeGoogleFont(
-                                          'Noto Sans',
-                                          fontSize: 12 * ffem,
-                                          fontWeight: FontWeight.w500,
-                                          height: 1.3625 * ffem / fem,
-                                          color: Color(0xff777777),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                Positioned(
-                                  left: 306 * fem,
-                                  top: 24 * fem,
-                                  child: Align(
-                                    child: SizedBox(
-                                      width: 6 * fem,
-                                      height: 50 * fem,
-                                      child: Container(
-                                        decoration: BoxDecoration(
-                                          color: Color(0xff60ff00),
-                                          borderRadius: BorderRadius.only(
-                                            topLeft: Radius.circular(50 * fem),
-                                            bottomLeft:
-                                                Radius.circular(50 * fem),
+                                  Positioned(
+                                    left: 180 * fem,
+                                    top: 9 * fem,
+                                    child: Align(
+                                      child: SizedBox(
+                                        width: 200 * fem,
+                                        height: 25 * fem,
+                                        child: Text(
+                                          season['cropSeasonName'],
+                                          style: SafeGoogleFont(
+                                            'Noto Sans',
+                                            fontSize: 18 * ffem,
+                                            fontWeight: FontWeight.w600,
+                                            height: 1.3625 * ffem / fem,
+                                            color: Color(0xff000000),
                                           ),
                                         ),
                                       ),
                                     ),
                                   ),
-                                ),
-                              ],
+                                  Positioned(
+                                    left: 175 * fem,
+                                    top: 84 * fem,
+                                    child: Align(
+                                      child: SizedBox(
+                                        width: 77 * fem,
+                                        height: 20 * fem,
+                                        child: Text(
+                                          'Loại mùa vụ: ${season['seasonType']}',
+                                          style: SafeGoogleFont(
+                                            'Noto Sans',
+                                            fontSize: 14 * ffem,
+                                            fontWeight: FontWeight.w600,
+                                            height: 1.3625 * ffem / fem,
+                                            color: Color(0xff000000),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  Positioned(
+                                    left: 175 * fem,
+                                    top: 40 * fem,
+                                    child: Align(
+                                      child: SizedBox(
+                                        width: 94 * fem,
+                                        height: 20 * fem,
+                                        child: Text(
+                                          'Mã mùa vụ: ${season['cropSeasonCode']}',
+                                          style: SafeGoogleFont(
+                                            'Noto Sans',
+                                            fontSize: 14 * ffem,
+                                            fontWeight: FontWeight.w600,
+                                            height: 1.3625 * ffem / fem,
+                                            color: Color(0xff000000),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  Positioned(
+                                    left: 217 * fem,
+                                    top: 65 * fem,
+                                    child: Align(
+                                      child: SizedBox(
+                                        width: 50 * fem,
+                                        height: 17 * fem,
+                                        child: Text(
+                                          season['cropSeasonCode'],
+                                          style: SafeGoogleFont(
+                                            'Noto Sans',
+                                            fontSize: 12 * ffem,
+                                            fontWeight: FontWeight.w500,
+                                            height: 1.3625 * ffem / fem,
+                                            color: Color(0xff777777),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  Positioned(
+                                    left: 217 * fem,
+                                    top: 107 * fem,
+                                    child: Align(
+                                      child: SizedBox(
+                                        width: 80 * fem,
+                                        height: 17 * fem,
+                                        child: Text(
+                                          season['seasonType'],
+                                          style: SafeGoogleFont(
+                                            'Noto Sans',
+                                            fontSize: 12 * ffem,
+                                            fontWeight: FontWeight.w500,
+                                            height: 1.3625 * ffem / fem,
+                                            color: Color(0xff777777),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  Positioned(
+                                    left: 306 * fem,
+                                    top: 24 * fem,
+                                    child: Align(
+                                      child: SizedBox(
+                                        width: 6 * fem,
+                                        height: 50 * fem,
+                                        child: Container(
+                                          decoration: BoxDecoration(
+                                            color: Color(0xff60ff00),
+                                            borderRadius: BorderRadius.only(
+                                              topLeft:
+                                                  Radius.circular(50 * fem),
+                                              bottomLeft:
+                                                  Radius.circular(50 * fem),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
                           );
                         }),

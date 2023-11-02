@@ -5,7 +5,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:myapp/page-3/season_activities_manager.dart';
 
 class SeasonFertilizer extends StatelessWidget {
-  const SeasonFertilizer({super.key});
+  final Map<String, dynamic> seasonData;
+  SeasonFertilizer({required this.seasonData, Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -522,7 +523,7 @@ class SeasonFertilizer extends StatelessWidget {
                     onTap: () {
                       Navigator.of(context).push(
                         MaterialPageRoute(
-                          builder: (context) => SeasonActivitiesManager(),
+                          builder: (context) => SeasonActivitiesManager(seasonData: seasonData),
                         ),
                       );
                     },

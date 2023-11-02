@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
+import 'package:intl/intl.dart';
 import 'package:myapp/page-3/season_activities_manager.dart';
 
 import 'season-list.dart';
@@ -17,7 +18,31 @@ class SeasonDetail extends StatefulWidget {
 class _SeasonDetailState extends State<SeasonDetail> {
   List<Map<String, dynamic>> seasons = [];
   String? selectedOption;
-  bool isDropdownOpen = false;
+
+  String formatDate(String date) {
+    if (date != null && date != 'N/A') {
+      DateTime dateTime = DateTime.parse(date);
+      return DateFormat('dd/MM/yyyy').format(dateTime);
+    } else {
+      return 'N/A';
+    }
+  }
+
+  bool isHidden = true;
+
+// Hàm để hiển thị phần xác nhận xóa
+  void showPositioned() {
+    setState(() {
+      isHidden = false;
+    });
+  }
+
+// Hàm để ẩn phần xác nhận xóa
+  void hidePositioned() {
+    setState(() {
+      isHidden = true;
+    });
+  }
 
   // Hàm gọi API để xóa mùa vụ
   Future<void> deleteSeason() async {
@@ -44,6 +69,14 @@ class _SeasonDetailState extends State<SeasonDetail> {
     } catch (error) {
       print('Error deleting season: $error');
     }
+  }
+  void navigateToSeasonActivitiesManager() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => SeasonActivitiesManager(seasonData: widget.seasonData),
+      ),
+    );
   }
 
   @override
@@ -139,7 +172,7 @@ class _SeasonDetailState extends State<SeasonDetail> {
                 child: SizedBox(
                   height: 26,
                   child: Text(
-                    'RC00002',
+                    formatDate(widget.seasonData['harvestDate']),
                     style: GoogleFonts.getFont(
                       'Noto Sans',
                       color: Colors.black,
@@ -179,7 +212,7 @@ class _SeasonDetailState extends State<SeasonDetail> {
                 left: 249,
                 top: 664,
                 child: Text(
-                  'RC00002',
+                  formatDate(widget.seasonData['plantingDate']),
                   style: GoogleFonts.getFont(
                     'Noto Sans',
                     color: Colors.black,
@@ -218,7 +251,7 @@ class _SeasonDetailState extends State<SeasonDetail> {
                 left: 249,
                 top: 618,
                 child: Text(
-                  'RC00002',
+                  widget.seasonData['yield'] ?? 'N/A',
                   style: GoogleFonts.getFont(
                     'Noto Sans',
                     color: Colors.black,
@@ -257,7 +290,7 @@ class _SeasonDetailState extends State<SeasonDetail> {
                 left: 249,
                 top: 571,
                 child: Text(
-                  'RC00002',
+                  widget.seasonData['fieldSample'] ?? 'N/A',
                   style: GoogleFonts.getFont(
                     'Noto Sans',
                     color: Colors.black,
@@ -296,7 +329,7 @@ class _SeasonDetailState extends State<SeasonDetail> {
                 left: 249,
                 top: 524,
                 child: Text(
-                  'RC00002',
+                  widget.seasonData['riceVariety'] ?? 'N/A',
                   style: GoogleFonts.getFont(
                     'Noto Sans',
                     color: Colors.black,
@@ -335,7 +368,7 @@ class _SeasonDetailState extends State<SeasonDetail> {
                 left: 249,
                 top: 477,
                 child: Text(
-                  'RC00002',
+                  widget.seasonData['seasonType'] ?? 'N/A',
                   style: GoogleFonts.getFont(
                     'Noto Sans',
                     color: Colors.black,
@@ -374,7 +407,7 @@ class _SeasonDetailState extends State<SeasonDetail> {
                 left: 249,
                 top: 430,
                 child: Text(
-                  'RC00002',
+                  widget.seasonData['cropSeasonName'] ?? 'N/A',
                   style: GoogleFonts.getFont(
                     'Noto Sans',
                     color: Colors.black,
@@ -413,7 +446,7 @@ class _SeasonDetailState extends State<SeasonDetail> {
                 left: 249,
                 top: 383,
                 child: Text(
-                  'RC00002',
+                  widget.seasonData['cropSeasonCode'] ?? 'N/A',
                   style: GoogleFonts.getFont(
                     'Noto Sans',
                     color: Colors.black,
@@ -428,13 +461,7 @@ class _SeasonDetailState extends State<SeasonDetail> {
                 child: Material(
                   type: MaterialType.transparency,
                   child: InkWell(
-                    onTap: () {
-                      Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (context) => SeasonActivitiesManager(),
-                        ),
-                      );
-                    },
+                    onTap: navigateToSeasonActivitiesManager,
                     overlayColor: const MaterialStatePropertyAll<Color>(
                       Color(0x0c7f7f7f),
                     ),
@@ -457,13 +484,7 @@ class _SeasonDetailState extends State<SeasonDetail> {
                   type: MaterialType.transparency,
                   clipBehavior: Clip.antiAlias,
                   child: InkWell(
-                    onTap: () {
-                      Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (context) => SeasonActivitiesManager(),
-                        ),
-                      );
-                    },
+                    onTap: navigateToSeasonActivitiesManager,
                     overlayColor: const MaterialStatePropertyAll<Color>(
                       Color(0x0c7f7f7f),
                     ),
@@ -493,42 +514,32 @@ class _SeasonDetailState extends State<SeasonDetail> {
               ),
               Positioned(
                 left: 43,
-                top: 825,
+                top: 829,
                 child: Material(
                   type: MaterialType.transparency,
                   borderRadius: BorderRadius.circular(25),
                   clipBehavior: Clip.antiAlias,
                   child: InkWell(
-                    onTap: () {},
-                    overlayColor: const MaterialStatePropertyAll<Color>(
-                      Color(0x0c7f7f7f),
-                    ),
-                    child: Ink(
-                      color: const Color(0xFFFFF9C7),
+                    onTap: () {
+                      // Add your onTap logic here
+                    },
+                    overlayColor:
+                        MaterialStateProperty.all<Color>(Color(0x0c7f7f7f)),
+                    child: Container(
                       width: 141,
                       height: 47,
-                    ),
-                  ),
-                ),
-              ),
-              Positioned(
-                left: 76,
-                top: 836,
-                child: Material(
-                  type: MaterialType.transparency,
-                  child: InkWell(
-                    onTap: () {},
-                    overlayColor: const MaterialStatePropertyAll<Color>(
-                      Color(0x0c7f7f7f),
-                    ),
-                    child: Text(
-                      'Cập nhật',
-                      textAlign: TextAlign.center,
-                      style: GoogleFonts.getFont(
-                        'Noto Sans',
-                        color: Colors.black,
-                        fontSize: 16,
-                        fontWeight: FontWeight.w600,
+                      color: const Color(0xFFFFF9C7),
+                      child: Center(
+                        child: Text(
+                          'Cập nhật',
+                          textAlign: TextAlign.center,
+                          style: GoogleFonts.getFont(
+                            'Noto Sans',
+                            color: Colors.black,
+                            fontSize: 16,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
                       ),
                     ),
                   ),
@@ -536,115 +547,160 @@ class _SeasonDetailState extends State<SeasonDetail> {
               ),
               Positioned(
                 left: 231,
-                top: 825,
+                top: 829,
                 child: Material(
                   type: MaterialType.transparency,
                   borderRadius: BorderRadius.circular(25),
                   clipBehavior: Clip.antiAlias,
                   child: InkWell(
-                    onTap: () {},
-                    overlayColor: const MaterialStatePropertyAll<Color>(
-                      Color(0x0c7f7f7f),
-                    ),
+                    onTap: () {
+                      showPositioned();
+                    },
                     child: Ink(
                       color: const Color(0xFFFF3838),
                       width: 141,
                       height: 47,
-                    ),
-                  ),
-                ),
-              ),
-              Positioned(
-                left: 341,
-                top: 837,
-                child: Container(
-                  width: 24,
-                  height: 24,
-                  clipBehavior: Clip.hardEdge,
-                  decoration: const BoxDecoration(),
-                  child: Stack(
-                    clipBehavior: Clip.none,
-                    children: [
-                      Positioned(
-                        left: 2,
-                        top: 2,
-                        child: Material(
-                          type: MaterialType.transparency,
-                          clipBehavior: Clip.antiAlias,
-                          child: InkWell(
-                            onTap: () {},
-                            overlayColor: const MaterialStatePropertyAll<Color>(
-                              Color(0x0c7f7f7f),
-                            ),
-                            child: Ink(
-                              width: 20,
-                              height: 20,
-                              decoration: const BoxDecoration(
-                                image: DecorationImage(
-                                  image: NetworkImage(
-                                    'https://storage.googleapis.com/codeless-dev.appspot.com/uploads%2Fimages%2FTeD8q4fMRDdW3VSyJEbH%2F463e314fadee8c2dcb74cc8452af9f34.png',
-                                  ),
-                                  fit: BoxFit.contain,
-                                ),
-                              ),
-                            ),
+                      child: Center(
+                        child: Text(
+                          'Xoá',
+                          style: GoogleFonts.getFont(
+                            'Noto Sans',
+                            color: Colors.white,
+                            fontSize: 16,
+                            fontWeight: FontWeight.w600,
                           ),
                         ),
-                      )
-                    ],
-                  ),
-                ),
-              ),
-              Positioned(
-                left: 248,
-                top: 834,
-                child: Material(
-                  type: MaterialType.transparency,
-                  borderRadius: BorderRadius.circular(25),
-                  clipBehavior: Clip.antiAlias,
-                  child: InkWell(
-                    onTap: () {},
-                    overlayColor: const MaterialStatePropertyAll<Color>(
-                      Color(0x0c7f7f7f),
-                    ),
-                    child: Ink(
-                      color: Colors.white,
-                      width: 59,
-                      height: 30,
-                    ),
-                  ),
-                ),
-              ),
-              Positioned(
-                left: 262,
-                top: 837,
-                child: Material(
-                  type: MaterialType.transparency,
-                  child: InkWell(
-                    onTap: () {},
-                    overlayColor: const MaterialStatePropertyAll<Color>(
-                      Color(0x0c7f7f7f),
-                    ),
-                    child: Text(
-                      'Xoá',
-                      style: GoogleFonts.getFont(
-                        'Noto Sans',
-                        color: Colors.black,
-                        fontSize: 16,
-                        fontWeight: FontWeight.w600,
                       ),
                     ),
                   ),
                 ),
               ),
               Positioned(
-                left: 325,
-                top: 835,
-                child: Image.network(
-                  'https://storage.googleapis.com/codeless-dev.appspot.com/uploads%2Fimages%2FTeD8q4fMRDdW3VSyJEbH%2Fcdee8630b6a5f6a443dda5106daafabc.png',
-                  width: 4,
-                  height: 30,
-                  fit: BoxFit.contain,
+                left: 47,
+                top: 352,
+                child: Container(
+                  width: 318,
+                  height: 211,
+                  clipBehavior: Clip.hardEdge,
+                  decoration: const BoxDecoration(),
+                  child: Stack(
+                    clipBehavior: Clip.none,
+                    children: [
+                      if (!isHidden)
+                        Positioned(
+                          left: 0,
+                          top: 0,
+                          child: Container(
+                            width: 318,
+                            height: 211,
+                            clipBehavior: Clip.hardEdge,
+                            decoration: BoxDecoration(
+                              color: const Color(0xE5FFD79C),
+                              borderRadius: BorderRadius.circular(35),
+                            ),
+                          ),
+                        ),
+                      if (!isHidden)
+                        Positioned(
+                          left: 42,
+                          top: 62,
+                          child: Text(
+                            'Xác nhận xóa ?',
+                            style: GoogleFonts.getFont(
+                              'Noto Sans',
+                              color: Colors.black,
+                              fontSize: 32,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ),
+                      if (!isHidden)
+                        InkWell(
+                          onTap: () {},
+                          child: Stack(
+                            children: [
+                              Positioned(
+                                left: 43,
+                                top: 133,
+                                child: Material(
+                                  type: MaterialType.transparency,
+                                  borderRadius: BorderRadius.circular(15),
+                                  clipBehavior: Clip.antiAlias,
+                                  child: Ink(
+                                    color: const Color(0xFF65FF3F),
+                                    width: 84,
+                                    height: 36,
+                                  ),
+                                ),
+                              ),
+                              Positioned(
+                                left: 50,
+                                top: 140,
+                                child: Material(
+                                  type: MaterialType.transparency,
+                                  child: InkWell(
+                                    onTap: () {},
+                                    overlayColor:
+                                        const MaterialStatePropertyAll<Color>(
+                                      Color(0x0c7f7f7f),
+                                    ),
+                                    child: Text(
+                                      'Xác nhận',
+                                      style: GoogleFonts.getFont(
+                                        'Noto Sans',
+                                        color: Colors.black,
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      if (!isHidden)
+                        InkWell(
+                          onTap: () {
+                            hidePositioned();
+                          },
+                          child: Stack(
+                            children: [
+                              Positioned(
+                                left: 183,
+                                top: 133,
+                                child: Material(
+                                  type: MaterialType.transparency,
+                                  borderRadius: BorderRadius.circular(15),
+                                  clipBehavior: Clip.antiAlias,
+                                  child: Ink(
+                                    color: const Color(0xFFD9D9D9),
+                                    width: 84,
+                                    height: 36,
+                                  ),
+                                ),
+                              ),
+                              Positioned(
+                                left: 208,
+                                top: 139,
+                                child: Material(
+                                  type: MaterialType.transparency,
+                                  child: Text(
+                                    'Hủy',
+                                    style: GoogleFonts.getFont(
+                                      'Noto Sans',
+                                      color: Colors.black,
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                    ],
+                  ),
                 ),
               ),
               Positioned(

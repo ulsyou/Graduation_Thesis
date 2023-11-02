@@ -426,7 +426,7 @@ class Profile extends StatelessWidget {
                       Navigator.of(context).push(
                         MaterialPageRoute(
                           builder: (context) =>
-                              AddPages(), // Thay thế EmployeeHomeScreen() bằng tên class của bạn
+                              AddPages(),
                         ),
                       );
                     },

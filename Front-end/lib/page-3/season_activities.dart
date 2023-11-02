@@ -5,7 +5,9 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:myapp/page-3/season_activities_manager.dart';
 
 class SeasonActivities extends StatelessWidget {
-  const SeasonActivities({super.key});
+  final Map<String, dynamic> seasonData;
+  SeasonActivities({required this.seasonData, Key? key}) : super(key: key);
+
 
   @override
   Widget build(BuildContext context) {
@@ -301,7 +303,7 @@ class SeasonActivities extends StatelessWidget {
                 onTap: () {
                   Navigator.of(context).push(
                     MaterialPageRoute(
-                      builder: (context) => SeasonActivitiesManager(),
+                      builder: (context) => SeasonActivitiesManager(seasonData: seasonData),
                     ),
                   );
                 },
