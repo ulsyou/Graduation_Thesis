@@ -102,8 +102,8 @@ class _SeasonDetailState extends State<SeasonDetail> {
                   clipBehavior: Clip.hardEdge,
                   decoration: BoxDecoration(
                     image: const DecorationImage(
-                      image: NetworkImage(
-                        'https://firebasestorage.googleapis.com/v0/b/codeless-app.appspot.com/o/projects%2FTeD8q4fMRDdW3VSyJEbH%2F179800e3ecb133fbb531b822ceb94009dc1a8493yuki-ho-_YGqbbZEmMI-unsplash%201.png?alt=media&token=3dbefdbc-2e28-419c-bb5a-ba4a4119e5c7',
+                      image: AssetImage(
+                        'assets/page-1/images/yuki-ho-ygqbbzemmi-unsplash-1-bg.png',
                       ),
                       fit: BoxFit.none,
                       alignment: Alignment.centerLeft,
@@ -132,8 +132,8 @@ class _SeasonDetailState extends State<SeasonDetail> {
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(20),
                   clipBehavior: Clip.hardEdge,
-                  child: Image.network(
-                    'https://firebasestorage.googleapis.com/v0/b/codeless-app.appspot.com/o/projects%2FTeD8q4fMRDdW3VSyJEbH%2Ff4568d422a6c0ec14a0567d726b1ac9096212c2aRectangle%2032.png?alt=media&token=fdaf15ad-a955-436f-82a8-beeaf25d6587',
+                  child: Image.asset(
+                    'assets/page-1/images/rectangle-26.png',
                     width: 318,
                     height: 180,
                     fit: BoxFit.cover,
@@ -497,12 +497,10 @@ class _SeasonDetailState extends State<SeasonDetail> {
                         clipBehavior: Clip.none,
                         children: [
                           Positioned(
-                            left: 8,
-                            top: 5,
-                            child: Image.network(
-                              'https://storage.googleapis.com/codeless-dev.appspot.com/uploads%2Fimages%2FTeD8q4fMRDdW3VSyJEbH%2Fc37d26344f5e268f21afe308d4883e81.png',
-                              width: 8,
-                              height: 14,
+                            child: Image.asset(
+                              'assets/page-1/images/Group 32.png',
+                              width: 24,
+                              height: 24,
                               fit: BoxFit.contain,
                             ),
                           )
@@ -734,10 +732,8 @@ class _SeasonDetailState extends State<SeasonDetail> {
                     clipBehavior: Clip.none,
                     children: [
                       Positioned(
-                        left: -115,
-                        top: -118,
-                        child: Image.network(
-                          'https://storage.googleapis.com/codeless-dev.appspot.com/uploads%2Fimages%2FTeD8q4fMRDdW3VSyJEbH%2Fc635059ff9273dae3cfa4172964d22eb.png',
+                        child: Image.asset(
+                          'assets/page-1/images/mask-group.png',
                           width: 351,
                           height: 254,
                           fit: BoxFit.contain,
@@ -765,8 +761,8 @@ class _SeasonDetailState extends State<SeasonDetail> {
                       Color(0x0c7f7f7f),
                     ),
                     child: Container(
-                      width: 24,
-                      height: 24,
+                      width: 28,
+                      height: 28,
                       clipBehavior: Clip.hardEdge,
                       decoration: const BoxDecoration(),
                       child: Stack(
@@ -775,10 +771,10 @@ class _SeasonDetailState extends State<SeasonDetail> {
                           Positioned(
                             left: 4,
                             top: 4,
-                            child: Image.network(
-                              'https://storage.googleapis.com/codeless-dev.appspot.com/uploads%2Fimages%2FTeD8q4fMRDdW3VSyJEbH%2F27779bc9b3ca41161ea5511599390cdd.png',
-                              width: 16,
-                              height: 16,
+                            child: Image.asset(
+                              'assets/page-1/images/Group 25.png',
+                              width: 24,
+                              height: 24,
                               fit: BoxFit.contain,
                             ),
                           )

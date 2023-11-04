@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../utils.dart';
+import 'add_season_information.dart';
 import 'expert-manager-page.dart';
 
 class AddPages extends StatelessWidget {
@@ -36,8 +37,8 @@ class AddPages extends StatelessWidget {
                     clipBehavior: Clip.hardEdge,
                     decoration: BoxDecoration(
                       image: const DecorationImage(
-                        image: NetworkImage(
-                          'https://firebasestorage.googleapis.com/v0/b/codeless-app.appspot.com/o/projects%2FTeD8q4fMRDdW3VSyJEbH%2F179800e3ecb133fbb531b822ceb94009dc1a8493yuki-ho-_YGqbbZEmMI-unsplash%201.png?alt=media&token=c53f978a-1ef7-4c54-8990-dbb4e7d0c3e7',
+                        image: AssetImage(
+                          'assets/page-1/images/yuki-ho-ygqbbzemmi-unsplash-1-bg.png',
                         ),
                         fit: BoxFit.none,
                         alignment: Alignment.centerLeft,
@@ -121,12 +122,12 @@ class AddPages extends StatelessWidget {
                         Color(0x0c7f7f7f),
                       ),
                       child: Ink(
-                        width: 50,
-                        height: 50,
+                        width: 60,
+                        height: 60,
                         decoration: const BoxDecoration(
                           image: DecorationImage(
-                            image: NetworkImage(
-                              'https://firebasestorage.googleapis.com/v0/b/codeless-app.appspot.com/o/projects%2FTeD8q4fMRDdW3VSyJEbH%2Fa4b842cfe3a494a83e3dbae5656ac3632bc4ff9bactivities%201.png?alt=media&token=3144bda1-a3f1-4a6b-98e5-6c529cc68334',
+                            image: AssetImage(
+                              'assets/page-1/images/activities-1.png',
                             ),
                             fit: BoxFit.cover,
                           ),
@@ -197,12 +198,12 @@ class AddPages extends StatelessWidget {
                         Color(0x0c7f7f7f),
                       ),
                       child: Ink(
-                        width: 50,
-                        height: 50,
+                        width: 60,
+                        height: 60,
                         decoration: const BoxDecoration(
                           image: DecorationImage(
-                            image: NetworkImage(
-                              'https://firebasestorage.googleapis.com/v0/b/codeless-app.appspot.com/o/projects%2FTeD8q4fMRDdW3VSyJEbH%2F368bcd77cf3f7e8e861f61bc717d5070233604e2pesticide%201.png?alt=media&token=a423802b-6b95-46a8-8877-5472a31bb4b4',
+                            image: AssetImage(
+                              'assets/page-1/images/pesticide-1.png',
                             ),
                             fit: BoxFit.cover,
                           ),
@@ -273,12 +274,12 @@ class AddPages extends StatelessWidget {
                         Color(0x0c7f7f7f),
                       ),
                       child: Ink(
-                        width: 50,
-                        height: 50,
+                        width: 60,
+                        height: 60,
                         decoration: const BoxDecoration(
                           image: DecorationImage(
-                            image: NetworkImage(
-                              'https://firebasestorage.googleapis.com/v0/b/codeless-app.appspot.com/o/projects%2FTeD8q4fMRDdW3VSyJEbH%2F3b1ac47e8dc0b8987fc5e018e44d9fa7526baef0fields%201.png?alt=media&token=a00257d4-6d60-443e-93ca-2183d0647812',
+                            image: AssetImage(
+                              'assets/page-1/images/fields-1.png',
                             ),
                             fit: BoxFit.cover,
                           ),
@@ -349,12 +350,12 @@ class AddPages extends StatelessWidget {
                         Color(0x0c7f7f7f),
                       ),
                       child: Ink(
-                        width: 50,
-                        height: 50,
+                        width: 60,
+                        height: 60,
                         decoration: const BoxDecoration(
                           image: DecorationImage(
-                            image: NetworkImage(
-                              'https://firebasestorage.googleapis.com/v0/b/codeless-app.appspot.com/o/projects%2FTeD8q4fMRDdW3VSyJEbH%2F52c64d3e85714cd434ab199c946650a0ed52239apests%201.png?alt=media&token=313486bd-f6d1-444e-bd1d-fe994b16d319',
+                            image: AssetImage(
+                              'assets/page-1/images/pests-1.png',
                             ),
                             fit: BoxFit.cover,
                           ),
@@ -425,12 +426,12 @@ class AddPages extends StatelessWidget {
                         Color(0x0c7f7f7f),
                       ),
                       child: Ink(
-                        width: 50,
-                        height: 50,
+                        width: 60,
+                        height: 60,
                         decoration: const BoxDecoration(
                           image: DecorationImage(
-                            image: NetworkImage(
-                              'https://firebasestorage.googleapis.com/v0/b/codeless-app.appspot.com/o/projects%2FTeD8q4fMRDdW3VSyJEbH%2Fcf79d1bcfa5c98308e4ccfe714e7f849837c73b3fertilizer%201.png?alt=media&token=4ca7868b-65b7-469f-a7d0-345e7413b751',
+                            image: AssetImage(
+                              'assets/page-1/images/fertilizer-1-1.png',
                             ),
                             fit: BoxFit.cover,
                           ),
@@ -496,17 +497,23 @@ class AddPages extends StatelessWidget {
                     type: MaterialType.transparency,
                     clipBehavior: Clip.antiAlias,
                     child: InkWell(
-                      onTap: () {},
+                      onTap: () {
+                        // Navigator.of(context).push(
+                        //   MaterialPageRoute(
+                        //     builder: (context) => ExpertManagerPage(),
+                        //   ),
+                        // );
+                      },
                       overlayColor: const MaterialStatePropertyAll<Color>(
                         Color(0x0c7f7f7f),
                       ),
                       child: Ink(
-                        width: 50,
-                        height: 50,
+                        width: 60,
+                        height: 60,
                         decoration: const BoxDecoration(
                           image: DecorationImage(
-                            image: NetworkImage(
-                              'https://firebasestorage.googleapis.com/v0/b/codeless-app.appspot.com/o/projects%2FTeD8q4fMRDdW3VSyJEbH%2Fccd0df66955b662a32371d0542f78a132edb86b3wheat%201.png?alt=media&token=cf310051-5fdb-46e7-9c0d-f734f90160a2',
+                            image: AssetImage(
+                              'assets/page-1/images/wheat-1.png',
                             ),
                             fit: BoxFit.cover,
                           ),
@@ -522,7 +529,13 @@ class AddPages extends StatelessWidget {
                     type: MaterialType.transparency,
                     clipBehavior: Clip.antiAlias,
                     child: InkWell(
-                      onTap: () {},
+                      onTap: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) => AddSeason(),
+                          ),
+                        );
+                      },
                       overlayColor: const MaterialStatePropertyAll<Color>(
                         Color(0x0c7f7f7f),
                       ),
@@ -545,7 +558,13 @@ class AddPages extends StatelessWidget {
                   child: Material(
                     type: MaterialType.transparency,
                     child: InkWell(
-                      onTap: () {},
+                      onTap: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) => AddSeason(),
+                          ),
+                        );
+                      },
                       overlayColor: const MaterialStatePropertyAll<Color>(
                         Color(0x0c7f7f7f),
                       ),
@@ -572,17 +591,23 @@ class AddPages extends StatelessWidget {
                     type: MaterialType.transparency,
                     clipBehavior: Clip.antiAlias,
                     child: InkWell(
-                      onTap: () {},
+                      onTap: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) => AddSeason(),
+                          ),
+                        );
+                      },
                       overlayColor: const MaterialStatePropertyAll<Color>(
                         Color(0x0c7f7f7f),
                       ),
                       child: Ink(
-                        width: 50,
-                        height: 50,
+                        width: 60,
+                        height: 60,
                         decoration: const BoxDecoration(
                           image: DecorationImage(
-                            image: NetworkImage(
-                              'https://firebasestorage.googleapis.com/v0/b/codeless-app.appspot.com/o/projects%2FTeD8q4fMRDdW3VSyJEbH%2Ff7bfd09b9815049130c6185f7a6c9df935919e73farm%201.png?alt=media&token=b12df145-2461-4732-8073-5ab1be3057d9',
+                            image: AssetImage(
+                              'assets/page-1/images/farm-1.png',
                             ),
                             fit: BoxFit.cover,
                           ),
@@ -618,7 +643,7 @@ class AddPages extends StatelessWidget {
                                 width: 360 * fem,
                                 height: 115 * fem,
                                 child: Image.asset(
-                                  'assets/page-1/images/mask-group-amN.png',
+                                  'assets/page-1/images/mask-group.png',
                                   width: 360 * fem,
                                   height: 115 * fem,
                                 ),
@@ -645,7 +670,7 @@ class AddPages extends StatelessWidget {
                                   padding: EdgeInsets.zero,
                                 ),
                                 child: Image.asset(
-                                  'assets/page-1/images/group-27-JDW.png',
+                                  'assets/page-1/images/Group 25.png',
                                   width: 24 * fem,
                                   height: 24 * fem,
                                 ),
@@ -654,14 +679,14 @@ class AddPages extends StatelessWidget {
                           ),
                         ),
                         Positioned(
-                          left: 120 * fem,
+                          left: 130 * fem,
                           top: 66 * fem,
                           child: Align(
                             child: SizedBox(
                               width: 200 * fem,
                               height: 33 * fem,
                               child: Text(
-                                'Theo dõi mùa vụ',
+                                'Thêm Dữ liệu',
                                 style: SafeGoogleFont(
                                   'Noto Sans',
                                   fontSize: 24 * ffem,

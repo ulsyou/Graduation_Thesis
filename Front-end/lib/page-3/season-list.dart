@@ -99,7 +99,7 @@ class _SeasonsState extends State<Seasons> {
                       color: Color(0x84FFFDF4),
                       image: DecorationImage(
                         image: AssetImage(
-                            'assets/page-1/images/yuki-ho-ygqbbzemmi-unsplash-1-bg-7hJ.png'),
+                            'assets/page-1/images/yuki-ho-ygqbbzemmi-unsplash-1-bg.png'),
                         fit: BoxFit.fill,
                         colorFilter: ColorFilter.mode(
                             Colors.black.withOpacity(0.4), BlendMode.dstATop),
@@ -321,7 +321,7 @@ class _SeasonsState extends State<Seasons> {
                                 width: 360 * fem,
                                 height: 115 * fem,
                                 child: Image.asset(
-                                  'assets/page-1/images/mask-group-amN.png',
+                                  'assets/page-1/images/mask-group.png',
                                   width: 360 * fem,
                                   height: 115 * fem,
                                 ),
@@ -348,7 +348,7 @@ class _SeasonsState extends State<Seasons> {
                                   padding: EdgeInsets.zero,
                                 ),
                                 child: Image.asset(
-                                  'assets/page-1/images/group-27-JDW.png',
+                                  'assets/page-1/images/Group 25.png',
                                   width: 24 * fem,
                                   height: 24 * fem,
                                 ),

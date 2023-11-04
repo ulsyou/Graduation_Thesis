@@ -98,8 +98,8 @@ class _SeasonActivitiesManagerState extends State<SeasonActivitiesManager> {
                   clipBehavior: Clip.hardEdge,
                   decoration: BoxDecoration(
                     image: const DecorationImage(
-                      image: NetworkImage(
-                        'https://firebasestorage.googleapis.com/v0/b/codeless-app.appspot.com/o/projects%2FTeD8q4fMRDdW3VSyJEbH%2F179800e3ecb133fbb531b822ceb94009dc1a8493yuki-ho-_YGqbbZEmMI-unsplash%201.png?alt=media&token=9a0d5a0b-162d-40fd-ace8-8486303c41ec',
+                      image: AssetImage(
+                        'assets/page-1/images/yuki-ho-ygqbbzemmi-unsplash-1-bg.png',
                       ),
                       fit: BoxFit.none,
                       alignment: Alignment.centerLeft,
@@ -371,60 +371,60 @@ class _SeasonActivitiesManagerState extends State<SeasonActivitiesManager> {
               Positioned(
                 left: 97,
                 top: 908,
-                child: Image.network(
-                  'https://firebasestorage.googleapis.com/v0/b/codeless-app.appspot.com/o/projects%2FTeD8q4fMRDdW3VSyJEbH%2F8ef2e93582deae0cbb4d8328b5579604c905d832to-do-list%201.png?alt=media&token=1387c0a8-ea17-47c1-b81d-9fdd3af8fb8e',
-                  width: 50,
-                  height: 50,
+                child: Image.asset(
+                  'assets/page-1/images/to-do-list-1.png',
+                  width: 60,
+                  height: 60,
                   fit: BoxFit.cover,
                 ),
               ),
               Positioned(
                 left: 97,
                 top: 765,
-                child: Image.network(
-                  'https://firebasestorage.googleapis.com/v0/b/codeless-app.appspot.com/o/projects%2FTeD8q4fMRDdW3VSyJEbH%2Fdb5333a290aa498f0f1f3d5b7432249940d4c139employees%201.png?alt=media&token=114425eb-6403-4582-8ec9-79a0f1e320e3',
-                  width: 50,
-                  height: 50,
+                child: Image.asset(
+                  'assets/page-1/images/employees-1.png',
+                  width: 60,
+                  height: 60,
                   fit: BoxFit.cover,
                 ),
               ),
               Positioned(
                 left: 97,
                 top: 619,
-                child: Image.network(
-                  'https://firebasestorage.googleapis.com/v0/b/codeless-app.appspot.com/o/projects%2FTeD8q4fMRDdW3VSyJEbH%2F1d7cc7ac0124c2a1c4a67b434619f78b6608147ediseases%201.png?alt=media&token=36dc503f-bab7-4181-bd15-627ea28beceb',
-                  width: 50,
-                  height: 50,
+                child: Image.asset(
+                  'assets/page-1/images/diseases-1.png',
+                  width: 60,
+                  height: 60,
                   fit: BoxFit.cover,
                 ),
               ),
               Positioned(
                 left: 97,
                 top: 475,
-                child: Image.network(
-                  'https://firebasestorage.googleapis.com/v0/b/codeless-app.appspot.com/o/projects%2FTeD8q4fMRDdW3VSyJEbH%2F38e81027ac7fefd074ef620312a7a7d34b08e27egallery%201.png?alt=media&token=6dbf3deb-7054-42bc-b266-6eb4c704ac29',
-                  width: 50,
-                  height: 50,
+                child: Image.asset(
+                  'assets/page-1/images/gallery-1.png',
+                  width: 60,
+                  height: 60,
                   fit: BoxFit.cover,
                 ),
               ),
               Positioned(
                 left: 97,
                 top: 331,
-                child: Image.network(
-                  'https://firebasestorage.googleapis.com/v0/b/codeless-app.appspot.com/o/projects%2FTeD8q4fMRDdW3VSyJEbH%2F04b4eb3562c54b6be9e1bceb79cebcb6ccac702bpesticide%20(1)%201.png?alt=media&token=931ea233-1bcd-43fc-a8bc-4f5e3ee57296',
-                  width: 50,
-                  height: 50,
+                child: Image.asset(
+                  'assets/page-1/images/pesticide-1-1.png',
+                  width: 60,
+                  height: 60,
                   fit: BoxFit.cover,
                 ),
               ),
               Positioned(
                 left: 97,
                 top: 188,
-                child: Image.network(
-                  'https://firebasestorage.googleapis.com/v0/b/codeless-app.appspot.com/o/projects%2FTeD8q4fMRDdW3VSyJEbH%2F393aa66f71b9f420713181b1014fb42603f366a0fertilizer%20(1)%201.png?alt=media&token=bd481885-3ba0-4373-8950-34dec8048099',
-                  width: 50,
-                  height: 50,
+                child: Image.asset(
+                  'assets/page-1/images/fertilizer-1-1.png',
+                  width: 60,
+                  height: 60,
                   fit: BoxFit.cover,
                 ),
               ),
@@ -461,8 +461,8 @@ class _SeasonActivitiesManagerState extends State<SeasonActivitiesManager> {
                       Positioned(
                         left: -100,
                         top: -118,
-                        child: Image.network(
-                          'https://storage.googleapis.com/codeless-dev.appspot.com/uploads%2Fimages%2FTeD8q4fMRDdW3VSyJEbH%2Fc812d1126cec9c4a866c5d413962a12e.png',
+                        child: Image.asset(
+                          'assets/page-1/images/mask-group.png',
                           width: 307,
                           height: 254,
                           fit: BoxFit.contain,
@@ -484,8 +484,8 @@ class _SeasonActivitiesManagerState extends State<SeasonActivitiesManager> {
                       Color(0x0c7f7f7f),
                     ),
                     child: Container(
-                      width: 24,
-                      height: 24,
+                      width: 28,
+                      height: 28,
                       clipBehavior: Clip.hardEdge,
                       decoration: const BoxDecoration(),
                       child: Stack(
@@ -494,10 +494,10 @@ class _SeasonActivitiesManagerState extends State<SeasonActivitiesManager> {
                           Positioned(
                             left: 4,
                             top: 4,
-                            child: Image.network(
-                              'https://storage.googleapis.com/codeless-dev.appspot.com/uploads%2Fimages%2FTeD8q4fMRDdW3VSyJEbH%2F27779bc9b3ca41161ea5511599390cdd.png',
-                              width: 16,
-                              height: 16,
+                            child: Image.asset(
+                              'assets/page-1/images/Group 25.png',
+                              width: 24,
+                              height: 24,
                               fit: BoxFit.contain,
                             ),
                           )

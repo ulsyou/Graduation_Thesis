@@ -34,8 +34,8 @@ class ExpertManagerPage extends StatelessWidget {
                   clipBehavior: Clip.hardEdge,
                   decoration: BoxDecoration(
                     image: const DecorationImage(
-                      image: NetworkImage(
-                        'https://firebasestorage.googleapis.com/v0/b/codeless-app.appspot.com/o/projects%2FTeD8q4fMRDdW3VSyJEbH%2F179800e3ecb133fbb531b822ceb94009dc1a8493yuki-ho-_YGqbbZEmMI-unsplash%201.png?alt=media&token=7a92c1f8-65b9-4acd-a447-6f3945cfad3d',
+                      image: AssetImage(
+                        'assets/page-1/images/yuki-ho-ygqbbzemmi-unsplash-1-bg.png',
                       ),
                       fit: BoxFit.none,
                       alignment: Alignment.centerLeft,
@@ -184,14 +184,14 @@ class ExpertManagerPage extends StatelessWidget {
                 top: 204,
                 child: SizedBox(
                   width: 81,
-                  height: 15,
+                  height: 20,
                   child: Text(
                     'Trời nắng',
                     textAlign: TextAlign.center,
                     style: GoogleFonts.getFont(
                       'Noto Sans',
                       color: const Color(0xFF292929),
-                      fontSize: 10,
+                      fontSize: 12,
                       fontWeight: FontWeight.w600,
                     ),
                   ),
@@ -201,13 +201,13 @@ class ExpertManagerPage extends StatelessWidget {
                 left: 220,
                 top: 164,
                 child: Container(
-                  width: 43,
-                  height: 35,
+                  width: 40,
+                  height: 40,
                   clipBehavior: Clip.hardEdge,
                   decoration: const BoxDecoration(
                     image: DecorationImage(
-                      image: NetworkImage(
-                        'https://firebasestorage.googleapis.com/v0/b/codeless-app.appspot.com/o/projects%2FTeD8q4fMRDdW3VSyJEbH%2Fefa2cf5a1d7b9e01f29bf7c83b014121c2d853b7clear%201.png?alt=media&token=e1dba562-ffb3-4871-a63b-4522a0c7f831',
+                      image: AssetImage(
+                        'assets/page-1/images/clear-1.png',
                       ),
                       fit: BoxFit.cover,
                     ),
@@ -215,8 +215,8 @@ class ExpertManagerPage extends StatelessWidget {
                       BoxShadow(
                         color: Color(0x3F000000),
                         spreadRadius: 0,
-                        offset: Offset(0, 4),
-                        blurRadius: 4,
+                        offset: Offset(0, 0),
+                        blurRadius: 25,
                       )
                     ],
                   ),
@@ -226,7 +226,7 @@ class ExpertManagerPage extends StatelessWidget {
                 left: 14,
                 top: 87,
                 child: Container(
-                  width: 183,
+                  width: 190,
                   height: 190,
                   clipBehavior: Clip.hardEdge,
                   decoration: BoxDecoration(
@@ -239,7 +239,7 @@ class ExpertManagerPage extends StatelessWidget {
                 ),
               ),
               Positioned(
-                left: 12,
+                left: 14,
                 top: 87,
                 child: Material(
                   type: MaterialType.transparency,
@@ -255,8 +255,8 @@ class ExpertManagerPage extends StatelessWidget {
                       height: 190,
                       decoration: BoxDecoration(
                         image: const DecorationImage(
-                          image: NetworkImage(
-                            'https://firebasestorage.googleapis.com/v0/b/codeless-app.appspot.com/o/projects%2FTeD8q4fMRDdW3VSyJEbH%2F179800e3ecb133fbb531b822ceb94009dc1a8493yuki-ho-_YGqbbZEmMI-unsplash%202.png?alt=media&token=a6db3ebb-d014-4c75-9980-97b22f1c9d06',
+                          image: AssetImage(
+                            'assets/page-1/images/yuki-ho-ygqbbzemmi-unsplash-1-bg.png',
                           ),
                           fit: BoxFit.none,
                           alignment: Alignment.topCenter,
@@ -388,12 +388,12 @@ class ExpertManagerPage extends StatelessWidget {
                               Color(0x0c7f7f7f),
                             ),
                             child: Ink(
-                              width: 19,
-                              height: 23,
+                              width: 24,
+                              height: 24,
                               decoration: const BoxDecoration(
                                 image: DecorationImage(
-                                  image: NetworkImage(
-                                    'https://storage.googleapis.com/codeless-dev.appspot.com/uploads%2Fimages%2FTeD8q4fMRDdW3VSyJEbH%2F3156ca24236488201a17688cc92422c8.png',
+                                  image: AssetImage(
+                                    'assets/page-1/images/Group 16.png',
                                   ),
                                   fit: BoxFit.contain,
                                 ),
@@ -434,7 +434,7 @@ class ExpertManagerPage extends StatelessWidget {
               ),
               Positioned(
                 left: 111,
-                top: 527,
+                top: 530,
                 child: Material(
                   type: MaterialType.transparency,
                   child: InkWell(
@@ -476,8 +476,6 @@ class ExpertManagerPage extends StatelessWidget {
                     clipBehavior: Clip.none,
                     children: [
                       Positioned(
-                        left: 2,
-                        top: 4,
                         child: Material(
                           type: MaterialType.transparency,
                           clipBehavior: Clip.antiAlias,
@@ -493,12 +491,12 @@ class ExpertManagerPage extends StatelessWidget {
                               Color(0x0c7f7f7f),
                             ),
                             child: Ink(
-                              width: 23,
-                              height: 21,
+                              width: 24,
+                              height: 24,
                               decoration: const BoxDecoration(
                                 image: DecorationImage(
-                                  image: NetworkImage(
-                                    'https://storage.googleapis.com/codeless-dev.appspot.com/uploads%2Fimages%2FTeD8q4fMRDdW3VSyJEbH%2Fbc4960ca4324aef0f8cfe9e8928920b5.png',
+                                  image: AssetImage(
+                                    'assets/page-1/images/Group 13.png',
                                   ),
                                   fit: BoxFit.contain,
                                 ),
@@ -569,8 +567,6 @@ class ExpertManagerPage extends StatelessWidget {
                     clipBehavior: Clip.none,
                     children: [
                       Positioned(
-                        left: 1,
-                        top: 7,
                         child: Material(
                           type: MaterialType.transparency,
                           clipBehavior: Clip.antiAlias,
@@ -580,12 +576,12 @@ class ExpertManagerPage extends StatelessWidget {
                               Color(0x0c7f7f7f),
                             ),
                             child: Ink(
-                              width: 26,
-                              height: 14,
+                              width: 24,
+                              height: 24,
                               decoration: const BoxDecoration(
                                 image: DecorationImage(
-                                  image: NetworkImage(
-                                    'https://storage.googleapis.com/codeless-dev.appspot.com/uploads%2Fimages%2FTeD8q4fMRDdW3VSyJEbH%2F7487ed79c4842fbeacde3b459035350f.png',
+                                  image: AssetImage(
+                                    'assets/page-1/images/Group 14.png',
                                   ),
                                   fit: BoxFit.contain,
                                 ),
@@ -664,12 +660,10 @@ class ExpertManagerPage extends StatelessWidget {
                         clipBehavior: Clip.none,
                         children: [
                           Positioned(
-                            left: 2,
-                            top: 2,
-                            child: Image.network(
-                              'https://storage.googleapis.com/codeless-dev.appspot.com/uploads%2Fimages%2FTeD8q4fMRDdW3VSyJEbH%2F3e2fd43a3dc3e8e02443dc6d9f1c73f3.png',
-                              width: 23,
-                              height: 23,
+                            child: Image.asset(
+                              'assets/page-1/images/Group 15.png',
+                              width: 24,
+                              height: 24,
                               fit: BoxFit.contain,
                             ),
                           )
@@ -737,8 +731,6 @@ class ExpertManagerPage extends StatelessWidget {
                     clipBehavior: Clip.none,
                     children: [
                       Positioned(
-                        left: 5,
-                        top: 3,
                         child: Material(
                           type: MaterialType.transparency,
                           clipBehavior: Clip.antiAlias,
@@ -748,12 +740,12 @@ class ExpertManagerPage extends StatelessWidget {
                               Color(0x0c7f7f7f),
                             ),
                             child: Ink(
-                              width: 18,
-                              height: 23,
+                              width: 24,
+                              height: 24,
                               decoration: const BoxDecoration(
                                 image: DecorationImage(
-                                  image: NetworkImage(
-                                    'https://storage.googleapis.com/codeless-dev.appspot.com/uploads%2Fimages%2FTeD8q4fMRDdW3VSyJEbH%2F272fed6bb7eac3d46f456232099590f5.png',
+                                  image: AssetImage(
+                                    'assets/page-1/images/Group 17.png',
                                   ),
                                   fit: BoxFit.contain,
                                 ),
@@ -780,26 +772,25 @@ class ExpertManagerPage extends StatelessWidget {
                 ),
               ),
               Positioned(
-                left: 156,
-                top: 214,
+                left: 140,
+                top: 235,
                 child: Transform.rotate(
                   angle: 270 * pi / 180,
                   child: Container(
                     width: 133,
-                    height: 386,
+                    height: 354,
                     clipBehavior: Clip.hardEdge,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(30),
                       gradient: const LinearGradient(
                         colors: [
-                          Color(0xC0FFFFFF),
-                          Color(0xCCFFFFFF),
-                          Color(0xCCFFFFFF),
-                          Color(0x04FFFFFF),
-                          Color(0x00FFFFFF)
+                          Color(0x78FFFFFF),
+                          Color(0x80FFFFFF),
+                          Color(0x20FFFFFF),
+                          Color(0x02FFFFFF)
                         ],
-                        stops: [0, 0, 0, 1, 1],
-                        transform: GradientRotation(90 * pi / 180),
+                        stops: [0, 0.01, 1, 1],
+                        transform: GradientRotation(169 * pi / 180),
                       ),
                     ),
                   ),
@@ -874,8 +865,8 @@ class ExpertManagerPage extends StatelessWidget {
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(25),
                   clipBehavior: Clip.hardEdge,
-                  child: Image.network(
-                    'https://firebasestorage.googleapis.com/v0/b/codeless-app.appspot.com/o/projects%2FTeD8q4fMRDdW3VSyJEbH%2Ff4568d422a6c0ec14a0567d726b1ac9096212c2af4568d422a6c0ec14a0567d726b1ac9096212c2a%202.png?alt=media&token=c7f11398-a619-4fcf-b952-524a03aa8060',
+                  child: Image.asset(
+                    'assets/page-1/images/f4568d422a6c0ec14a0567d726b1ac9096212c2a-1.png',
                     width: 20,
                     height: 20,
                     fit: BoxFit.cover,
@@ -913,8 +904,8 @@ class ExpertManagerPage extends StatelessWidget {
                       Positioned(
                         left: 3,
                         top: 2,
-                        child: Image.network(
-                          'https://storage.googleapis.com/codeless-dev.appspot.com/uploads%2Fimages%2FTeD8q4fMRDdW3VSyJEbH%2Fa558837414ef5cc2661cbceb591ffdbc.png',
+                        child: Image.asset(
+                          'assets/page-1/images/Calendar.png',
                           width: 17,
                           height: 17,
                           fit: BoxFit.contain,
@@ -964,31 +955,6 @@ class ExpertManagerPage extends StatelessWidget {
                           ),
                         )
                       ],
-                    ),
-                  ),
-                ),
-              ),
-              Positioned(
-                left: 531,
-                top: 233,
-                child: Transform.rotate(
-                  angle: 270 * pi / 180,
-                  child: Container(
-                    width: 133,
-                    height: 344,
-                    clipBehavior: Clip.hardEdge,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(30),
-                      gradient: const LinearGradient(
-                        colors: [
-                          Color(0xC1FFFDDA),
-                          Color(0xCCFFFFFF),
-                          Color(0xCCFFFFFF),
-                          Color(0x04FFFFFF),
-                          Color(0x00FFFFFF)
-                        ],
-                        stops: [0, 0, 0, 1, 1],
-                      ),
                     ),
                   ),
                 ),
@@ -1053,7 +1019,7 @@ class ExpertManagerPage extends StatelessWidget {
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(25),
                   clipBehavior: Clip.hardEdge,
-                  child: Image.network(
+                  child: Image.asset(
                     'https://firebasestorage.googleapis.com/v0/b/codeless-app.appspot.com/o/projects%2FTeD8q4fMRDdW3VSyJEbH%2Ff4568d422a6c0ec14a0567d726b1ac9096212c2af4568d422a6c0ec14a0567d726b1ac9096212c2a%202.png?alt=media&token=f71d7625-5523-47ad-a864-9cda950a12cd',
                     width: 20,
                     height: 20,
@@ -1089,7 +1055,7 @@ class ExpertManagerPage extends StatelessWidget {
                       Positioned(
                         left: 3,
                         top: 2,
-                        child: Image.network(
+                        child: Image.asset(
                           'https://storage.googleapis.com/codeless-dev.appspot.com/uploads%2Fimages%2FTeD8q4fMRDdW3VSyJEbH%2Fb586571915a54b6a0f3a7c4f9ddf20c3.png',
                           width: 15,
                           height: 17,
@@ -1154,8 +1120,8 @@ class ExpertManagerPage extends StatelessWidget {
               Positioned(
                 left: 171,
                 top: 787,
-                child: Image.network(
-                  'https://storage.googleapis.com/codeless-dev.appspot.com/uploads%2Fimages%2FTeD8q4fMRDdW3VSyJEbH%2Ffbb3d25c2395735df03b840624e4392a.png',
+                child: Image.asset(
+                  'assets/page-1/images/Ellipse 1.png',
                   width: 70,
                   height: 70,
                   fit: BoxFit.contain,
@@ -1213,12 +1179,10 @@ class ExpertManagerPage extends StatelessWidget {
                         clipBehavior: Clip.none,
                         children: [
                           Positioned(
-                            left: 5,
-                            top: 5,
-                            child: Image.network(
-                              'https://storage.googleapis.com/codeless-dev.appspot.com/uploads%2Fimages%2FTeD8q4fMRDdW3VSyJEbH%2Fb3e9c2f4ae02858e93b665c13e511eda.png',
-                              width: 14,
-                              height: 14,
+                            child: Image.asset(
+                              'assets/page-1/images/Group 1.png',
+                              width: 24,
+                              height: 24,
                               fit: BoxFit.contain,
                             ),
                           )
@@ -1251,12 +1215,12 @@ class ExpertManagerPage extends StatelessWidget {
                               Color(0x0c7f7f7f),
                             ),
                             child: Ink(
-                              width: 23,
+                              width: 25,
                               height: 25,
                               decoration: const BoxDecoration(
                                 image: DecorationImage(
-                                  image: NetworkImage(
-                                    'https://storage.googleapis.com/codeless-dev.appspot.com/uploads%2Fimages%2FTeD8q4fMRDdW3VSyJEbH%2Ff3f8b5f2aa5550001fbe8ff225cbfe60.png',
+                                  image: AssetImage(
+                                    'assets/page-1/images/Home.png',
                                   ),
                                   fit: BoxFit.contain,
                                 ),
@@ -1292,12 +1256,12 @@ class ExpertManagerPage extends StatelessWidget {
                               Color(0x0c7f7f7f),
                             ),
                             child: Ink(
-                              width: 21,
-                              height: 23,
+                              width: 25,
+                              height: 25,
                               decoration: const BoxDecoration(
                                 image: DecorationImage(
-                                  image: NetworkImage(
-                                    'https://storage.googleapis.com/codeless-dev.appspot.com/uploads%2Fimages%2FTeD8q4fMRDdW3VSyJEbH%2F8605ce849738c37961c79693c5c8445f.png',
+                                  image: AssetImage(
+                                    'assets/page-1/images/Noti.png',
                                   ),
                                   fit: BoxFit.contain,
                                 ),
@@ -1322,8 +1286,6 @@ class ExpertManagerPage extends StatelessWidget {
                     clipBehavior: Clip.none,
                     children: [
                       Positioned(
-                        left: 4,
-                        top: 2,
                         child: Material(
                           type: MaterialType.transparency,
                           clipBehavior: Clip.antiAlias,
@@ -1333,12 +1295,12 @@ class ExpertManagerPage extends StatelessWidget {
                               Color(0x0c7f7f7f),
                             ),
                             child: Ink(
-                              width: 21,
-                              height: 23,
+                              width: 25,
+                              height: 25,
                               decoration: const BoxDecoration(
                                 image: DecorationImage(
-                                  image: NetworkImage(
-                                    'https://storage.googleapis.com/codeless-dev.appspot.com/uploads%2Fimages%2FTeD8q4fMRDdW3VSyJEbH%2Fd157653d1a0bacbffb4fc447e9e787a3.png',
+                                  image: AssetImage(
+                                    'assets/page-1/images/Calendar.png',
                                   ),
                                   fit: BoxFit.contain,
                                 ),
@@ -1387,8 +1349,8 @@ class ExpertManagerPage extends StatelessWidget {
                       height: 28,
                       decoration: BoxDecoration(
                         image: const DecorationImage(
-                          image: NetworkImage(
-                            'https://firebasestorage.googleapis.com/v0/b/codeless-app.appspot.com/o/projects%2FTeD8q4fMRDdW3VSyJEbH%2Ff4568d422a6c0ec14a0567d726b1ac9096212c2af4568d422a6c0ec14a0567d726b1ac9096212c2a%201.png?alt=media&token=45915c8d-8f47-4a04-9478-c5ac65a06f24',
+                          image: AssetImage(
+                            'assets/page-1/images/avt.png',
                           ),
                           fit: BoxFit.cover,
                         ),
