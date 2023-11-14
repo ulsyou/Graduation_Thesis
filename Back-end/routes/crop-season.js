@@ -4,6 +4,7 @@ const router = express.Router();
 const CropSeason = require("../models/crop-season");
 const FieldSample = require("../models/field-sample");
 const Strain = require("../models/rice");
+const upload = require('../config/upload');
 
 // Middleware for handling errors
 function handleErrors(res, err) {
@@ -14,7 +15,14 @@ function handleErrors(res, err) {
 // Get all crop seasons
 router.get("/crop-season", async (req, res) => {
     try {
-        const cropSeasons = await CropSeason.find();
+        let cropSeasons = await CropSeason.find();
+        cropSeasons = cropSeasons.map(cropSeason => {
+            cropSeason = cropSeason.toObject();
+            if (cropSeason.image) {
+                cropSeason.image = `${req.protocol}://${req.get('host')}/uploads/${cropSeason.image}`;
+            }
+            return cropSeason;
+        });
         res.json(cropSeasons);
     } catch (err) {
         handleErrors(res, err);
@@ -22,18 +30,25 @@ router.get("/crop-season", async (req, res) => {
 });
 
 // Create a new crop season
-router.post("/create/crop-season", async (req, res) => {
+router.post("/create/crop-season", upload.single('image'), async (req, res) => {
     try {
-        const cropSeason = new CropSeason(req.body);
-        const newCropSeason = await cropSeason.save();
-        res.status(201).json(newCropSeason);
+      const cropSeasonData = req.body;
+      if (req.file) {
+        cropSeasonData.image = req.file.filename; 
+      }
+      const cropSeason = new CropSeason(cropSeasonData);
+      const newCropSeason = await cropSeason.save();
+      res.status(201).json(newCropSeason);
     } catch (err) {
-        handleErrors(res, err);
+      handleErrors(res, err);
     }
 });
 
 // Get a specific crop season
 router.get("/crop-season/:id", getCropSeason, (req, res) => {
+    if (res.cropSeason.image) {
+        res.cropSeason.image = `${req.protocol}://${req.get('host')}/uploads/${res.cropSeason.image}`;
+    }
     res.json(res.cropSeason);
 });
 

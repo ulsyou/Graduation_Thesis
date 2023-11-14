@@ -39,7 +39,9 @@ app.use("/disease", diseaseRoute);
 app.use("/field", fieldRoute);
 app.use("/pesticide", pesticideRoute);
 app.use("/crops-season", cropSeason);
+app.use('/uploads', express.static('./uploads'));
 
 const port = process.env.PORT || 5000;
 
 app.listen(port, () => console.log(`Server running on port ${port}`));
+

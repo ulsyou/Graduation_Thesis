@@ -99,8 +99,6 @@ class _AddSeasonState extends State<AddSeason> {
       'cropSeasonName': cropSeasonNameController.text,
       'seasonType': selectedSeasonType,
       'yield': yieldController.text,
-      'plantingDate': plantingDateController.text,
-      'harvestDate': harvestDateController.text,
       'fieldSample': selectedFieldSample,
       'riceVariety': selectedRole,
       'plantingDate': selectedGieoSaDate.toIso8601String(),

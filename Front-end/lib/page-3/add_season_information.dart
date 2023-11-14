@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:mongo_dart/mongo_dart.dart' as mongo;
 import 'package:google_fonts/google_fonts.dart';
-
+import 'package:image_picker/image_picker.dart';
+import 'package:http_parser/http_parser.dart';
+import 'dart:io';
 import 'add-pages.dart';
 
 class AddSeason extends StatefulWidget {
@@ -13,15 +15,15 @@ class AddSeason extends StatefulWidget {
 class _AddSeasonState extends State<AddSeason> {
   TextEditingController cropSeasonNameController = TextEditingController();
   TextEditingController yieldController = TextEditingController();
-  TextEditingController plantingDateController = TextEditingController();
-  TextEditingController harvestDateController = TextEditingController();
   DateTime selectedGieoSaDate = DateTime.now();
   DateTime selectedThuHoachDate = DateTime.now();
   List<String> riceStrains = [];
   List<String> fieldSamples = [];
-  String selectedRole = '';
+  String selectedRice = '';
   String selectedFieldSample = '';
   String selectedRiceStrain = '';
+  String? imagePath;
+  File? image;
 
   Future<void> _selectDate(BuildContext context, DateTime selectedDate,
       Function(DateTime) onSelect) async {
@@ -79,7 +81,7 @@ class _AddSeasonState extends State<AddSeason> {
     fetchRiceStrainsFromMongoDB().then((strains) {
       setState(() {
         riceStrains = strains;
-        selectedRole = riceStrains.isNotEmpty ? riceStrains[0] : '';
+        selectedRice = riceStrains.isNotEmpty ? riceStrains[0] : '';
       });
     });
 
@@ -91,26 +93,30 @@ class _AddSeasonState extends State<AddSeason> {
     });
   }
 
-  Future<void> addSeason() async {
+  Future<void> addSeason(File? image) async {
     final String apiUrl =
         'http://10.0.2.2:5000/crops-season/create/crop-season';
 
-    final response = await http.post(Uri.parse(apiUrl), body: {
-      'cropSeasonName': cropSeasonNameController.text,
-      'seasonType': selectedSeasonType,
-      'yield': yieldController.text,
-      'plantingDate': plantingDateController.text,
-      'harvestDate': harvestDateController.text,
-      'fieldSample': selectedFieldSample,
-      'riceVariety': selectedRole,
-      'plantingDate': selectedGieoSaDate.toIso8601String(),
-      'harvestDate': selectedThuHoachDate.toIso8601String(),
-    });
-
-    if (response.statusCode == 201) {
-      print('Season create successfully');
-    } else {
-      print('Error in Create new Season:  ${response.body}');
+    if (image != null) {
+      var request = http.MultipartRequest('POST', Uri.parse(apiUrl))
+        ..fields['cropSeasonName'] = cropSeasonNameController.text
+        ..fields['seasonType'] = selectedSeasonType
+        ..fields['yield'] = yieldController.text
+        ..fields['fieldSample'] = selectedFieldSample
+        ..fields['riceVariety'] = selectedRice
+        ..fields['plantingDate'] = selectedGieoSaDate.toIso8601String()
+        ..fields['harvestDate'] = selectedThuHoachDate.toIso8601String()
+        ..files.add(await http.MultipartFile.fromPath(
+          'image',
+          image.path,
+          contentType: MediaType('image', 'jpeg'),
+        ));
+      var response = await request.send();
+      if (response.statusCode == 201) {
+        print('Season created successful');
+      } else {
+        print('Request failed with status ${response.statusCode}');
+      }
     }
   }
 
@@ -118,8 +124,8 @@ class _AddSeasonState extends State<AddSeason> {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      child: SingleChildScrollView(
+    return Scaffold(
+      body: SingleChildScrollView(
         child: Container(
           width: 412,
           height: 915,
@@ -167,16 +173,31 @@ class _AddSeasonState extends State<AddSeason> {
                 left: 49,
                 top: 158,
                 child: InkWell(
-                  onTap: () {},
+                  onTap: () async {
+                    final pickedFile = await ImagePicker()
+                        .pickImage(source: ImageSource.gallery);
+                    if (pickedFile != null) {
+                      setState(() {
+                        image = File(pickedFile.path);
+                      });
+                    }
+                  },
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(20),
                     clipBehavior: Clip.hardEdge,
-                    child: Image.asset(
-                      'assets/page-1/images/Group 46.png',
-                      width: 318,
-                      height: 180,
-                      fit: BoxFit.cover,
-                    ),
+                    child: image != null
+                        ? Image.file(
+                            File(image!.path),
+                            width: 318,
+                            height: 180,
+                            fit: BoxFit.cover,
+                          )
+                        : Image.asset(
+                            'assets/page-1/images/Group 46.png',
+                            width: 318,
+                            height: 180,
+                            fit: BoxFit.cover,
+                          ),
                   ),
                 ),
               ),
@@ -223,11 +244,11 @@ class _AddSeasonState extends State<AddSeason> {
                         child: GestureDetector(
                           onTap: () {
                             _selectDate(context, selectedThuHoachDate,
-                                    (DateTime newDate) {
-                                  setState(() {
-                                    selectedThuHoachDate = newDate;
-                                  });
-                                });
+                                (DateTime newDate) {
+                              setState(() {
+                                selectedThuHoachDate = newDate;
+                              });
+                            });
                           },
                           child: Text(
                             '${selectedThuHoachDate.day}/${selectedThuHoachDate.month}/${selectedThuHoachDate.year}',
@@ -286,9 +307,9 @@ class _AddSeasonState extends State<AddSeason> {
                         child: GestureDetector(
                           onTap: () {
                             _selectDate(context, selectedGieoSaDate,
-                                    (DateTime newDate) {
-                                  selectedGieoSaDate = newDate;
-                                });
+                                (DateTime newDate) {
+                              selectedGieoSaDate = newDate;
+                            });
                           },
                           child: Text(
                             '${selectedGieoSaDate.day}/${selectedGieoSaDate.month}/${selectedGieoSaDate.year}',
@@ -346,7 +367,7 @@ class _AddSeasonState extends State<AddSeason> {
                         top: -6,
                         child: Container(
                           width: 200,
-                          child: TextField(
+                          child: TextFormField(
                             controller: yieldController,
                             decoration: InputDecoration(
                               hintText: 'Nhập năng suất',
@@ -506,11 +527,11 @@ class _AddSeasonState extends State<AddSeason> {
 
                             return DropdownButton<String>(
                               value:
-                                  selectedRole.isNotEmpty ? selectedRole : null,
+                                  selectedRice.isNotEmpty ? selectedRice : null,
                               onChanged: (String? newValue) {
                                 if (newValue != null) {
                                   setState(() {
-                                    selectedRole = newValue;
+                                    selectedRice = newValue;
                                   });
                                 }
                               },
@@ -649,7 +670,7 @@ class _AddSeasonState extends State<AddSeason> {
                         top: -6,
                         child: Container(
                           width: 200,
-                          child: TextField(
+                          child: TextFormField(
                             controller: cropSeasonNameController,
                             decoration: InputDecoration(
                               hintText: 'Nhập tên mùa vụ',
@@ -667,6 +688,7 @@ class _AddSeasonState extends State<AddSeason> {
                   ),
                 ),
               ),
+
               Positioned(
                 left: 43,
                 top: 825,
@@ -676,9 +698,14 @@ class _AddSeasonState extends State<AddSeason> {
                   clipBehavior: Clip.antiAlias,
                   child: InkWell(
                     onTap: () {
-
-
-
+                      addSeason(image).then((_) {
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => AddPages(),
+                          ),
+                        );
+                      });
                     },
                     overlayColor: const MaterialStatePropertyAll<Color>(
                       Color(0x0c7f7f7f),
@@ -687,28 +714,17 @@ class _AddSeasonState extends State<AddSeason> {
                       color: const Color(0xFF6BFF53),
                       width: 141,
                       height: 47,
-                    ),
-                  ),
-                ),
-              ),
-              Positioned(
-                left: 90,
-                top: 837,
-                child: Material(
-                  type: MaterialType.transparency,
-                  child: InkWell(
-                    onTap: () {},
-                    overlayColor: const MaterialStatePropertyAll<Color>(
-                      Color(0x0c7f7f7f),
-                    ),
-                    child: Text(
-                      'Thêm',
-                      textAlign: TextAlign.center,
-                      style: GoogleFonts.getFont(
-                        'Noto Sans',
-                        color: Colors.black,
-                        fontSize: 16,
-                        fontWeight: FontWeight.w600,
+                      child: Center(
+                        child: Text(
+                          'Thêm',
+                          textAlign: TextAlign.center,
+                          style: GoogleFonts.getFont(
+                            'Noto Sans',
+                            color: Colors.black,
+                            fontSize: 16,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
                       ),
                     ),
                   ),
@@ -722,7 +738,14 @@ class _AddSeasonState extends State<AddSeason> {
                   borderRadius: BorderRadius.circular(25),
                   clipBehavior: Clip.antiAlias,
                   child: InkWell(
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => AddPages(),
+                        ),
+                      );
+                    },
                     overlayColor: const MaterialStatePropertyAll<Color>(
                       Color(0x0c7f7f7f),
                     ),
@@ -740,7 +763,14 @@ class _AddSeasonState extends State<AddSeason> {
                 child: Material(
                   type: MaterialType.transparency,
                   child: InkWell(
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => AddPages(),
+                        ),
+                      );
+                    },
                     overlayColor: const MaterialStatePropertyAll<Color>(
                       Color(0x0c7f7f7f),
                     ),
@@ -756,6 +786,7 @@ class _AddSeasonState extends State<AddSeason> {
                   ),
                 ),
               ),
+
               Positioned(
                 left: 0,
                 top: 0,
@@ -776,7 +807,7 @@ class _AddSeasonState extends State<AddSeason> {
                 top: 0,
                 child: Container(
                   width: 412,
-                  height: 200,
+                  height: 115,
                   clipBehavior: Clip.hardEdge,
                   decoration: const BoxDecoration(
                     borderRadius: BorderRadius.vertical(
@@ -787,8 +818,6 @@ class _AddSeasonState extends State<AddSeason> {
                     clipBehavior: Clip.none,
                     children: [
                       Positioned(
-                        left: -115,
-                        top: -118,
                         child: Image.asset(
                           'assets/page-1/images/mask-group.png',
                           width: 351,
@@ -847,7 +876,7 @@ class _AddSeasonState extends State<AddSeason> {
                 child: SizedBox(
                   width: 240,
                   child: Text(
-                    'Thông tin mùa vụ',
+                    'Thêm mùa vụ',
                     style: GoogleFonts.getFont(
                       'Noto Sans',
                       color: Colors.black,

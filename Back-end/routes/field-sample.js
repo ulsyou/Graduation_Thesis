@@ -1,6 +1,16 @@
 const express = require("express");
 const router = express.Router();
 const FieldSample = require('../models/field-sample');
+const multer = require("multer");
+
+// Set up multer for file uploads
+const upload = multer({ 
+    dest: './uploads/',
+    limits: { 
+        fileSize: 50 * 1024 * 1024,
+        fieldSize: 50 * 1024 * 1024 
+    }, 
+});
 
 router.post("/create/fieldSample", async (req, res) => {
   try {

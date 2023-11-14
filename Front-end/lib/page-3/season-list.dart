@@ -156,11 +156,10 @@ class _SeasonsState extends State<Seasons> {
                                         width: 165 * fem,
                                         height: 100 * fem,
                                         child: ClipRRect(
-                                          borderRadius:
-                                              BorderRadius.circular(20 * fem),
+                                          borderRadius: BorderRadius.circular(20 * fem),
                                           child: Image.network(
                                             season['image'],
-                                            fit: BoxFit.cover,
+                                            fit: BoxFit.scaleDown,
                                           ),
                                         ),
                                       ),

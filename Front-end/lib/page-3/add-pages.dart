@@ -2,8 +2,12 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:myapp/page-3/add_pesticide_information.dart';
+import 'package:myapp/page-3/add_ricestrain_information.dart';
+import 'package:myapp/page-3/rice_strain_detail.dart';
 
 import '../utils.dart';
+import 'add_fertilizer_infomation.dart';
 import 'add_season_information.dart';
 import 'expert-manager-page.dart';
 
@@ -117,7 +121,10 @@ class AddPages extends StatelessWidget {
                     type: MaterialType.transparency,
                     clipBehavior: Clip.antiAlias,
                     child: InkWell(
-                      onTap: () {},
+                      onTap: () {
+
+
+                      },
                       overlayColor: const MaterialStatePropertyAll<Color>(
                         Color(0x0c7f7f7f),
                       ),
@@ -143,7 +150,13 @@ class AddPages extends StatelessWidget {
                     type: MaterialType.transparency,
                     clipBehavior: Clip.antiAlias,
                     child: InkWell(
-                      onTap: () {},
+                      onTap: () {
+                        // Navigator.of(context).push(
+                        //   MaterialPageRoute(
+                        //     builder: (context) => AddPesticide(),
+                        //   ),
+                        // );
+                      },
                       overlayColor: const MaterialStatePropertyAll<Color>(
                         Color(0x0c7f7f7f),
                       ),
@@ -166,7 +179,13 @@ class AddPages extends StatelessWidget {
                   child: Material(
                     type: MaterialType.transparency,
                     child: InkWell(
-                      onTap: () {},
+                      onTap: () {
+                        // Navigator.of(context).push(
+                        //   MaterialPageRoute(
+                        //     builder: (context) => AddPesticide(),
+                        //   ),
+                        // );
+                      },
                       overlayColor: const MaterialStatePropertyAll<Color>(
                         Color(0x0c7f7f7f),
                       ),
@@ -193,7 +212,13 @@ class AddPages extends StatelessWidget {
                     type: MaterialType.transparency,
                     clipBehavior: Clip.antiAlias,
                     child: InkWell(
-                      onTap: () {},
+                      onTap: () {
+                        // Navigator.of(context).push(
+                        //   MaterialPageRoute(
+                        //     builder: (context) => AddPesticide(),
+                        //   ),
+                        // );
+                      },
                       overlayColor: const MaterialStatePropertyAll<Color>(
                         Color(0x0c7f7f7f),
                       ),
@@ -371,7 +396,13 @@ class AddPages extends StatelessWidget {
                     type: MaterialType.transparency,
                     clipBehavior: Clip.antiAlias,
                     child: InkWell(
-                      onTap: () {},
+                      onTap: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) => AddFertilizer(),
+                          ),
+                        );
+                      },
                       overlayColor: const MaterialStatePropertyAll<Color>(
                         Color(0x0c7f7f7f),
                       ),
@@ -394,7 +425,13 @@ class AddPages extends StatelessWidget {
                   child: Material(
                     type: MaterialType.transparency,
                     child: InkWell(
-                      onTap: () {},
+                      onTap: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) => AddFertilizer(),
+                          ),
+                        );
+                      },
                       overlayColor: const MaterialStatePropertyAll<Color>(
                         Color(0x0c7f7f7f),
                       ),
@@ -421,7 +458,13 @@ class AddPages extends StatelessWidget {
                     type: MaterialType.transparency,
                     clipBehavior: Clip.antiAlias,
                     child: InkWell(
-                      onTap: () {},
+                      onTap: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) => AddFertilizer(),
+                          ),
+                        );
+                      },
                       overlayColor: const MaterialStatePropertyAll<Color>(
                         Color(0x0c7f7f7f),
                       ),
@@ -447,7 +490,13 @@ class AddPages extends StatelessWidget {
                     type: MaterialType.transparency,
                     clipBehavior: Clip.antiAlias,
                     child: InkWell(
-                      onTap: () {},
+                      onTap: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) => AddRiceStrains(),
+                          ),
+                        );
+                      },
                       overlayColor: const MaterialStatePropertyAll<Color>(
                         Color(0x0c7f7f7f),
                       ),
@@ -470,7 +519,13 @@ class AddPages extends StatelessWidget {
                   child: Material(
                     type: MaterialType.transparency,
                     child: InkWell(
-                      onTap: () {},
+                      onTap: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) => AddRiceStrains(),
+                          ),
+                        );
+                      },
                       overlayColor: const MaterialStatePropertyAll<Color>(
                         Color(0x0c7f7f7f),
                       ),
@@ -498,11 +553,11 @@ class AddPages extends StatelessWidget {
                     clipBehavior: Clip.antiAlias,
                     child: InkWell(
                       onTap: () {
-                        // Navigator.of(context).push(
-                        //   MaterialPageRoute(
-                        //     builder: (context) => ExpertManagerPage(),
-                        //   ),
-                        // );
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) => AddRiceStrains(),
+                          ),
+                        );
                       },
                       overlayColor: const MaterialStatePropertyAll<Color>(
                         Color(0x0c7f7f7f),

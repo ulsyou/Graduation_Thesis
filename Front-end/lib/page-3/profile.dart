@@ -30,8 +30,8 @@ class Profile extends StatelessWidget {
                   clipBehavior: Clip.hardEdge,
                   decoration: BoxDecoration(
                     image: const DecorationImage(
-                      image: NetworkImage(
-                        'https://firebasestorage.googleapis.com/v0/b/codeless-app.appspot.com/o/projects%2FTeD8q4fMRDdW3VSyJEbH%2F179800e3ecb133fbb531b822ceb94009dc1a8493yuki-ho-_YGqbbZEmMI-unsplash%201.png?alt=media&token=04c2562b-4e5e-41fa-b57b-d16d6eaa721d',
+                      image: AssetImage(
+                        '',
                       ),
                       fit: BoxFit.none,
                       alignment: Alignment.centerLeft,
@@ -57,8 +57,8 @@ class Profile extends StatelessWidget {
               Positioned(
                 left: 0,
                 top: 15,
-                child: Image.network(
-                  'https://storage.googleapis.com/codeless-dev.appspot.com/uploads%2Fimages%2FTeD8q4fMRDdW3VSyJEbH%2F6c85841d9d76081c90947acd92470ff2.png',
+                child: Image.asset(
+                  '',
                   width: 360,
                   height: 198,
                   fit: BoxFit.contain,
@@ -67,8 +67,8 @@ class Profile extends StatelessWidget {
               Positioned(
                 left: -167,
                 top: 195,
-                child: Image.network(
-                  'https://storage.googleapis.com/codeless-dev.appspot.com/uploads%2Fimages%2FTeD8q4fMRDdW3VSyJEbH%2F60bf1379acec0b1e7b40559b40219817.png',
+                child: Image.asset(
+                  '',
                   width: 663,
                   height: 80,
                   fit: BoxFit.contain,
@@ -80,8 +80,8 @@ class Profile extends StatelessWidget {
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(75),
                   clipBehavior: Clip.hardEdge,
-                  child: Image.network(
-                    'https://firebasestorage.googleapis.com/v0/b/codeless-app.appspot.com/o/projects%2FTeD8q4fMRDdW3VSyJEbH%2Ff4568d422a6c0ec14a0567d726b1ac9096212c2aEllipse%202.png?alt=media&token=865edd34-4a94-4fe1-839c-ce0381d73cac',
+                  child: Image.asset(
+                    '',
                     width: 150,
                     height: 150,
                     fit: BoxFit.cover,
@@ -367,8 +367,8 @@ class Profile extends StatelessWidget {
                       Positioned(
                         left: -100,
                         top: -118,
-                        child: Image.network(
-                          'https://storage.googleapis.com/codeless-dev.appspot.com/uploads%2Fimages%2FTeD8q4fMRDdW3VSyJEbH%2Fc812d1126cec9c4a866c5d413962a12e.png',
+                        child: Image.asset(
+                          '',
                           width: 307,
                           height: 254,
                           fit: BoxFit.contain,
@@ -407,8 +407,8 @@ class Profile extends StatelessWidget {
               Positioned(
                 left: 171,
                 top: 787,
-                child: Image.network(
-                  'https://storage.googleapis.com/codeless-dev.appspot.com/uploads%2Fimages%2FTeD8q4fMRDdW3VSyJEbH%2Ffbb3d25c2395735df03b840624e4392a.png',
+                child: Image.asset(
+                  '',
                   width: 70,
                   height: 70,
                   fit: BoxFit.contain,
@@ -469,8 +469,8 @@ class Profile extends StatelessWidget {
                           Positioned(
                             left: 5,
                             top: 5,
-                            child: Image.network(
-                              'https://storage.googleapis.com/codeless-dev.appspot.com/uploads%2Fimages%2FTeD8q4fMRDdW3VSyJEbH%2Fb3e9c2f4ae02858e93b665c13e511eda.png',
+                            child: Image.asset(
+                              '',
                               width: 14,
                               height: 14,
                               fit: BoxFit.contain,
@@ -510,8 +510,8 @@ class Profile extends StatelessWidget {
                           Positioned(
                             left: 4,
                             top: 3,
-                            child: Image.network(
-                              'https://storage.googleapis.com/codeless-dev.appspot.com/uploads%2Fimages%2FTeD8q4fMRDdW3VSyJEbH%2Fcda1e80e64dd1f9a3d23d57a1bc47682.png',
+                            child: Image.asset(
+                              '',
                               width: 23,
                               height: 25,
                               fit: BoxFit.contain,
@@ -545,8 +545,8 @@ class Profile extends StatelessWidget {
                           Positioned(
                             left: 4,
                             top: 2,
-                            child: Image.network(
-                              'https://storage.googleapis.com/codeless-dev.appspot.com/uploads%2Fimages%2FTeD8q4fMRDdW3VSyJEbH%2F8605ce849738c37961c79693c5c8445f.png',
+                            child: Image.asset(
+                              '',
                               width: 21,
                               height: 23,
                               fit: BoxFit.contain,
@@ -580,8 +580,8 @@ class Profile extends StatelessWidget {
                           Positioned(
                             left: 4,
                             top: 2,
-                            child: Image.network(
-                              'https://storage.googleapis.com/codeless-dev.appspot.com/uploads%2Fimages%2FTeD8q4fMRDdW3VSyJEbH%2Fd157653d1a0bacbffb4fc447e9e787a3.png',
+                            child: Image.asset(
+                              '',
                               width: 21,
                               height: 23,
                               fit: BoxFit.contain,
@@ -649,8 +649,8 @@ class Profile extends StatelessWidget {
                       height: 28,
                       decoration: BoxDecoration(
                         image: const DecorationImage(
-                          image: NetworkImage(
-                            'https://firebasestorage.googleapis.com/v0/b/codeless-app.appspot.com/o/projects%2FTeD8q4fMRDdW3VSyJEbH%2Ff4568d422a6c0ec14a0567d726b1ac9096212c2af4568d422a6c0ec14a0567d726b1ac9096212c2a%201.png?alt=media&token=4f306310-e34f-4fc1-ae07-2f6b16729faa',
+                          image: AssetImage(
+                            '',
                           ),
                           fit: BoxFit.cover,
                         ),

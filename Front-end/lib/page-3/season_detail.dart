@@ -132,11 +132,11 @@ class _SeasonDetailState extends State<SeasonDetail> {
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(20),
                   clipBehavior: Clip.hardEdge,
-                  child: Image.asset(
-                    'assets/page-1/images/rectangle-26.png',
+                  child: Image.network(
+                    widget.seasonData['image'],
                     width: 318,
                     height: 180,
-                    fit: BoxFit.cover,
+                    fit: BoxFit.scaleDown,
                   ),
                 ),
               ),
