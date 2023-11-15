@@ -2,9 +2,10 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:myapp/page-3/add_desease_information.dart';
+import 'package:myapp/page-3/add_fieldsample_informaton.dart';
 import 'package:myapp/page-3/add_pesticide_information.dart';
 import 'package:myapp/page-3/add_ricestrain_information.dart';
-import 'package:myapp/page-3/rice_strain_detail.dart';
 
 import '../utils.dart';
 import 'add_fertilizer_infomation.dart';
@@ -244,7 +245,13 @@ class AddPages extends StatelessWidget {
                     type: MaterialType.transparency,
                     clipBehavior: Clip.antiAlias,
                     child: InkWell(
-                      onTap: () {},
+                      onTap: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) => AddField(),
+                          ),
+                        );
+                      },
                       overlayColor: const MaterialStatePropertyAll<Color>(
                         Color(0x0c7f7f7f),
                       ),
@@ -267,7 +274,13 @@ class AddPages extends StatelessWidget {
                   child: Material(
                     type: MaterialType.transparency,
                     child: InkWell(
-                      onTap: () {},
+                      onTap: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) => AddField(),
+                          ),
+                        );
+                      },
                       overlayColor: const MaterialStatePropertyAll<Color>(
                         Color(0x0c7f7f7f),
                       ),
@@ -294,7 +307,13 @@ class AddPages extends StatelessWidget {
                     type: MaterialType.transparency,
                     clipBehavior: Clip.antiAlias,
                     child: InkWell(
-                      onTap: () {},
+                      onTap: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) => AddField(),
+                          ),
+                        );
+                      },
                       overlayColor: const MaterialStatePropertyAll<Color>(
                         Color(0x0c7f7f7f),
                       ),
@@ -320,7 +339,13 @@ class AddPages extends StatelessWidget {
                     type: MaterialType.transparency,
                     clipBehavior: Clip.antiAlias,
                     child: InkWell(
-                      onTap: () {},
+                      onTap: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) => AddDesease(),
+                          ),
+                        );
+                      },
                       overlayColor: const MaterialStatePropertyAll<Color>(
                         Color(0x0c7f7f7f),
                       ),
@@ -343,7 +368,13 @@ class AddPages extends StatelessWidget {
                   child: Material(
                     type: MaterialType.transparency,
                     child: InkWell(
-                      onTap: () {},
+                      onTap: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) => AddDesease(),
+                          ),
+                        );
+                      },
                       overlayColor: const MaterialStatePropertyAll<Color>(
                         Color(0x0c7f7f7f),
                       ),
@@ -370,7 +401,13 @@ class AddPages extends StatelessWidget {
                     type: MaterialType.transparency,
                     clipBehavior: Clip.antiAlias,
                     child: InkWell(
-                      onTap: () {},
+                      onTap: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) => AddDesease(),
+                          ),
+                        );
+                      },
                       overlayColor: const MaterialStatePropertyAll<Color>(
                         Color(0x0c7f7f7f),
                       ),

@@ -4,16 +4,6 @@ const bcrypt = require("bcrypt");
 const router = express.Router();
 const User = require("../models/user");
 const { checkAdminRole } = require("../middleware/authMiddleware");
-const multer = require("multer");
-
-// Set up multer for file uploads
-const upload = multer({ 
-    dest: './uploads/',
-    limits: { 
-        fileSize: 50 * 1024 * 1024,
-        fieldSize: 50 * 1024 * 1024 
-    }, 
-});
 
 router.post("/login", async (req, res) => {
   try {

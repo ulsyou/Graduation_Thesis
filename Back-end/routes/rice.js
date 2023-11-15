@@ -47,7 +47,7 @@ router.get("/riceStrain/:id", getRiceStrain, (req, res) => {
   res.json(res.strain);
 });
 
-router.patch("/update/riceStrain/:id", getRiceStrain, async (req, res) => {
+router.patch("/update/riceStrain/:id", upload.single('image'), getRiceStrain, async (req, res) => {
   if (req.body.strainCode != null) {
     res.strain.strainCode = req.body.strainCode;
   }
@@ -57,8 +57,8 @@ router.patch("/update/riceStrain/:id", getRiceStrain, async (req, res) => {
   if (req.body.description != null) {
     res.strain.description = req.body.description;
   }
-  if (req.body.image != null) {
-    res.strain.image = req.body.image;
+  if (req.file) {
+    res.strain.image = req.file.filename;
   }
   try {
     const updatedStrain = await res.strain.save();

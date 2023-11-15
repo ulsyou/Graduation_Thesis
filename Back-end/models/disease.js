@@ -22,6 +22,10 @@ const diseaseSchema = mongoose.Schema({
     type: String,
     required: true,
   },
+  time: {
+    type: String,
+    required: true,
+  },
   classification: {
     type: String,
     enum: ["Côn trùng", "Dịch bệnh", "Nấm hại", "Sâu bệnh"],

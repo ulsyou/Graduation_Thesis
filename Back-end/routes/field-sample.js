@@ -1,20 +1,20 @@
 const express = require("express");
 const router = express.Router();
 const FieldSample = require('../models/field-sample');
-const multer = require("multer");
+const upload = require('../config/upload');
 
-// Set up multer for file uploads
-const upload = multer({ 
-    dest: './uploads/',
-    limits: { 
-        fileSize: 50 * 1024 * 1024,
-        fieldSize: 50 * 1024 * 1024 
-    }, 
-});
+// Middleware for handling errors
+function handleErrors(res, err) {
+    console.error(err);
+    res.status(500).json({ message: "An error occurred" });
+}
 
-router.post("/create/fieldSample", async (req, res) => {
+router.post("/create/fieldSample", upload.single('image'), async (req, res) => {
   try {
-    const newFieldSample = new FieldSample(req.body);
+    const newFieldSample = new FieldSample({
+      ...req.body,
+      image: req.file ? req.file.filename : null,
+    });
 
     const savedFieldSample = await newFieldSample.save();
     res.status(201).json(savedFieldSample);
@@ -41,17 +41,20 @@ router.get("/fieldSample/:id", async (req, res) => {
     }
 });
 
-router.patch("/update/fieldSample/:id", async (req, res) => {
-    try {
-        const updatedFieldSample = await FieldSample.findByIdAndUpdate(
-            req.params.id,
-            req.body,
-            { new: true }
-        );
-        return res.status(200).json({ message: "Fields update successfully" });
-    } catch (error) {
-        res.status(500).json({ error: "Error updating field sample" });
-    }
+router.patch("/update/fieldSample/:id", upload.single('image'), async (req, res) => {
+  try {
+      const updatedFieldSample = await FieldSample.findByIdAndUpdate(
+          req.params.id,
+          {
+            ...req.body,
+            image: req.file ? req.file.filename : req.body.image,
+          },
+          { new: true }
+      );
+      return res.status(200).json({ message: "Fields update successfully" });
+  } catch (error) {
+      res.status(500).json({ error: "Error updating field sample" });
+  }
 });
 
 router.delete("/delete/fieldSample/:id", async (req, res) => {

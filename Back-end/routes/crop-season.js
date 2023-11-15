@@ -53,7 +53,7 @@ router.get("/crop-season/:id", getCropSeason, (req, res) => {
 });
 
 // Update a crop season
-router.patch("/update/crop-season/:id", getCropSeason, async (req, res) => {
+router.patch("/update/crop-season/:id", upload.single('image'), getCropSeason, async (req, res) => {
     if (req.body.cropSeasonCode != null) {
         res.cropSeason.cropSeasonCode = req.body.cropSeasonCode;
     }

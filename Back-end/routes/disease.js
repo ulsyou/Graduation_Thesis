@@ -1,75 +1,101 @@
 const express = require("express");
 const router = express.Router();
 const Disease = require('../models/disease');
-const multer = require("multer");
+const upload = require('../config/upload');
 
-// Set up multer for file uploads
-const upload = multer({ 
-    dest: './uploads/',
-    limits: { 
-        fileSize: 50 * 1024 * 1024,
-        fieldSize: 50 * 1024 * 1024 
-    }, 
-});
+// Middleware for handling errors
+function handleErrors(res, err) {
+    console.error(err);
+    res.status(500).json({ message: "An error occurred" });
+}
 
-router.post("/create/disease", async (req, res) => {
-  try {
-    const newDisease = new Disease(req.body);
-
-    const savedDisease = await newDisease.save();
-    res.status(201).json(savedDisease);
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-});
-
+// Get all diseases
 router.get("/disease", async (req, res) => {
-  try {
-    const diseases = await Disease.find();
-    res.status(200).json(diseases);
-  } catch (error) {
-    res.status(500).json({ error: "Error retrieving diseases" });
-  }
+    try {
+        let diseases = await Disease.find();
+        diseases = diseases.map(disease => {
+            disease = disease.toObject();
+            if (disease.image) {
+                disease.image = `${req.protocol}://${req.get('host')}/uploads/${disease.image}`;
+            }
+            return disease;
+        });
+        res.json(diseases);
+    } catch (err) {
+        handleErrors(res, err);
+    }
 });
 
-router.get("/disease/:id", async (req, res) => {
-  try {
-    const disease = await Disease.findById(req.params.id);
-    if (!disease) {
-      return res.status(404).json({ error: "Disease not found" });
+// Create a new disease
+router.post("/create/disease", upload.single('image'), async (req, res) => {
+    try {
+      const diseaseData = req.body;
+      if (req.file) {
+        diseaseData.image = req.file.filename; 
+      }
+      const disease = new Disease(diseaseData);
+      const newDisease = await disease.save();
+      res.status(201).json(newDisease);
+    } catch (err) {
+      handleErrors(res, err);
     }
-    res.status(200).json(disease);
-  } catch (error) {
-    res.status(500).json({ error: "Error retrieving disease" });
-  }
 });
 
-router.patch("/update/disease/:id", async (req, res) => {
-  try {
-    const updatedDisease = await Disease.findByIdAndUpdate(
-      req.params.id,
-      req.body,
-      { new: true }
-    );
-    if (!updatedDisease) {
-      return res.status(404).json({ error: "Disease not found" });
+// Get a specific disease
+router.get("/disease/:id", getDisease, (req, res) => {
+    if (res.disease.image) {
+            res.disease.image = `${req.protocol}://${req.get('host')}/uploads/${res.disease.image}`;
+        }
+        res.json(res.disease);
+    });
+
+    // Update a disease
+router.patch("/update/disease/:id", getDisease, async (req, res) => {
+    if (req.body.diseaseName != null) {
+        res.disease.diseaseName = req.body.diseaseName;
     }
-    res.status(200).json(updatedDisease);
-  } catch (error) {
-    res.status(500).json({ error: "Error updating disease" });
-  }
+    if (req.body.harm != null) {
+        res.disease.harm = req.body.harm;
+    }
+    if (req.body.environment != null) {
+        res.disease.environment = req.body.environment;
+    }
+    if (req.body.classification != null) {
+        res.disease.classification = req.body.classification;
+    }
+    if (req.file) {
+        res.disease.image = req.file.filename;
+    }
+
+    try {
+        const updatedDisease = await res.disease.save();
+        res.json(updatedDisease);
+    } catch (err) {
+        res.status(400).json({ message: err.message });
+    }
 });
 
-router.delete("/delete/disease/:id", async (req, res) => {
-  try {
-    const deletedDisease = await Disease.findByIdAndRemove(req.params.id);
-    if (!deletedDisease) {
-      return res.status(404).json({ error: "Disease not found" });
+// Delete a disease
+router.delete("/delete/disease/:id", getDisease, async (req, res) => {
+    try {
+        await Disease.findByIdAndRemove(req.params.id);
+        res.json({ message: "Deleted disease" });
+    } catch (err) {
+        res.status(500).json({ message: err.message });
     }
-    res.status(200).json({ message: "Disease deleted successfully" });
-  } catch (error) {
-    res.status(500).json({ error: "Error deleting disease" });
-  }
 });
+
+async function getDisease(req, res, next) {
+    try {
+        const disease = await Disease.findById(req.params.id);
+        if (disease == null) {
+            return res.status(404).json({ message: "Disease not found" });
+        }
+        res.disease = disease;
+        next();
+    } catch (err) {
+        return res.status(500).json({ message: err.message });
+    }
+}
 
 module.exports = router;

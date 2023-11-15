@@ -62,11 +62,14 @@ router.get("/fertilizer/:id", async (req, res) => {
     }
 });
 
-router.patch("/update/fertilizer/:id", async (req, res) => {
+router.patch("/update/fertilizer/:id", upload.single('image'), async (req, res) => {
     try {
         const updatedFertilizer = await Fertilizer.findByIdAndUpdate(
             req.params.id,
-            req.body,
+            {
+              ...req.body,
+              image: req.file ? req.file.filename : req.body.image,
+            },
             { new: true }
         );
         if (!updatedFertilizer) {

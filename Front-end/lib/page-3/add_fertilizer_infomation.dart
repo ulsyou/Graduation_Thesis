@@ -422,6 +422,7 @@ class _AddFertilizerState extends State<AddFertilizer> {
                         ),
                         border: InputBorder.none,
                       ),
+                      maxLines: null,
                     ),
                   ),
                 ),

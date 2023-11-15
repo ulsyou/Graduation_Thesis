@@ -6,6 +6,10 @@ const fieldSampleSchema = mongoose.Schema({
         unique: true,
         required: false,
     },
+    image: {
+        type: String,
+        required: false,
+      },
     area: {
         type: String,
         required: true,
