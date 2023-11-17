@@ -304,24 +304,23 @@ class _AddFertilizerState extends State<AddFertilizer> {
                   ),
                 ),
                 Positioned(
-                  left: 260,
-                  top: 773,
-                  child: SizedBox(
-                    width: 145,
-                    child: TextFormField(
-                      controller: kaliController,
-                      decoration: InputDecoration(
-                        hintText: 'Nhập Kali',
-                        hintStyle: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w500,
-                          color: Color(0xb57e7e7e),
+                    left: 260,
+                    top: 773,
+                    child: SizedBox(
+                      width: 145,
+                      child: TextFormField(
+                        controller: kaliController,
+                        decoration: InputDecoration(
+                          hintText: 'Nhập Kali',
+                          hintStyle: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w500,
+                            color: Color(0xb57e7e7e),
+                          ),
+                          border: InputBorder.none,
                         ),
-                        border: InputBorder.none,
                       ),
-                    ),
-                  )
-                ),
+                    )),
                 Positioned(
                   left: 260,
                   top: 738,

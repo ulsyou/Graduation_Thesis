@@ -16,7 +16,8 @@ class SeasonActivitiesManager extends StatefulWidget {
   SeasonActivitiesManager({required this.seasonData});
 
   @override
-  _SeasonActivitiesManagerState createState() => _SeasonActivitiesManagerState();
+  _SeasonActivitiesManagerState createState() =>
+      _SeasonActivitiesManagerState();
 }
 
 class _SeasonActivitiesManagerState extends State<SeasonActivitiesManager> {
@@ -75,6 +76,7 @@ class _SeasonActivitiesManagerState extends State<SeasonActivitiesManager> {
       ),
     );
   }
+
   @override
   Widget build(BuildContext context) {
     return Material(

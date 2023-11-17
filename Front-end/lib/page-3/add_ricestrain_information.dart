@@ -21,8 +21,7 @@ class _AddRiceStrains extends State<AddRiceStrains> {
   File? image;
 
   Future<void> addStrain(File? image) async {
-    final String apiUrl =
-        'http://10.0.2.2:5000/rice-strain/create/riceStrain';
+    final String apiUrl = 'http://10.0.2.2:5000/rice-strain/create/riceStrain';
 
     if (image != null) {
       var request = http.MultipartRequest('POST', Uri.parse(apiUrl))

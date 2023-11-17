@@ -6,44 +6,44 @@ import 'package:myapp/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'catatalog-list.dart';
-import 'desease_detail.dart';
+import 'disease_detail.dart';
 
-class Deseases extends StatefulWidget {
+class Diseases extends StatefulWidget {
   @override
-  _DeseasesState createState() => _DeseasesState();
+  _DiseasesState createState() => _DiseasesState();
 }
 
-class _DeseasesState extends State<Deseases> {
-  List<dynamic> deseases = [];
+class _DiseasesState extends State<Diseases> {
+  List<dynamic> diseases = [];
   String searchQuery = '';
-  List<dynamic> filteredDeseases = [];
+  List<dynamic> filteredDiseases = [];
   FocusNode searchFocus = FocusNode();
 
   @override
   void initState() {
     super.initState();
-    fetchDeseases();
+    fetchDiseases();
   }
 
-  Future<void> fetchDeseases() async {
-    final response = await http
-        .get(Uri.parse('http://10.0.2.2:5000/rice-desease/riceStrain'));
+  Future<void> fetchDiseases() async {
+    final response =
+        await http.get(Uri.parse('http://10.0.2.2:5000/disease/disease'));
 
     if (response.statusCode == 200) {
       setState(() {
-        deseases = json.decode(response.body);
-        filteredDeseases = deseases;
+        diseases = json.decode(response.body);
+        filteredDiseases = diseases;
       });
     } else {
-      print('Failed to fetch desease: ${response.statusCode}');
+      print('Failed to fetch disease: ${response.statusCode}');
     }
   }
 
   void performSearch(String searchText) {
     setState(() {
       searchQuery = searchText;
-      filteredDeseases = deseases.where((desease) {
-        return desease['cropSeasonName']
+      filteredDiseases = diseases.where((disease) {
+        return disease['cropSeasonName']
             .toLowerCase()
             .contains(searchQuery.toLowerCase());
       }).toList();
@@ -54,16 +54,16 @@ class _DeseasesState extends State<Deseases> {
   void resetSearch() {
     setState(() {
       searchQuery = '';
-      filteredDeseases = deseases;
+      filteredDiseases = diseases;
     });
     searchFocus.unfocus();
   }
 
-  void navigateToDeseaseDetail(Map<String, dynamic> deseaseData) {
+  void navigateToDiseaseDetail(Map<String, dynamic> diseaseData) {
     Navigator.of(context).push(
       MaterialPageRoute(
-        builder: (context) => DeseaseDetail(
-          // deseaseData: deseaseData,
+        builder: (context) => DiseaseDetail(
+          diseaseData: diseaseData,
         ),
       ),
     );
@@ -106,16 +106,16 @@ class _DeseasesState extends State<Deseases> {
                       ),
                     ),
                     child: ListView.builder(
-                        itemCount: filteredDeseases.length,
+                        itemCount: filteredDiseases.length,
                         itemBuilder: (context, index) {
-                          final desease = filteredDeseases[index];
+                          final disease = filteredDiseases[index];
                           EdgeInsets margin = EdgeInsets.symmetric(vertical: 0);
                           if (index == 0) {
                             margin = EdgeInsets.only(top: 130 * fem);
                           }
                           return InkWell(
                             onTap: () {
-                              navigateToDeseaseDetail(desease);
+                              navigateToDiseaseDetail(disease);
                             },
                             child: Container(
                               margin: margin,
@@ -133,7 +133,7 @@ class _DeseasesState extends State<Deseases> {
                                         child: Container(
                                           decoration: BoxDecoration(
                                             borderRadius:
-                                            BorderRadius.circular(30 * fem),
+                                                BorderRadius.circular(30 * fem),
                                             gradient: LinearGradient(
                                               begin: Alignment(1.217, -0.146),
                                               end: Alignment(-1.379, 0.131),
@@ -157,9 +157,9 @@ class _DeseasesState extends State<Deseases> {
                                         height: 100 * fem,
                                         child: ClipRRect(
                                           borderRadius:
-                                          BorderRadius.circular(20 * fem),
+                                              BorderRadius.circular(20 * fem),
                                           child: Image.network(
-                                            desease['image'],
+                                            disease['image'],
                                             fit: BoxFit.fill,
                                           ),
                                         ),
@@ -174,7 +174,7 @@ class _DeseasesState extends State<Deseases> {
                                         width: 200 * fem,
                                         height: 25 * fem,
                                         child: Text(
-                                          '${desease['deseaseName']}',
+                                          '${disease['diseaseName']}',
                                           style: SafeGoogleFont(
                                             'Noto Sans',
                                             fontSize: 18 * ffem,
@@ -194,7 +194,7 @@ class _DeseasesState extends State<Deseases> {
                                         width: 200 * fem,
                                         height: 20 * fem,
                                         child: Text(
-                                          'Nhà cung cấp:',
+                                          'Loại bệnh dịch:',
                                           style: SafeGoogleFont(
                                             'Noto Sans',
                                             fontSize: 14 * ffem,
@@ -214,7 +214,7 @@ class _DeseasesState extends State<Deseases> {
                                         width: 94 * fem,
                                         height: 20 * fem,
                                         child: Text(
-                                          'Mã giống lúa:',
+                                          'Mã bệnh dịch:',
                                           style: SafeGoogleFont(
                                             'Noto Sans',
                                             fontSize: 14 * ffem,
@@ -234,7 +234,7 @@ class _DeseasesState extends State<Deseases> {
                                         width: 100 * fem,
                                         height: 17 * fem,
                                         child: Text(
-                                          '${desease['deseaseCode']}',
+                                          '${disease['diseaseCode']}',
                                           style: SafeGoogleFont(
                                             'Noto Sans',
                                             fontSize: 13 * ffem,
@@ -254,7 +254,7 @@ class _DeseasesState extends State<Deseases> {
                                         width: 100 * fem,
                                         height: 17 * fem,
                                         child: Text(
-                                          '${desease['supplier']}',
+                                          '${disease['classification']}',
                                           style: SafeGoogleFont(
                                             'Noto Sans',
                                             fontSize: 12 * ffem,
@@ -278,9 +278,9 @@ class _DeseasesState extends State<Deseases> {
                                             color: Color(0xff60ff00),
                                             borderRadius: BorderRadius.only(
                                               topLeft:
-                                              Radius.circular(50 * fem),
+                                                  Radius.circular(50 * fem),
                                               bottomLeft:
-                                              Radius.circular(50 * fem),
+                                                  Radius.circular(50 * fem),
                                             ),
                                           ),
                                         ),
@@ -404,4 +404,3 @@ class _DeseasesState extends State<Deseases> {
     );
   }
 }
-

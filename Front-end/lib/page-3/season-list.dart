@@ -68,7 +68,6 @@ class _SeasonsState extends State<Seasons> {
     );
   }
 
-
   @override
   Widget build(BuildContext context) {
     double baseWidth = 412;
@@ -156,10 +155,11 @@ class _SeasonsState extends State<Seasons> {
                                         width: 165 * fem,
                                         height: 100 * fem,
                                         child: ClipRRect(
-                                          borderRadius: BorderRadius.circular(20 * fem),
+                                          borderRadius:
+                                              BorderRadius.circular(20 * fem),
                                           child: Image.network(
                                             season['image'],
-                                              fit: BoxFit.fill,
+                                            fit: BoxFit.fill,
                                           ),
                                         ),
                                       ),
@@ -293,7 +293,6 @@ class _SeasonsState extends State<Seasons> {
                         }),
                   ),
                 ),
-
                 Positioned(
                   left: 0 * fem,
                   top: 0 * fem,

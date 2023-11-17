@@ -1,17 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:http/http.dart' as http;
+import 'diseases.dart';
 
-import 'deseases.dart';
+class DiseaseDetail extends StatefulWidget {
+  final Map<String, dynamic> diseaseData;
 
-class DeseaseDetail extends StatefulWidget {
-  const DeseaseDetail({super.key});
+  DiseaseDetail({required this.diseaseData});
 
   @override
-  _DeseaseDetail createState() => _DeseaseDetail();
+  _DiseaseDetail createState() => _DiseaseDetail();
 }
 
-class _DeseaseDetail extends State<DeseaseDetail> {
+class _DiseaseDetail extends State<DiseaseDetail> {
   bool isHidden = true;
+  List<Map<String, dynamic>> diseases = [];
 
 // Hàm để hiển thị phần xác nhận xóa
   void showPositioned() {
@@ -25,6 +28,37 @@ class _DeseaseDetail extends State<DeseaseDetail> {
     setState(() {
       isHidden = true;
     });
+  }
+
+  // Hàm gọi API để xóa
+  Future<void> deleteDisease() async {
+    final diseaseId = widget.diseaseData['_id'];
+    final apiUrl =
+        Uri.parse('http://10.0.2.2:5000/disease/delete/disease/$diseaseId');
+
+    try {
+      final response = await http.delete(
+        apiUrl,
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+      );
+
+      if (response.statusCode == 200) {
+        setState(() {
+          diseases.removeWhere((disease) => disease['_id'] == diseaseId);
+        });
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => Diseases()),
+        );
+      } else {
+        print('Failed to delete disease: ${response.statusCode}');
+        print('Error response body: ${response.body}');
+      }
+    } catch (error) {
+      print('Error deleting disease: $error');
+    }
   }
 
   @override
@@ -148,7 +182,7 @@ class _DeseaseDetail extends State<DeseaseDetail> {
                 child: SizedBox(
                   width: 305,
                   child: Text(
-                    'Sâu non xâm nhập vào bẹ lá vào thân cắt đứt đường vận chuyển dinh dưỡng làm dảnh vô hiệu và bông bạclàm bông lúa bị lép hoàn toàn, trong khi các lá bên dưới của chồi vẫn còn xanh',
+                    widget.diseaseData['harm'] ?? 'N/A',
                     style: GoogleFonts.getFont(
                       'Noto Sans',
                       color: Colors.black,
@@ -185,10 +219,10 @@ class _DeseaseDetail extends State<DeseaseDetail> {
                 ),
               ),
               Positioned(
-                left: 259,
+                left: 250,
                 top: 616,
                 child: Text(
-                  'Quanh năm',
+                  widget.diseaseData['time'] ?? 'N/A',
                   style: GoogleFonts.getFont(
                     'Noto Sans',
                     color: Colors.black,
@@ -216,7 +250,7 @@ class _DeseaseDetail extends State<DeseaseDetail> {
                 child: SizedBox(
                   width: 305,
                   child: Text(
-                    'Điều kiện nhiệt độ ấm nóng và ẩm độ cao thích hợp cho sâu phát sinh gây hại.',
+                    widget.diseaseData['environment'] ?? 'N/A',
                     style: GoogleFonts.getFont(
                       'Noto Sans',
                       color: Colors.black,
@@ -267,11 +301,11 @@ class _DeseaseDetail extends State<DeseaseDetail> {
               ),
               Positioned(
                 left: 224,
-                top: 421,
+                top: 430,
                 child: SizedBox(
                   width: 138,
                   child: Text(
-                    'Sâu đục thân bướm 2 chấm hại lúa',
+                    widget.diseaseData['diseaseName'] ?? 'N/A',
                     style: GoogleFonts.getFont(
                       'Noto Sans',
                       color: Colors.black,
@@ -311,7 +345,7 @@ class _DeseaseDetail extends State<DeseaseDetail> {
                 left: 255,
                 top: 377,
                 child: Text(
-                  'RC00002',
+                  widget.diseaseData['diseaseCode'] ?? 'N/A',
                   style: GoogleFonts.getFont(
                     'Noto Sans',
                     color: Colors.black,
@@ -347,10 +381,10 @@ class _DeseaseDetail extends State<DeseaseDetail> {
                 ),
               ),
               Positioned(
-                left: 253,
+                left: 223,
                 top: 483,
                 child: Text(
-                  'Dịch bệnh',
+                  widget.diseaseData['classification'] ?? 'N/A',
                   style: GoogleFonts.getFont(
                     'Noto Sans',
                     color: Colors.black,
@@ -413,7 +447,7 @@ class _DeseaseDetail extends State<DeseaseDetail> {
                     onTap: () {
                       Navigator.of(context).push(
                         MaterialPageRoute(
-                          builder: (context) => Deseases(),
+                          builder: (context) => Diseases(),
                         ),
                       );
                     },
@@ -421,8 +455,8 @@ class _DeseaseDetail extends State<DeseaseDetail> {
                       Color(0x0c7f7f7f),
                     ),
                     child: Container(
-                      width: 24,
-                      height: 24,
+                      width: 28,
+                      height: 28,
                       clipBehavior: Clip.hardEdge,
                       decoration: const BoxDecoration(),
                       child: Stack(
@@ -431,10 +465,10 @@ class _DeseaseDetail extends State<DeseaseDetail> {
                           Positioned(
                             left: 4,
                             top: 4,
-                            child: Image.network(
-                              'https://storage.googleapis.com/codeless-dev.appspot.com/uploads%2Fimages%2FTeD8q4fMRDdW3VSyJEbH%2F27779bc9b3ca41161ea5511599390cdd.png',
-                              width: 16,
-                              height: 16,
+                            child: Image.asset(
+                              'assets/page-1/images/Group 25.png',
+                              width: 24,
+                              height: 24,
                               fit: BoxFit.contain,
                             ),
                           )
@@ -559,7 +593,9 @@ class _DeseaseDetail extends State<DeseaseDetail> {
                         ),
                       if (!isHidden)
                         GestureDetector(
-                          onTap: () {},
+                          onTap: () {
+                            deleteDisease();
+                          },
                           child: Stack(
                             children: [
                               Positioned(
@@ -582,7 +618,9 @@ class _DeseaseDetail extends State<DeseaseDetail> {
                                 child: Material(
                                   type: MaterialType.transparency,
                                   child: InkWell(
-                                    onTap: () {},
+                                    onTap: () {
+                                      deleteDisease();
+                                    },
                                     overlayColor:
                                         const MaterialStatePropertyAll<Color>(
                                       Color(0x0c7f7f7f),

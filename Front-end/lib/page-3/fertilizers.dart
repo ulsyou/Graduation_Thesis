@@ -25,8 +25,8 @@ class _FertilizerState extends State<Fertilizer> {
   }
 
   Future<void> fetchFertilizer() async {
-    final response = await http
-        .get(Uri.parse('http://10.0.2.2:5000/fertilizer/fertilizer'));
+    final response =
+        await http.get(Uri.parse('http://10.0.2.2:5000/fertilizer/fertilizer'));
 
     if (response.statusCode == 200) {
       setState(() {
@@ -132,7 +132,7 @@ class _FertilizerState extends State<Fertilizer> {
                                         child: Container(
                                           decoration: BoxDecoration(
                                             borderRadius:
-                                            BorderRadius.circular(30 * fem),
+                                                BorderRadius.circular(30 * fem),
                                             gradient: LinearGradient(
                                               begin: Alignment(1.217, -0.146),
                                               end: Alignment(-1.379, 0.131),
@@ -156,7 +156,7 @@ class _FertilizerState extends State<Fertilizer> {
                                         height: 100 * fem,
                                         child: ClipRRect(
                                           borderRadius:
-                                          BorderRadius.circular(20 * fem),
+                                              BorderRadius.circular(20 * fem),
                                           child: Image.network(
                                             fertilizers['image'],
                                             fit: BoxFit.fill,
@@ -277,9 +277,9 @@ class _FertilizerState extends State<Fertilizer> {
                                             color: Color(0xff60ff00),
                                             borderRadius: BorderRadius.only(
                                               topLeft:
-                                              Radius.circular(50 * fem),
+                                                  Radius.circular(50 * fem),
                                               bottomLeft:
-                                              Radius.circular(50 * fem),
+                                                  Radius.circular(50 * fem),
                                             ),
                                           ),
                                         ),
@@ -363,7 +363,7 @@ class _FertilizerState extends State<Fertilizer> {
                               width: 200 * fem,
                               height: 33 * fem,
                               child: Text(
-                                'Giống lúa',
+                                'Phân bón',
                                 style: SafeGoogleFont(
                                   'Noto Sans',
                                   fontSize: 24 * ffem,

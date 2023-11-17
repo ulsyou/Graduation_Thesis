@@ -10,6 +10,7 @@ class AddActivity extends StatefulWidget {
   @override
   _AddActivityState createState() => _AddActivityState();
 }
+
 class _AddActivityState extends State<AddActivity> {
   TextEditingController activitiesNameController = TextEditingController();
   String? imagePath;
@@ -102,17 +103,17 @@ class _AddActivityState extends State<AddActivity> {
                       clipBehavior: Clip.hardEdge,
                       child: image != null
                           ? Image.file(
-                        File(image!.path),
-                        width: 318,
-                        height: 180,
-                        fit: BoxFit.cover,
-                      )
+                              File(image!.path),
+                              width: 318,
+                              height: 180,
+                              fit: BoxFit.cover,
+                            )
                           : Image.asset(
-                        'assets/page-1/images/Group 46.png',
-                        width: 318,
-                        height: 180,
-                        fit: BoxFit.cover,
-                      ),
+                              'assets/page-1/images/Group 46.png',
+                              width: 318,
+                              height: 180,
+                              fit: BoxFit.cover,
+                            ),
                     ),
                   ),
                 ),

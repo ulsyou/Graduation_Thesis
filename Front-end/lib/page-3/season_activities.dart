@@ -8,7 +8,6 @@ class SeasonActivities extends StatelessWidget {
   final Map<String, dynamic> seasonData;
   SeasonActivities({required this.seasonData, Key? key}) : super(key: key);
 
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -303,7 +302,8 @@ class SeasonActivities extends StatelessWidget {
                 onTap: () {
                   Navigator.of(context).push(
                     MaterialPageRoute(
-                      builder: (context) => SeasonActivitiesManager(seasonData: seasonData),
+                      builder: (context) =>
+                          SeasonActivitiesManager(seasonData: seasonData),
                     ),
                   );
                 },

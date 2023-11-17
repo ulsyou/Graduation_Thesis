@@ -425,8 +425,7 @@ class Profile extends StatelessWidget {
                     onTap: () {
                       Navigator.of(context).push(
                         MaterialPageRoute(
-                          builder: (context) =>
-                              AddPages(),
+                          builder: (context) => AddPages(),
                         ),
                       );
                     },

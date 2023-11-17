@@ -105,7 +105,8 @@ class SeasonEmployee extends StatelessWidget {
                 onTap: () {
                   Navigator.of(context).push(
                     MaterialPageRoute(
-                      builder: (context) => SeasonActivitiesManager(seasonData: seasonData),
+                      builder: (context) =>
+                          SeasonActivitiesManager(seasonData: seasonData),
                     ),
                   );
                 },

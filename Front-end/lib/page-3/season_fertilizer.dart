@@ -523,7 +523,8 @@ class SeasonFertilizer extends StatelessWidget {
                     onTap: () {
                       Navigator.of(context).push(
                         MaterialPageRoute(
-                          builder: (context) => SeasonActivitiesManager(seasonData: seasonData),
+                          builder: (context) =>
+                              SeasonActivitiesManager(seasonData: seasonData),
                         ),
                       );
                     },

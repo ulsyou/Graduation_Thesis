@@ -2,7 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:myapp/page-3/deseases.dart';
+import 'package:myapp/page-3/diseases.dart';
 import 'package:myapp/page-3/expert-manager-page.dart';
 import 'package:myapp/page-3/pesticides.dart';
 import 'package:myapp/page-3/rice_strains.dart';
@@ -38,8 +38,7 @@ class CatalogList extends StatelessWidget {
                   decoration: BoxDecoration(
                     image: const DecorationImage(
                       image: AssetImage(
-                        'assets/page-1/images/yuki-ho-ygqbbzemmi-unsplash-1-bg.png'
-                      ),
+                          'assets/page-1/images/yuki-ho-ygqbbzemmi-unsplash-1-bg.png'),
                       fit: BoxFit.none,
                       alignment: Alignment.centerLeft,
                       opacity: 0.7,
@@ -268,7 +267,7 @@ class CatalogList extends StatelessWidget {
                     onTap: () {
                       Navigator.of(context).push(
                         MaterialPageRoute(
-                          builder: (context) => Deseases(),
+                          builder: (context) => Diseases(),
                         ),
                       );
                     },
@@ -294,7 +293,13 @@ class CatalogList extends StatelessWidget {
                 child: Material(
                   type: MaterialType.transparency,
                   child: InkWell(
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => Diseases(),
+                        ),
+                      );
+                    },
                     overlayColor: const MaterialStatePropertyAll<Color>(
                       Color(0x0c7f7f7f),
                     ),
@@ -468,7 +473,6 @@ class CatalogList extends StatelessWidget {
                   fit: BoxFit.fill,
                 ),
               ),
-
               Positioned(
                 left: 0,
                 top: 0,
@@ -552,7 +556,6 @@ class CatalogList extends StatelessWidget {
                   ),
                 ),
               ),
-
               Positioned(
                 left: 145,
                 top: 65,

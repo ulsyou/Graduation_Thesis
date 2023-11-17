@@ -688,7 +688,6 @@ class _AddSeasonState extends State<AddSeason> {
                   ),
                 ),
               ),
-
               Positioned(
                 left: 43,
                 top: 825,
@@ -786,7 +785,6 @@ class _AddSeasonState extends State<AddSeason> {
                   ),
                 ),
               ),
-
               Positioned(
                 left: 0,
                 top: 0,
@@ -870,7 +868,6 @@ class _AddSeasonState extends State<AddSeason> {
                   ),
                 ),
               ),
-
               Positioned(
                 left: 115,
                 top: 65,

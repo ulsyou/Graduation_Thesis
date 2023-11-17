@@ -48,10 +48,6 @@ class _RiceStrainDetailState extends State<RiceStrainDetail> {
         setState(() {
           strains.removeWhere((strain) => strain['_id'] == strainId);
         });
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (context) => RiceStrains()),
-        );
       } else {
         print('Failed to delete strain: ${response.statusCode}');
         print('Error response body: ${response.body}');
@@ -400,8 +396,8 @@ class _RiceStrainDetailState extends State<RiceStrainDetail> {
                   Color(0x0c7f7f7f),
                 ),
                 child: Container(
-                  width: 24,
-                  height: 24,
+                  width: 28,
+                  height: 28,
                   clipBehavior: Clip.hardEdge,
                   decoration: const BoxDecoration(),
                   child: Stack(
@@ -410,10 +406,10 @@ class _RiceStrainDetailState extends State<RiceStrainDetail> {
                       Positioned(
                         left: 4,
                         top: 4,
-                        child: Image.network(
-                          'https://storage.googleapis.com/codeless-dev.appspot.com/uploads%2Fimages%2FTeD8q4fMRDdW3VSyJEbH%2F27779bc9b3ca41161ea5511599390cdd.png',
-                          width: 16,
-                          height: 16,
+                        child: Image.asset(
+                          'assets/page-1/images/Group 25.png',
+                          width: 24,
+                          height: 24,
                           fit: BoxFit.contain,
                         ),
                       )
