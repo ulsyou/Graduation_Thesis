@@ -62,6 +62,10 @@ class _SeasonDetailState extends State<SeasonDetail> {
         setState(() {
           seasons.removeWhere((season) => season['_id'] == seasonId);
         });
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => Seasons()),
+        );
       } else {
         print('Failed to delete season: ${response.statusCode}');
         print('Error response body: ${response.body}');
@@ -70,11 +74,13 @@ class _SeasonDetailState extends State<SeasonDetail> {
       print('Error deleting season: $error');
     }
   }
+
   void navigateToSeasonActivitiesManager() {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => SeasonActivitiesManager(seasonData: widget.seasonData),
+        builder: (context) =>
+            SeasonActivitiesManager(seasonData: widget.seasonData),
       ),
     );
   }
@@ -136,7 +142,7 @@ class _SeasonDetailState extends State<SeasonDetail> {
                     widget.seasonData['image'],
                     width: 318,
                     height: 180,
-                    fit: BoxFit.scaleDown,
+                    fit: BoxFit.fill,
                   ),
                 ),
               ),
@@ -613,8 +619,10 @@ class _SeasonDetailState extends State<SeasonDetail> {
                           ),
                         ),
                       if (!isHidden)
-                        InkWell(
-                          onTap: () {},
+                        GestureDetector(
+                          onTap: () {
+                            deleteSeason();
+                          },
                           child: Stack(
                             children: [
                               Positioned(
@@ -637,7 +645,10 @@ class _SeasonDetailState extends State<SeasonDetail> {
                                 child: Material(
                                   type: MaterialType.transparency,
                                   child: InkWell(
-                                    onTap: () {},
+                                    onTap: () {
+                                      print('InkWell tapped');
+                                      deleteSeason();
+                                    },
                                     overlayColor:
                                         const MaterialStatePropertyAll<Color>(
                                       Color(0x0c7f7f7f),
@@ -658,7 +669,7 @@ class _SeasonDetailState extends State<SeasonDetail> {
                           ),
                         ),
                       if (!isHidden)
-                        InkWell(
+                        GestureDetector(
                           onTap: () {
                             hidePositioned();
                           },

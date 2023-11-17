@@ -1,371 +1,406 @@
-import 'dart:math';
+import 'dart:convert';
 
+import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'package:myapp/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:myapp/page-3/rice_strain_detail.dart';
 
 import 'catatalog-list.dart';
 
-class RiceStrains extends StatelessWidget {
-  const RiceStrains({super.key});
+class RiceStrains extends StatefulWidget {
+  @override
+  _RiceStrainsState createState() => _RiceStrainsState();
+}
+
+class _RiceStrainsState extends State<RiceStrains> {
+  List<dynamic> strains = [];
+  String searchQuery = '';
+  List<dynamic> filteredRiceStrains = [];
+  FocusNode searchFocus = FocusNode();
+
+  @override
+  void initState() {
+    super.initState();
+    fetchRiceStrains();
+  }
+
+  Future<void> fetchRiceStrains() async {
+    final response = await http
+        .get(Uri.parse('http://10.0.2.2:5000/rice-strain/riceStrain'));
+
+    if (response.statusCode == 200) {
+      setState(() {
+        strains = json.decode(response.body);
+        filteredRiceStrains = strains;
+      });
+    } else {
+      print('Failed to fetch strain: ${response.statusCode}');
+    }
+  }
+
+  void performSearch(String searchText) {
+    setState(() {
+      searchQuery = searchText;
+      filteredRiceStrains = strains.where((strain) {
+        return strain['cropSeasonName']
+            .toLowerCase()
+            .contains(searchQuery.toLowerCase());
+      }).toList();
+    });
+    searchFocus.requestFocus();
+  }
+
+  void resetSearch() {
+    setState(() {
+      searchQuery = '';
+      filteredRiceStrains = strains;
+    });
+    searchFocus.unfocus();
+  }
+
+  void navigateToStrainDetail(Map<String, dynamic> strainData) {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => RiceStrainDetail(
+          strainData: strainData,
+        ),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 412,
-      height: 915,
-      clipBehavior: Clip.hardEdge,
-      decoration: const BoxDecoration(
-        color: Colors.white,
-      ),
-      child: Stack(
-        clipBehavior: Clip.none,
-        children: [
-          Positioned(
-            left: 0,
-            top: 0,
-            child: Container(
-              width: 412,
-              height: 915,
-              clipBehavior: Clip.hardEdge,
-              decoration: BoxDecoration(
-                image: const DecorationImage(
-                  image: NetworkImage(
-                    'https://firebasestorage.googleapis.com/v0/b/codeless-app.appspot.com/o/projects%2FTeD8q4fMRDdW3VSyJEbH%2F179800e3ecb133fbb531b822ceb94009dc1a8493yuki-ho-_YGqbbZEmMI-unsplash%201.png?alt=media&token=c2652219-58b7-4ede-88ab-87954f46cbf4',
-                  ),
-                  fit: BoxFit.none,
-                  alignment: Alignment.centerLeft,
-                  opacity: 0.7,
-                  scale: 1.8,
-                ),
-                border: Border.all(),
-              ),
+    double baseWidth = 412;
+    double fem = MediaQuery.of(context).size.width / baseWidth;
+    double ffem = fem * 0.97;
+    return Material(
+      child: SingleChildScrollView(
+        child: Container(
+          width: double.infinity,
+          child: Container(
+            width: double.infinity,
+            height: 915 * fem,
+            decoration: BoxDecoration(
+              color: Color(0xffffffff),
             ),
-          ),
-          Positioned(
-            left: 0,
-            top: 0,
-            child: Container(
-              width: 412,
-              height: 915,
-              clipBehavior: Clip.hardEdge,
-              decoration: const BoxDecoration(
-                color: Color(0x84FFFDF4),
-              ),
-            ),
-          ),
-          Positioned(
-            left: 72,
-            top: 141,
-            child: Material(
-              type: MaterialType.transparency,
-              borderRadius: BorderRadius.circular(30),
-              clipBehavior: Clip.antiAlias,
-              child: InkWell(
-                onTap: () {
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (context) => RiceStrainDetail(),
-                    ),
-                  );
-                },
-                overlayColor: const MaterialStatePropertyAll<Color>(
-                  Color(0x0c7f7f7f),
-                ),
-                child: Ink(
-                  width: 311,
-                  height: 130,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(30),
-                    gradient: const LinearGradient(
-                      colors: [Color(0xFFFFFFFF), Color(0x00FFFACD)],
-                      transform: GradientRotation(180 * pi / 180),
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          ),
-          Positioned(
-            left: 57,
-            top: 156,
-            child: Material(
-              type: MaterialType.transparency,
-              borderRadius: BorderRadius.circular(20),
-              clipBehavior: Clip.antiAlias,
-              child: InkWell(
-                onTap: () {
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (context) => RiceStrainDetail(),
-                    ),
-                  );
-                },
-                overlayColor: const MaterialStatePropertyAll<Color>(
-                  Color(0x0c7f7f7f),
-                ),
-                child: Ink(
-                  width: 165,
-                  height: 100,
-                  decoration: BoxDecoration(
-                    image: const DecorationImage(
-                      image: NetworkImage(
-                        'https://firebasestorage.googleapis.com/v0/b/codeless-app.appspot.com/o/projects%2FTeD8q4fMRDdW3VSyJEbH%2Ff4568d422a6c0ec14a0567d726b1ac9096212c2aRectangle%2026.png?alt=media&token=6adccf74-1b5b-44cd-88dc-cf26166b9649',
+            child: Stack(
+              children: [
+                Positioned(
+                  left: 0 * fem,
+                  top: 0 * fem,
+                  child: Container(
+                    padding: EdgeInsets.fromLTRB(
+                        71 * fem, 0 * fem, 29 * fem, 0 * fem),
+                    width: 412 * fem,
+                    height: 915 * fem,
+                    decoration: BoxDecoration(
+                      border: Border.all(color: Color(0x99000000)),
+                      color: Color(0x84FFFDF4),
+                      image: DecorationImage(
+                        image: AssetImage(
+                            'assets/page-1/images/yuki-ho-ygqbbzemmi-unsplash-1-bg.png'),
+                        fit: BoxFit.fill,
+                        colorFilter: ColorFilter.mode(
+                            Colors.black.withOpacity(0.4), BlendMode.dstATop),
                       ),
-                      fit: BoxFit.cover,
                     ),
-                    borderRadius: BorderRadius.circular(20),
+                    child: ListView.builder(
+                        itemCount: filteredRiceStrains.length,
+                        itemBuilder: (context, index) {
+                          final strain = filteredRiceStrains[index];
+                          EdgeInsets margin = EdgeInsets.symmetric(vertical: 0);
+                          if (index == 0) {
+                            margin = EdgeInsets.only(top: 130 * fem);
+                          }
+                          return InkWell(
+                            onTap: () {
+                              navigateToStrainDetail(strain);
+                            },
+                            child: Container(
+                              margin: margin,
+                              width: double.infinity,
+                              height: 160 * fem,
+                              child: Stack(
+                                children: [
+                                  Positioned(
+                                    left: 1 * fem,
+                                    top: 0 * fem,
+                                    child: Align(
+                                      child: SizedBox(
+                                        width: 311 * fem,
+                                        height: 130 * fem,
+                                        child: Container(
+                                          decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(30 * fem),
+                                            gradient: LinearGradient(
+                                              begin: Alignment(1.217, -0.146),
+                                              end: Alignment(-1.379, 0.131),
+                                              colors: <Color>[
+                                                Color(0xffffffff),
+                                                Color(0x00fffacd)
+                                              ],
+                                              stops: <double>[0, 1],
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  Positioned(
+                                    left: 0 * fem,
+                                    top: 15 * fem,
+                                    child: Align(
+                                      child: SizedBox(
+                                        width: 165 * fem,
+                                        height: 100 * fem,
+                                        child: ClipRRect(
+                                          borderRadius:
+                                              BorderRadius.circular(20 * fem),
+                                          child: Image.network(
+                                            strain['image'],
+                                            fit: BoxFit.fill,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  Positioned(
+                                    left: 175 * fem,
+                                    top: 9 * fem,
+                                    child: Align(
+                                      child: SizedBox(
+                                        width: 200 * fem,
+                                        height: 25 * fem,
+                                        child: Text(
+                                          '${strain['strainName']}',
+                                          style: SafeGoogleFont(
+                                            'Noto Sans',
+                                            fontSize: 18 * ffem,
+                                            fontWeight: FontWeight.w600,
+                                            height: 1.3625 * ffem / fem,
+                                            color: Color(0xff000000),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  Positioned(
+                                    left: 175 * fem,
+                                    top: 84 * fem,
+                                    child: Align(
+                                      child: SizedBox(
+                                        width: 200 * fem,
+                                        height: 20 * fem,
+                                        child: Text(
+                                          'Nhà cung cấp:',
+                                          style: SafeGoogleFont(
+                                            'Noto Sans',
+                                            fontSize: 14 * ffem,
+                                            fontWeight: FontWeight.w600,
+                                            height: 1.3625 * ffem / fem,
+                                            color: Color(0xff000000),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  Positioned(
+                                    left: 175 * fem,
+                                    top: 40 * fem,
+                                    child: Align(
+                                      child: SizedBox(
+                                        width: 94 * fem,
+                                        height: 20 * fem,
+                                        child: Text(
+                                          'Mã giống lúa:',
+                                          style: SafeGoogleFont(
+                                            'Noto Sans',
+                                            fontSize: 14 * ffem,
+                                            fontWeight: FontWeight.w600,
+                                            height: 1.3625 * ffem / fem,
+                                            color: Color(0xff000000),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  Positioned(
+                                    left: 190 * fem,
+                                    top: 65 * fem,
+                                    child: Align(
+                                      child: SizedBox(
+                                        width: 100 * fem,
+                                        height: 17 * fem,
+                                        child: Text(
+                                          '${strain['strainCode']}',
+                                          style: SafeGoogleFont(
+                                            'Noto Sans',
+                                            fontSize: 13 * ffem,
+                                            fontWeight: FontWeight.w500,
+                                            height: 1.3625 * ffem / fem,
+                                            color: Color(0xff777777),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  Positioned(
+                                    left: 190 * fem,
+                                    top: 107 * fem,
+                                    child: Align(
+                                      child: SizedBox(
+                                        width: 100 * fem,
+                                        height: 17 * fem,
+                                        child: Text(
+                                          '${strain['supplier']}',
+                                          style: SafeGoogleFont(
+                                            'Noto Sans',
+                                            fontSize: 12 * ffem,
+                                            fontWeight: FontWeight.w500,
+                                            height: 1.3625 * ffem / fem,
+                                            color: Color(0xff777777),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  Positioned(
+                                    left: 306 * fem,
+                                    top: 24 * fem,
+                                    child: Align(
+                                      child: SizedBox(
+                                        width: 6 * fem,
+                                        height: 50 * fem,
+                                        child: Container(
+                                          decoration: BoxDecoration(
+                                            color: Color(0xff60ff00),
+                                            borderRadius: BorderRadius.only(
+                                              topLeft:
+                                                  Radius.circular(50 * fem),
+                                              bottomLeft:
+                                                  Radius.circular(50 * fem),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          );
+                        }),
                   ),
                 ),
-              ),
-            ),
-          ),
-          Positioned(
-            left: 239,
-            top: 149,
-            child: Text(
-              'Tên giống lúa',
-              style: GoogleFonts.getFont(
-                'Noto Sans',
-                color: Colors.black,
-                fontSize: 18,
-                fontWeight: FontWeight.w600,
-              ),
-            ),
-          ),
-          Positioned(
-            left: 239,
-            top: 224,
-            child: Text(
-              'Năng suất:',
-              style: GoogleFonts.getFont(
-                'Noto Sans',
-                color: Colors.black,
-                fontSize: 14,
-                fontWeight: FontWeight.w600,
-              ),
-            ),
-          ),
-          Positioned(
-            left: 239,
-            top: 180,
-            child: Text(
-              'Mã giống lúa:',
-              style: GoogleFonts.getFont(
-                'Noto Sans',
-                color: Colors.black,
-                fontSize: 14,
-                fontWeight: FontWeight.w600,
-              ),
-            ),
-          ),
-          Positioned(
-            left: 287,
-            top: 205,
-            child: Text(
-              'RC00002',
-              style: GoogleFonts.getFont(
-                'Noto Sans',
-                color: const Color(0xFF777777),
-                fontSize: 12,
-                fontWeight: FontWeight.w500,
-              ),
-            ),
-          ),
-          Positioned(
-            left: 287,
-            top: 247,
-            child: Text(
-              'Vụ mùa',
-              style: GoogleFonts.getFont(
-                'Noto Sans',
-                color: const Color(0xFF777777),
-                fontSize: 12,
-                fontWeight: FontWeight.w500,
-              ),
-            ),
-          ),
-          Positioned(
-            left: 377,
-            top: 181,
-            child: Transform.rotate(
-              angle: 180 * pi / 180,
-              child: Container(
-                width: 6,
-                height: 50,
-                clipBehavior: Clip.hardEdge,
-                decoration: const BoxDecoration(
-                  color: Color(0xFF60FF00),
-                  borderRadius: BorderRadius.horizontal(
-                    right: Radius.circular(50),
-                  ),
-                ),
-              ),
-            ),
-          ),
-          Positioned(
-            left: 48,
-            top: 748,
-            child: Container(
-              width: 20,
-              height: 20,
-              clipBehavior: Clip.hardEdge,
-              decoration: const BoxDecoration(),
-            ),
-          ),
-          Positioned(
-            left: 0,
-            top: 0,
-            child: Container(
-              width: 412,
-              height: 127,
-              clipBehavior: Clip.hardEdge,
-              decoration: const BoxDecoration(
-                color: Color(0xFFFFFA96),
-                borderRadius: BorderRadius.vertical(
-                  bottom: Radius.circular(20),
-                ),
-              ),
-            ),
-          ),
-          Positioned(
-            left: 0,
-            top: 0,
-            child: Container(
-              width: 360,
-              height: 115,
-              clipBehavior: Clip.hardEdge,
-              decoration: const BoxDecoration(
-                borderRadius: BorderRadius.vertical(
-                  bottom: Radius.circular(20),
-                ),
-              ),
-              child: Stack(
-                clipBehavior: Clip.none,
-                children: [
-                  Positioned(
-                    left: -100,
-                    top: -118,
-                    child: Image.network(
-                      'https://storage.googleapis.com/codeless-dev.appspot.com/uploads%2Fimages%2FTeD8q4fMRDdW3VSyJEbH%2F1979e4809a9158f955c1fd7b58386847.png',
-                      width: 307,
-                      height: 254,
-                      fit: BoxFit.contain,
-                    ),
-                  )
-                ],
-              ),
-            ),
-          ),
-          Positioned(
-            left: 35,
-            top: 66,
-            child: Material(
-              type: MaterialType.transparency,
-              clipBehavior: Clip.antiAlias,
-              child: InkWell(
-                onTap: () {
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (context) => CatalogList(),
-                    ),
-                  );
-                },
-                overlayColor: const MaterialStatePropertyAll<Color>(
-                  Color(0x0c7f7f7f),
-                ),
-                child: Container(
-                  width: 24,
-                  height: 24,
-                  clipBehavior: Clip.hardEdge,
-                  decoration: const BoxDecoration(),
-                  child: Stack(
-                    clipBehavior: Clip.none,
-                    children: [
-                      Positioned(
-                        left: 4,
-                        top: 4,
-                        child: Image.network(
-                          'https://storage.googleapis.com/codeless-dev.appspot.com/uploads%2Fimages%2FTeD8q4fMRDdW3VSyJEbH%2F27779bc9b3ca41161ea5511599390cdd.png',
-                          width: 16,
-                          height: 16,
-                          fit: BoxFit.contain,
+                Positioned(
+                  left: 0 * fem,
+                  top: 0 * fem,
+                  child: Container(
+                    width: 412 * fem,
+                    height: 127 * fem,
+                    child: Stack(
+                      children: [
+                        Positioned(
+                          left: 0 * fem,
+                          top: 0 * fem,
+                          child: Container(
+                            width: 412 * fem,
+                            height: 127 * fem,
+                            decoration: BoxDecoration(
+                              color: Color(0xfffffa96),
+                              borderRadius: BorderRadius.only(
+                                bottomRight: Radius.circular(20 * fem),
+                                bottomLeft: Radius.circular(20 * fem),
+                              ),
+                            ),
+                            child: Align(
+                              alignment: Alignment.topLeft,
+                              child: SizedBox(
+                                width: 360 * fem,
+                                height: 115 * fem,
+                                child: Image.asset(
+                                  'assets/page-1/images/mask-group.png',
+                                  width: 360 * fem,
+                                  height: 115 * fem,
+                                ),
+                              ),
+                            ),
+                          ),
                         ),
-                      )
-                    ],
+                        Positioned(
+                          left: 35.4800109863 * fem,
+                          top: 66 * fem,
+                          child: Align(
+                            child: SizedBox(
+                              width: 24 * fem,
+                              height: 24 * fem,
+                              child: TextButton(
+                                onPressed: () {
+                                  Navigator.of(context).push(
+                                    MaterialPageRoute(
+                                      builder: (context) => CatalogList(),
+                                    ),
+                                  );
+                                },
+                                style: TextButton.styleFrom(
+                                  padding: EdgeInsets.zero,
+                                ),
+                                child: Image.asset(
+                                  'assets/page-1/images/Group 25.png',
+                                  width: 24 * fem,
+                                  height: 24 * fem,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                        Positioned(
+                          left: 150 * fem,
+                          top: 66 * fem,
+                          child: Align(
+                            child: SizedBox(
+                              width: 200 * fem,
+                              height: 33 * fem,
+                              child: Text(
+                                'Giống lúa',
+                                style: SafeGoogleFont(
+                                  'Noto Sans',
+                                  fontSize: 24 * ffem,
+                                  fontWeight: FontWeight.w600,
+                                  height: 1.3625 * ffem / fem,
+                                  color: Color(0xff000000),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
-              ),
-            ),
-          ),
-          Positioned(
-            left: 149,
-            top: 65,
-            child: Text(
-              'Giống lúa',
-              style: GoogleFonts.getFont(
-                'Noto Sans',
-                color: Colors.black,
-                fontSize: 24,
-                fontWeight: FontWeight.w600,
-              ),
-            ),
-          ),
-          Positioned(
-            left: 26,
-            top: 837,
-            child: Container(
-              width: 361,
-              height: 37,
-              clipBehavior: Clip.hardEdge,
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(31),
-              ),
-            ),
-          ),
-          Positioned(
-            left: 44,
-            top: 845,
-            child: Container(
-              width: 20,
-              height: 20,
-              clipBehavior: Clip.hardEdge,
-              decoration: const BoxDecoration(),
-              child: Stack(
-                clipBehavior: Clip.none,
-                children: [
-                  Positioned(
-                    left: 3,
-                    top: 3,
-                    child: Image.network(
-                      'https://storage.googleapis.com/codeless-dev.appspot.com/uploads%2Fimages%2FTeD8q4fMRDdW3VSyJEbH%2Ff5220da68e64acaeefe565a1504a72ff.png',
-                      width: 15,
-                      height: 15,
-                      fit: BoxFit.contain,
+                Positioned(
+                  left: 72,
+                  top: 845,
+                  child: SizedBox(
+                    width: 69,
+                    child: Text(
+                      'Tìm kiếm',
+                      style: GoogleFonts.getFont(
+                        'Noto Sans',
+                        color: const Color(0xFF919191),
+                        fontSize: 14,
+                        fontWeight: FontWeight.w600,
+                      ),
                     ),
-                  )
-                ],
-              ),
+                  ),
+                )
+              ],
             ),
           ),
-          Positioned(
-            left: 72,
-            top: 845,
-            child: SizedBox(
-              width: 69,
-              child: Text(
-                'Tìm kiếm',
-                style: GoogleFonts.getFont(
-                  'Noto Sans',
-                  color: const Color(0xFF919191),
-                  fontSize: 14,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-            ),
-          )
-        ],
+        ),
       ),
     );
   }

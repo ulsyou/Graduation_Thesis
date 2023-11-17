@@ -1,20 +1,16 @@
 const express = require("express");
 const router = express.Router();
 const Pesticide = require('../models/pesticides');
-const multer = require("multer");
+const upload = require('../config/upload');
 
-// Set up multer for file uploads
-const upload = multer({ 
-    dest: './uploads/',
-    limits: { 
-        fileSize: 50 * 1024 * 1024,
-        fieldSize: 50 * 1024 * 1024 
-    }, 
-});
-
-router.post("/create/pesticide", async (req, res) => {
+router.post("/create/pesticide", upload.single('image'), async (req, res) => {
+    let treatingDiseases = req.body.treatingDiseases.split(',');
     try {
-        const newPesticide = new Pesticide(req.body);
+        const newPesticide = new Pesticide({
+            ...req.body,
+            treatingDiseases: treatingDiseases,
+            image: req.file ? req.file.filename : req.body.image,
+        });
 
         const savedPesticide = await newPesticide.save();
         res.status(201).json(savedPesticide);
@@ -41,11 +37,16 @@ router.get("/pesticide/:id", async (req, res) => {
     }
 });
 
-router.patch("/update/pesticide/:id", async (req, res) => {
+router.patch("/update/pesticide/:id", upload.single('image'), async (req, res) => {
+    let treatingDiseases = req.body.treatingDiseases.split(',');
     try {
         const updatedPesticide = await Pesticide.findByIdAndUpdate(
             req.params.id,
-            req.body,
+            {
+              ...req.body,
+              treatingDiseases: treatingDiseases,
+              image: req.file ? req.file.filename : req.body.image,
+            },
             { new: true }
         );
         return res.status(200).json({ message: "Pesticide updated successfully" });

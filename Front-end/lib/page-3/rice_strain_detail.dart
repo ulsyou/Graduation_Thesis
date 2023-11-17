@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:http/http.dart' as http;
 import 'package:myapp/page-3/rice_strains.dart';
 
 class RiceStrainDetail extends StatefulWidget {
-  const RiceStrainDetail({super.key});
+  final Map<String, dynamic> strainData;
+
+  RiceStrainDetail({required this.strainData});
 
   @override
   _RiceStrainDetailState createState() => _RiceStrainDetailState();
@@ -11,6 +14,7 @@ class RiceStrainDetail extends StatefulWidget {
 
 class _RiceStrainDetailState extends State<RiceStrainDetail> {
   bool isHidden = true;
+  List<Map<String, dynamic>> strains = [];
 
 // Hàm để hiển thị phần xác nhận xóa
   void showPositioned() {
@@ -24,6 +28,37 @@ class _RiceStrainDetailState extends State<RiceStrainDetail> {
     setState(() {
       isHidden = true;
     });
+  }
+
+  // Hàm gọi API để xóa
+  Future<void> deleteStrain() async {
+    final strainId = widget.strainData['_id'];
+    final apiUrl = Uri.parse(
+        'http://10.0.2.2:5000/rice-strain/delete/riceStrain/$strainId');
+
+    try {
+      final response = await http.delete(
+        apiUrl,
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+      );
+
+      if (response.statusCode == 200) {
+        setState(() {
+          strains.removeWhere((strain) => strain['_id'] == strainId);
+        });
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => RiceStrains()),
+        );
+      } else {
+        print('Failed to delete strain: ${response.statusCode}');
+        print('Error response body: ${response.body}');
+      }
+    } catch (error) {
+      print('Error deleting strain: $error');
+    }
   }
 
   @override
@@ -47,8 +82,8 @@ class _RiceStrainDetailState extends State<RiceStrainDetail> {
               clipBehavior: Clip.hardEdge,
               decoration: BoxDecoration(
                 image: const DecorationImage(
-                  image: NetworkImage(
-                    'https://firebasestorage.googleapis.com/v0/b/codeless-app.appspot.com/o/projects%2FTeD8q4fMRDdW3VSyJEbH%2F179800e3ecb133fbb531b822ceb94009dc1a8493yuki-ho-_YGqbbZEmMI-unsplash%201.png?alt=media&token=e0c65e56-9a06-4bc0-98ba-fe3cd0a7fd06',
+                  image: AssetImage(
+                    'assets/page-1/images/yuki-ho-ygqbbzemmi-unsplash-1-bg.png',
                   ),
                   fit: BoxFit.none,
                   alignment: Alignment.centerLeft,
@@ -106,10 +141,10 @@ class _RiceStrainDetailState extends State<RiceStrainDetail> {
               borderRadius: BorderRadius.circular(20),
               clipBehavior: Clip.hardEdge,
               child: Image.network(
-                'https://firebasestorage.googleapis.com/v0/b/codeless-app.appspot.com/o/projects%2FTeD8q4fMRDdW3VSyJEbH%2Ff4568d422a6c0ec14a0567d726b1ac9096212c2aRectangle%2033.png?alt=media&token=870ef55d-668b-4282-981c-873a3207df50',
+                widget.strainData['image'],
                 width: 318,
                 height: 180,
-                fit: BoxFit.cover,
+                fit: BoxFit.fill,
               ),
             ),
           ),
@@ -146,7 +181,7 @@ class _RiceStrainDetailState extends State<RiceStrainDetail> {
               width: 310,
               height: 147,
               child: Text(
-                'Chiều cao cây 95 - 100 cm, lá đòng hơi to bản, đứng, đẻ nhánh khỏe, tập trung, gọn khóm. Giống VNR20 thấp cây chống đổ tốt, chịu thâm canh, chống chịu trung bình với một số sâu bệnh hại chính, phạm vi thích ứng rộng. Năng suất trung bình 7,0- 7,5 tấn/ha, thâm canh đạt 8,0- 8,5 tấn/ha.',
+                widget.strainData['characteristics'] ?? 'N/A',
                 style: GoogleFonts.getFont(
                   'Noto Sans',
                   color: Colors.black,
@@ -184,11 +219,11 @@ class _RiceStrainDetailState extends State<RiceStrainDetail> {
           ),
           Positioned(
             left: 188,
-            top: 482,
+            top: 490,
             child: SizedBox(
               width: 178,
               child: Text(
-                'Công ty cổ phần tập đoàn giống cây trồng Việt Nam',
+                widget.strainData['supplier'] ?? 'N/A',
                 style: GoogleFonts.getFont(
                   'Noto Sans',
                   color: Colors.black,
@@ -229,12 +264,12 @@ class _RiceStrainDetailState extends State<RiceStrainDetail> {
           ),
           Positioned(
             left: 191,
-            top: 420,
+            top: 430,
             child: SizedBox(
               width: 159,
               height: 39,
               child: Text(
-                'Giống lúa thuần năng suất chất lượng VNR20',
+                widget.strainData['strainName'] ?? 'N/A',
                 style: GoogleFonts.getFont(
                   'Noto Sans',
                   color: Colors.black,
@@ -271,10 +306,10 @@ class _RiceStrainDetailState extends State<RiceStrainDetail> {
             ),
           ),
           Positioned(
-            left: 258,
+            left: 250,
             top: 377,
             child: Text(
-              'RC00002',
+              widget.strainData['strainCode'] ?? 'N/A',
               style: GoogleFonts.getFont(
                 'Noto Sans',
                 color: Colors.black,
@@ -505,7 +540,9 @@ class _RiceStrainDetailState extends State<RiceStrainDetail> {
                     ),
                   if (!isHidden)
                     GestureDetector(
-                      onTap: () {},
+                      onTap: () {
+                        deleteStrain();
+                      },
                       child: Stack(
                         children: [
                           Positioned(
@@ -528,7 +565,9 @@ class _RiceStrainDetailState extends State<RiceStrainDetail> {
                             child: Material(
                               type: MaterialType.transparency,
                               child: InkWell(
-                                onTap: () {},
+                                onTap: () {
+                                  deleteStrain();
+                                },
                                 overlayColor:
                                     const MaterialStatePropertyAll<Color>(
                                   Color(0x0c7f7f7f),

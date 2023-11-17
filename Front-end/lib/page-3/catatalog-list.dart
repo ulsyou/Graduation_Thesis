@@ -37,8 +37,8 @@ class CatalogList extends StatelessWidget {
                   clipBehavior: Clip.hardEdge,
                   decoration: BoxDecoration(
                     image: const DecorationImage(
-                      image: NetworkImage(
-                        'https://firebasestorage.googleapis.com/v0/b/codeless-app.appspot.com/o/projects%2FTeD8q4fMRDdW3VSyJEbH%2F179800e3ecb133fbb531b822ceb94009dc1a8493yuki-ho-_YGqbbZEmMI-unsplash%201.png?alt=media&token=759b48f1-2892-4f97-881d-321d3747aed1',
+                      image: AssetImage(
+                        'assets/page-1/images/yuki-ho-ygqbbzemmi-unsplash-1-bg.png'
                       ),
                       fit: BoxFit.none,
                       alignment: Alignment.centerLeft,
@@ -92,7 +92,7 @@ class CatalogList extends StatelessWidget {
                 ),
               ),
               Positioned(
-                left: 189,
+                left: 205,
                 top: 920,
                 child: Material(
                   type: MaterialType.transparency,
@@ -119,11 +119,11 @@ class CatalogList extends StatelessWidget {
               Positioned(
                 left: 97,
                 top: 911,
-                child: Image.network(
-                  'https://firebasestorage.googleapis.com/v0/b/codeless-app.appspot.com/o/projects%2FTeD8q4fMRDdW3VSyJEbH%2Fa4b842cfe3a494a83e3dbae5656ac3632bc4ff9bactivities%201.png?alt=media&token=d2185430-9e50-4b5c-912e-38af2b7b87de',
+                child: Image.asset(
+                  'assets/page-1/images/to-do-list-1.png',
                   width: 50,
                   height: 45,
-                  fit: BoxFit.cover,
+                  fit: BoxFit.fill,
                 ),
               ),
               Positioned(
@@ -157,7 +157,7 @@ class CatalogList extends StatelessWidget {
                 ),
               ),
               Positioned(
-                left: 189,
+                left: 205,
                 top: 766,
                 child: Material(
                   type: MaterialType.transparency,
@@ -185,11 +185,11 @@ class CatalogList extends StatelessWidget {
               Positioned(
                 left: 97,
                 top: 769,
-                child: Image.network(
-                  'https://firebasestorage.googleapis.com/v0/b/codeless-app.appspot.com/o/projects%2FTeD8q4fMRDdW3VSyJEbH%2F368bcd77cf3f7e8e861f61bc717d5070233604e2pesticide%201.png?alt=media&token=f858c731-397c-4a26-befc-396c2cefba07',
+                child: Image.asset(
+                  'assets/page-1/images/pesticide-1-1.png',
                   width: 50,
                   height: 45,
-                  fit: BoxFit.cover,
+                  fit: BoxFit.fill,
                 ),
               ),
               Positioned(
@@ -223,7 +223,7 @@ class CatalogList extends StatelessWidget {
                 ),
               ),
               Positioned(
-                left: 189,
+                left: 205,
                 top: 632,
                 child: Material(
                   type: MaterialType.transparency,
@@ -251,11 +251,11 @@ class CatalogList extends StatelessWidget {
               Positioned(
                 left: 97,
                 top: 622,
-                child: Image.network(
-                  'https://firebasestorage.googleapis.com/v0/b/codeless-app.appspot.com/o/projects%2FTeD8q4fMRDdW3VSyJEbH%2F3b1ac47e8dc0b8987fc5e018e44d9fa7526baef0fields%201.png?alt=media&token=5b5547bb-ae9e-490a-baa2-2fe5b21139ea',
+                child: Image.asset(
+                  'assets/page-1/images/farm-1.png',
                   width: 50,
                   height: 45,
-                  fit: BoxFit.cover,
+                  fit: BoxFit.fill,
                 ),
               ),
               Positioned(
@@ -289,7 +289,7 @@ class CatalogList extends StatelessWidget {
                 ),
               ),
               Positioned(
-                left: 189,
+                left: 205,
                 top: 488,
                 child: Material(
                   type: MaterialType.transparency,
@@ -317,11 +317,11 @@ class CatalogList extends StatelessWidget {
               Positioned(
                 left: 97,
                 top: 478,
-                child: Image.network(
-                  'https://firebasestorage.googleapis.com/v0/b/codeless-app.appspot.com/o/projects%2FTeD8q4fMRDdW3VSyJEbH%2F52c64d3e85714cd434ab199c946650a0ed52239apests%201.png?alt=media&token=9bfe7e00-89fa-42d8-b769-1492e25443e2',
+                child: Image.asset(
+                  'assets/page-1/images/diseases-1.png',
                   width: 50,
                   height: 45,
-                  fit: BoxFit.cover,
+                  fit: BoxFit.fill,
                 ),
               ),
               Positioned(
@@ -334,7 +334,7 @@ class CatalogList extends StatelessWidget {
                     onTap: () {
                       Navigator.of(context).push(
                         MaterialPageRoute(
-                          builder: (context) => Fertilizers(),
+                          builder: (context) => Fertilizer(),
                         ),
                       );
                     },
@@ -355,12 +355,18 @@ class CatalogList extends StatelessWidget {
                 ),
               ),
               Positioned(
-                left: 189,
+                left: 205,
                 top: 344,
                 child: Material(
                   type: MaterialType.transparency,
                   child: InkWell(
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => Fertilizer(),
+                        ),
+                      );
+                    },
                     overlayColor: const MaterialStatePropertyAll<Color>(
                       Color(0x0c7f7f7f),
                     ),
@@ -383,11 +389,11 @@ class CatalogList extends StatelessWidget {
               Positioned(
                 left: 97,
                 top: 335,
-                child: Image.network(
-                  'https://firebasestorage.googleapis.com/v0/b/codeless-app.appspot.com/o/projects%2FTeD8q4fMRDdW3VSyJEbH%2Fcf79d1bcfa5c98308e4ccfe714e7f849837c73b3fertilizer%201.png?alt=media&token=c2d9af38-40ba-4cad-85ae-d17849363f50',
+                child: Image.asset(
+                  'assets/page-1/images/fertilizer-1.png',
                   width: 50,
                   height: 50,
-                  fit: BoxFit.cover,
+                  fit: BoxFit.fill,
                 ),
               ),
               Positioned(
@@ -421,7 +427,7 @@ class CatalogList extends StatelessWidget {
                 ),
               ),
               Positioned(
-                left: 189,
+                left: 205,
                 top: 198,
                 child: Material(
                   type: MaterialType.transparency,
@@ -455,13 +461,14 @@ class CatalogList extends StatelessWidget {
               Positioned(
                 left: 97,
                 top: 188,
-                child: Image.network(
-                  'https://firebasestorage.googleapis.com/v0/b/codeless-app.appspot.com/o/projects%2FTeD8q4fMRDdW3VSyJEbH%2Fccd0df66955b662a32371d0542f78a132edb86b3wheat%201.png?alt=media&token=d64f25ba-ffce-4bfe-9c07-ddafc57ac5d7',
+                child: Image.asset(
+                  'assets/page-1/images/wheat-1.png',
                   width: 50,
                   height: 50,
-                  fit: BoxFit.cover,
+                  fit: BoxFit.fill,
                 ),
               ),
+
               Positioned(
                 left: 0,
                 top: 0,
@@ -482,7 +489,7 @@ class CatalogList extends StatelessWidget {
                 top: 0,
                 child: Container(
                   width: 412,
-                  height: 127,
+                  height: 115,
                   clipBehavior: Clip.hardEdge,
                   decoration: const BoxDecoration(
                     borderRadius: BorderRadius.vertical(
@@ -493,12 +500,10 @@ class CatalogList extends StatelessWidget {
                     clipBehavior: Clip.none,
                     children: [
                       Positioned(
-                        left: -115,
-                        top: -130,
-                        child: Image.network(
-                          'https://storage.googleapis.com/codeless-dev.appspot.com/uploads%2Fimages%2FTeD8q4fMRDdW3VSyJEbH%2F1080b1dc2e243ca97ebafe6066c46942.png',
+                        child: Image.asset(
+                          'assets/page-1/images/mask-group.png',
                           width: 351,
-                          height: 281,
+                          height: 254,
                           fit: BoxFit.contain,
                         ),
                       )
@@ -524,8 +529,8 @@ class CatalogList extends StatelessWidget {
                       Color(0x0c7f7f7f),
                     ),
                     child: Container(
-                      width: 24,
-                      height: 24,
+                      width: 28,
+                      height: 28,
                       clipBehavior: Clip.hardEdge,
                       decoration: const BoxDecoration(),
                       child: Stack(
@@ -534,10 +539,10 @@ class CatalogList extends StatelessWidget {
                           Positioned(
                             left: 4,
                             top: 4,
-                            child: Image.network(
-                              'https://storage.googleapis.com/codeless-dev.appspot.com/uploads%2Fimages%2FTeD8q4fMRDdW3VSyJEbH%2F27779bc9b3ca41161ea5511599390cdd.png',
-                              width: 16,
-                              height: 16,
+                            child: Image.asset(
+                              'assets/page-1/images/Group 25.png',
+                              width: 24,
+                              height: 24,
                               fit: BoxFit.contain,
                             ),
                           )
@@ -547,14 +552,14 @@ class CatalogList extends StatelessWidget {
                   ),
                 ),
               ),
+
               Positioned(
                 left: 145,
                 top: 65,
                 child: SizedBox(
-                  width: 140,
-                  height: 38,
+                  width: 240,
                   child: Text(
-                    'Danh mục ',
+                    'Danh mục',
                     style: GoogleFonts.getFont(
                       'Noto Sans',
                       color: Colors.black,

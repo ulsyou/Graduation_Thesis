@@ -30,10 +30,19 @@ const pesticideSchema = mongoose.Schema({
         type: String,
         required: true
     },
-    treatingDiseases: [{
-        type: String,
-        required: true
-    }]
+    treatingDiseases: {
+    type: [String],
+    enum: [
+        "Bệnh khô vằn",
+        "Rầy nâu",
+        "Sâu đục thân",
+        "Sâu cuốn lá",
+        "Lùn xoắn là",
+        "Bệnh đạo ôn",
+        "Bệnh đốm nâu",
+    ],
+    required: true,
+    }
 });
 
 pesticideSchema.pre("save", async function (next) {

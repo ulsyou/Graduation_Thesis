@@ -159,7 +159,7 @@ class _SeasonsState extends State<Seasons> {
                                           borderRadius: BorderRadius.circular(20 * fem),
                                           child: Image.network(
                                             season['image'],
-                                            fit: BoxFit.scaleDown,
+                                              fit: BoxFit.fill,
                                           ),
                                         ),
                                       ),
@@ -293,6 +293,7 @@ class _SeasonsState extends State<Seasons> {
                         }),
                   ),
                 ),
+
                 Positioned(
                   left: 0 * fem,
                   top: 0 * fem,

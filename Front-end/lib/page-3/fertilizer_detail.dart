@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-
+import 'package:http/http.dart' as http;
 import 'fertilizers.dart';
 
 class FertilizerDetail extends StatefulWidget {
-  const FertilizerDetail({super.key});
+  final Map<String, dynamic> fertilizerData;
+
+  FertilizerDetail({required this.fertilizerData});
 
   @override
   _FertilizerDetail createState() => _FertilizerDetail();
@@ -12,6 +14,7 @@ class FertilizerDetail extends StatefulWidget {
 
 class _FertilizerDetail extends State<FertilizerDetail> {
   bool isHidden = true;
+  List<Map<String, dynamic>> fertilizers = [];
 
 // Hàm để hiển thị phần xác nhận xóa
   void showPositioned() {
@@ -25,6 +28,37 @@ class _FertilizerDetail extends State<FertilizerDetail> {
     setState(() {
       isHidden = true;
     });
+  }
+
+  // Hàm gọi API để xóa
+  Future<void> deleteFertilizer() async {
+    final fertilizerId = widget.fertilizerData['_id'];
+    final apiUrl = Uri.parse(
+        'http://10.0.2.2:5000/fertilizer/delete/fertilizer/$fertilizerId');
+
+    try {
+      final response = await http.delete(
+        apiUrl,
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+      );
+
+      if (response.statusCode == 200) {
+        setState(() {
+          fertilizers.removeWhere((fertilizer) => fertilizer['_id'] == fertilizerId);
+        });
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => Fertilizer()),
+        );
+      } else {
+        print('Failed to delete fertilizer: ${response.statusCode}');
+        print('Error response body: ${response.body}');
+      }
+    } catch (error) {
+      print('Error deleting fertilizer: $error');
+    }
   }
 
   @override
@@ -50,8 +84,8 @@ class _FertilizerDetail extends State<FertilizerDetail> {
                   clipBehavior: Clip.hardEdge,
                   decoration: BoxDecoration(
                     image: const DecorationImage(
-                      image: NetworkImage(
-                        'https://firebasestorage.googleapis.com/v0/b/codeless-app.appspot.com/o/projects%2FTeD8q4fMRDdW3VSyJEbH%2F179800e3ecb133fbb531b822ceb94009dc1a8493yuki-ho-_YGqbbZEmMI-unsplash%201.png?alt=media&token=2a456bfd-d5da-4a7a-af4e-465ac52885c1',
+                      image: AssetImage(
+                        'assets/page-1/images/yuki-ho-ygqbbzemmi-unsplash-1-bg.png',
                       ),
                       fit: BoxFit.none,
                       alignment: Alignment.centerLeft,
@@ -81,7 +115,7 @@ class _FertilizerDetail extends State<FertilizerDetail> {
                   borderRadius: BorderRadius.circular(20),
                   clipBehavior: Clip.hardEdge,
                   child: Image.network(
-                    'https://firebasestorage.googleapis.com/v0/b/codeless-app.appspot.com/o/projects%2FTeD8q4fMRDdW3VSyJEbH%2Ff4568d422a6c0ec14a0567d726b1ac9096212c2aRectangle%2032.png?alt=media&token=da88f7b8-4b3c-403f-9c42-95343ca60ffa',
+                    widget.fertilizerData['image'],
                     width: 318,
                     height: 180,
                     fit: BoxFit.cover,
@@ -146,7 +180,7 @@ class _FertilizerDetail extends State<FertilizerDetail> {
                 left: 190,
                 top: 705,
                 child: Text(
-                  'Bón 250-500 kg/ha/vụ',
+                  widget.fertilizerData['instructions'] ?? 'N/A',
                   style: GoogleFonts.getFont(
                     'Noto Sans',
                     color: Colors.black,
@@ -254,12 +288,12 @@ class _FertilizerDetail extends State<FertilizerDetail> {
               ),
               Positioned(
                 left: 311,
-                top: 809,
+                top: 783,
                 child: SizedBox(
                   width: 27,
                   height: 22,
                   child: Text(
-                    '0',
+                    widget.fertilizerData['nutrients']['kali'] ?? 'N/A',
                     style: GoogleFonts.getFont(
                       'Noto Sans',
                       color: Colors.black,
@@ -271,12 +305,12 @@ class _FertilizerDetail extends State<FertilizerDetail> {
               ),
               Positioned(
                 left: 311,
-                top: 783,
+                top: 809,
                 child: SizedBox(
                   width: 27,
                   height: 22,
                   child: Text(
-                    '16',
+                    widget.fertilizerData['nutrients']['nitro'] ?? 'N/A',
                     style: GoogleFonts.getFont(
                       'Noto Sans',
                       color: Colors.black,
@@ -293,7 +327,7 @@ class _FertilizerDetail extends State<FertilizerDetail> {
                   width: 27,
                   height: 22,
                   child: Text(
-                    '0',
+                    widget.fertilizerData['nutrients']['phosphate'] ?? 'N/A',
                     style: GoogleFonts.getFont(
                       'Noto Sans',
                       color: Colors.black,
@@ -310,7 +344,7 @@ class _FertilizerDetail extends State<FertilizerDetail> {
                   width: 27,
                   height: 22,
                   child: Text(
-                    '0',
+                    widget.fertilizerData['nutrients']['others'] ?? 'N/A',
                     style: GoogleFonts.getFont(
                       'Noto Sans',
                       color: Colors.black,
@@ -353,7 +387,7 @@ class _FertilizerDetail extends State<FertilizerDetail> {
                   width: 310,
                   height: 103,
                   child: Text(
-                    'Supe Lân Long Thành goài Lân còn có vôi, Lưu Huỳnh, Silic có tác dụng khử chua đất, hạ phèn, giúp cây trồng phát triển bộ rễ, kích thích sự phân hoá mầm hoa, sai bông chắc hạt.',
+                    widget.fertilizerData['instructions'] ?? 'N/A',
                     style: GoogleFonts.getFont(
                       'Noto Sans',
                       color: Colors.black,
@@ -395,7 +429,7 @@ class _FertilizerDetail extends State<FertilizerDetail> {
                 child: SizedBox(
                   width: 145,
                   child: Text(
-                    'Công ty cổ phần phân bón miền Nam',
+                    widget.fertilizerData['supplier'] ?? 'N/A',
                     style: GoogleFonts.getFont(
                       'Noto Sans',
                       color: Colors.black,
@@ -437,7 +471,7 @@ class _FertilizerDetail extends State<FertilizerDetail> {
                 child: SizedBox(
                   width: 145,
                   child: Text(
-                    'Phân bón SUPE LÂN Long Thành',
+                    widget.fertilizerData['fertilizerName'] ?? 'N/A',
                     style: GoogleFonts.getFont(
                       'Noto Sans',
                       color: Colors.black,
@@ -477,7 +511,7 @@ class _FertilizerDetail extends State<FertilizerDetail> {
                 left: 244,
                 top: 377,
                 child: Text(
-                  'RC00002',
+                  widget.fertilizerData['fertilizerCode'] ?? 'N/A',
                   style: GoogleFonts.getFont(
                     'Noto Sans',
                     color: Colors.black,
@@ -540,7 +574,7 @@ class _FertilizerDetail extends State<FertilizerDetail> {
                     onTap: () {
                       Navigator.of(context).push(
                         MaterialPageRoute(
-                          builder: (context) => Fertilizers(),
+                          builder: (context) => Fertilizer(),
                         ),
                       );
                     },
@@ -688,7 +722,9 @@ class _FertilizerDetail extends State<FertilizerDetail> {
                         ),
                       if (!isHidden)
                         GestureDetector(
-                          onTap: () {},
+                          onTap: () {
+                            deleteFertilizer();
+                          },
                           child: Stack(
                             children: [
                               Positioned(
@@ -711,7 +747,9 @@ class _FertilizerDetail extends State<FertilizerDetail> {
                                 child: Material(
                                   type: MaterialType.transparency,
                                   child: InkWell(
-                                    onTap: () {},
+                                    onTap: () {
+                                      deleteFertilizer();
+                                    },
                                     overlayColor:
                                         const MaterialStatePropertyAll<Color>(
                                       Color(0x0c7f7f7f),

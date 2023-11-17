@@ -1020,7 +1020,7 @@ class ExpertManagerPage extends StatelessWidget {
                   borderRadius: BorderRadius.circular(25),
                   clipBehavior: Clip.hardEdge,
                   child: Image.asset(
-                    'https://firebasestorage.googleapis.com/v0/b/codeless-app.appspot.com/o/projects%2FTeD8q4fMRDdW3VSyJEbH%2Ff4568d422a6c0ec14a0567d726b1ac9096212c2af4568d422a6c0ec14a0567d726b1ac9096212c2a%202.png?alt=media&token=f71d7625-5523-47ad-a864-9cda950a12cd',
+                    'assets/page-1/images/f4568d422a6c0ec14a0567d726b1ac9096212c2a-1.png',
                     width: 20,
                     height: 20,
                     fit: BoxFit.cover,
@@ -1056,7 +1056,7 @@ class ExpertManagerPage extends StatelessWidget {
                         left: 3,
                         top: 2,
                         child: Image.asset(
-                          'https://storage.googleapis.com/codeless-dev.appspot.com/uploads%2Fimages%2FTeD8q4fMRDdW3VSyJEbH%2Fb586571915a54b6a0f3a7c4f9ddf20c3.png',
+                          'assets/page-1/images/Calendar.png',
                           width: 15,
                           height: 17,
                           fit: BoxFit.contain,

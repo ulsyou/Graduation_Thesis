@@ -11,6 +11,7 @@ const diseaseRoute = require("./routes/disease");
 const fieldRoute = require("./routes/field-sample");
 const pesticideRoute = require("./routes/pesticides");
 const cropSeason = require("./routes/crop-season");
+const activitiesRoute = require("./routes/activities");
 
 // Connect Database
 connectDB();
@@ -39,6 +40,7 @@ app.use("/disease", diseaseRoute);
 app.use("/field", fieldRoute);
 app.use("/pesticide", pesticideRoute);
 app.use("/crops-season", cropSeason);
+app.use("/activities", activitiesRoute);
 app.use('/uploads', express.static('./uploads'));
 
 const port = process.env.PORT || 5000;
