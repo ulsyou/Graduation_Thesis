@@ -1,10 +1,13 @@
 const mongoose = require("mongoose");
 
 const activitiesSchema = mongoose.Schema({
-  _id: mongoose.Schema.Types.ObjectId,
   activitiesCode: {
     type: String,
     unique: true
+  },
+  image: {
+    type: String,
+    required: false,
   },
   activitiesName: {
     type: String,
