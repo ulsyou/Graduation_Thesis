@@ -135,7 +135,7 @@ class CatalogList extends StatelessWidget {
                     onTap: () {
                       Navigator.of(context).push(
                         MaterialPageRoute(
-                          builder: (context) => Pesticides(),
+                          builder: (context) => Pesticide(),
                         ),
                       );
                     },
@@ -161,7 +161,13 @@ class CatalogList extends StatelessWidget {
                 child: Material(
                   type: MaterialType.transparency,
                   child: InkWell(
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => Pesticide(),
+                        ),
+                      );
+                    },
                     overlayColor: const MaterialStatePropertyAll<Color>(
                       Color(0x0c7f7f7f),
                     ),

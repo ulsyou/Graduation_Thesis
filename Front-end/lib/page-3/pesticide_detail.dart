@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:http/http.dart' as http;
 import 'package:myapp/page-3/pesticides.dart';
 
 class PesticideDetail extends StatefulWidget {
-  const PesticideDetail({super.key});
+  final Map<String, dynamic> pesticideData;
+
+  PesticideDetail({required this.pesticideData});
 
   @override
   _PesticideDetail createState() => _PesticideDetail();
@@ -11,6 +14,7 @@ class PesticideDetail extends StatefulWidget {
 
 class _PesticideDetail extends State<PesticideDetail> {
   bool isHidden = true;
+  List<Map<String, dynamic>> pesticides = [];
 
 // Hàm để hiển thị phần xác nhận xóa
   void showPositioned() {
@@ -24,6 +28,38 @@ class _PesticideDetail extends State<PesticideDetail> {
     setState(() {
       isHidden = true;
     });
+  }
+
+  // Hàm gọi API để xóa
+  Future<void> deletePesticide() async {
+    final pesticideId = widget.pesticideData['_id'];
+    final apiUrl = Uri.parse(
+        'http://10.0.2.2:5000/pesticide/delete/pesticide/$pesticideId');
+
+    try {
+      final response = await http.delete(
+        apiUrl,
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+      );
+
+      if (response.statusCode == 200) {
+        setState(() {
+          pesticides
+              .removeWhere((pesticide) => pesticide['_id'] == pesticideId);
+        });
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => Pesticide()),
+        );
+      } else {
+        print('Failed to delete pesticide: ${response.statusCode}');
+        print('Error response body: ${response.body}');
+      }
+    } catch (error) {
+      print('Error deleting pesticide: $error');
+    }
   }
 
   @override
@@ -49,8 +85,8 @@ class _PesticideDetail extends State<PesticideDetail> {
                   clipBehavior: Clip.hardEdge,
                   decoration: BoxDecoration(
                     image: const DecorationImage(
-                      image: NetworkImage(
-                        'https://firebasestorage.googleapis.com/v0/b/codeless-app.appspot.com/o/projects%2FTeD8q4fMRDdW3VSyJEbH%2F179800e3ecb133fbb531b822ceb94009dc1a8493yuki-ho-_YGqbbZEmMI-unsplash%201.png?alt=media&token=603299e0-b308-4769-9cba-9552094b3158',
+                      image: AssetImage(
+                        'assets/page-1/images/yuki-ho-ygqbbzemmi-unsplash-1-bg.png',
                       ),
                       fit: BoxFit.none,
                       alignment: Alignment.centerLeft,
@@ -80,7 +116,7 @@ class _PesticideDetail extends State<PesticideDetail> {
                   borderRadius: BorderRadius.circular(20),
                   clipBehavior: Clip.hardEdge,
                   child: Image.network(
-                    'https://firebasestorage.googleapis.com/v0/b/codeless-app.appspot.com/o/projects%2FTeD8q4fMRDdW3VSyJEbH%2Ff4568d422a6c0ec14a0567d726b1ac9096212c2aRectangle%2032.png?alt=media&token=a5202311-436c-4b78-b0ad-6c1f0ca069cf',
+                    widget.pesticideData['image'],
                     width: 318,
                     height: 180,
                     fit: BoxFit.cover,
@@ -142,12 +178,14 @@ class _PesticideDetail extends State<PesticideDetail> {
                 ),
               ),
               Positioned(
-                left: 91,
-                top: 491,
+                left: 75,
+                top: 495,
                 child: SizedBox(
                   width: 247,
                   child: Text(
-                    'Sâu đục thân bướm 2 chấm hại lúa\nSâu cuốn lá nhỏ hại lúa',
+                    widget.pesticideData['treatingDiseases'] is List
+                        ? (widget.pesticideData['treatingDiseases'] as List).join(', ')
+                        : widget.pesticideData['treatingDiseases'] ?? 'N/A',
                     style: GoogleFonts.getFont(
                       'Noto Sans',
                       color: Colors.black,
@@ -190,7 +228,7 @@ class _PesticideDetail extends State<PesticideDetail> {
                   width: 298,
                   height: 118,
                   child: Text(
-                    'Khi thấy rầy mới xuất hiện, pha 1 gói Chess 20g vào bình 25 lít và phun đều cả cây. Lượng nước phun cho một Hecta thông thường khoảng 400 – 500 lít. Thời gian cách ly: ngừng phun thuốc trước khi thu hoạch 7 ngày.',
+                    widget.pesticideData['usageInstructions'] ?? 'N/A',
                     style: GoogleFonts.getFont(
                       'Noto Sans',
                       color: Colors.black,
@@ -237,7 +275,7 @@ class _PesticideDetail extends State<PesticideDetail> {
                   width: 306,
                   height: 153,
                   child: Text(
-                    'Ches 50WG tác động làm ngăn cản sự di chuyển và chích hút ở côn trùng thông qua quá trình can thiệp vào sự tương tác giữa các dây thần kinh điều khiển cơ,dẫn đến rối loạn và mất khả năng di chuyển đặc biệt là ở chân sau. Đồng thời, ngăn cản việc đưa vòi chích hút vaofmoo thực vật, gây hiện tượng ngán ăn, cuối cùng côn trùng',
+                    widget.pesticideData['function'] ?? 'N/A',
                     style: GoogleFonts.getFont(
                       'Noto Sans',
                       color: Colors.black,
@@ -283,7 +321,7 @@ class _PesticideDetail extends State<PesticideDetail> {
                   width: 296,
                   height: 23,
                   child: Text(
-                    'Chlorantraniliprole: 5%(w/w), phụ gia: 95%',
+                    widget.pesticideData['ingredients'] ?? 'N/A',
                     style: GoogleFonts.getFont(
                       'Noto Sans',
                       color: Colors.black,
@@ -323,7 +361,7 @@ class _PesticideDetail extends State<PesticideDetail> {
                 left: 191,
                 top: 555,
                 child: Text(
-                  'Công ty Du Pont Việt Nam',
+                  widget.pesticideData['supplier'] ?? 'N/A',
                   style: GoogleFonts.getFont(
                     'Noto Sans',
                     color: Colors.black,
@@ -362,7 +400,7 @@ class _PesticideDetail extends State<PesticideDetail> {
                 left: 190,
                 top: 422,
                 child: Text(
-                  'DuponTMprevathon 5SC',
+                  widget.pesticideData['pesticideName'] ?? 'N/A',
                   style: GoogleFonts.getFont(
                     'Noto Sans',
                     color: Colors.black,
@@ -398,10 +436,10 @@ class _PesticideDetail extends State<PesticideDetail> {
                 ),
               ),
               Positioned(
-                left: 252,
+                left: 245,
                 top: 374,
                 child: Text(
-                  'RC00002',
+                  widget.pesticideData['pesticideCode'] ?? 'N/A',
                   style: GoogleFonts.getFont(
                     'Noto Sans',
                     color: Colors.black,
@@ -464,7 +502,7 @@ class _PesticideDetail extends State<PesticideDetail> {
                     onTap: () {
                       Navigator.of(context).push(
                         MaterialPageRoute(
-                          builder: (context) => Pesticides(),
+                          builder: (context) => Pesticide(),
                         ),
                       );
                     },
@@ -472,8 +510,8 @@ class _PesticideDetail extends State<PesticideDetail> {
                       Color(0x0c7f7f7f),
                     ),
                     child: Container(
-                      width: 24,
-                      height: 24,
+                      width: 28,
+                      height: 28,
                       clipBehavior: Clip.hardEdge,
                       decoration: const BoxDecoration(),
                       child: Stack(
@@ -482,10 +520,10 @@ class _PesticideDetail extends State<PesticideDetail> {
                           Positioned(
                             left: 4,
                             top: 4,
-                            child: Image.network(
-                              'https://storage.googleapis.com/codeless-dev.appspot.com/uploads%2Fimages%2FTeD8q4fMRDdW3VSyJEbH%2F27779bc9b3ca41161ea5511599390cdd.png',
-                              width: 16,
-                              height: 16,
+                            child: Image.asset(
+                              'assets/page-1/images/Group 25.png',
+                              width: 24,
+                              height: 24,
                               fit: BoxFit.contain,
                             ),
                           )
@@ -612,7 +650,9 @@ class _PesticideDetail extends State<PesticideDetail> {
                         ),
                       if (!isHidden)
                         GestureDetector(
-                          onTap: () {},
+                          onTap: () {
+                            deletePesticide();
+                          },
                           child: Stack(
                             children: [
                               Positioned(
@@ -635,7 +675,9 @@ class _PesticideDetail extends State<PesticideDetail> {
                                 child: Material(
                                   type: MaterialType.transparency,
                                   child: InkWell(
-                                    onTap: () {},
+                                    onTap: () {
+                                      deletePesticide();
+                                    },
                                     overlayColor:
                                         const MaterialStatePropertyAll<Color>(
                                       Color(0x0c7f7f7f),

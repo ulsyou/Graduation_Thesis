@@ -31,7 +31,7 @@ class Profile extends StatelessWidget {
                   decoration: BoxDecoration(
                     image: const DecorationImage(
                       image: AssetImage(
-                        '',
+                        'assets/page-1/images/yuki-ho-ygqbbzemmi-unsplash-1-bg.png',
                       ),
                       fit: BoxFit.none,
                       alignment: Alignment.centerLeft,
@@ -58,7 +58,7 @@ class Profile extends StatelessWidget {
                 left: 0,
                 top: 15,
                 child: Image.asset(
-                  '',
+                  'assets/page-1/images/Rectangle 2.png',
                   width: 360,
                   height: 198,
                   fit: BoxFit.contain,
@@ -68,7 +68,7 @@ class Profile extends StatelessWidget {
                 left: -167,
                 top: 195,
                 child: Image.asset(
-                  '',
+                  'assets/page-1/images/Group 3.png',
                   width: 663,
                   height: 80,
                   fit: BoxFit.contain,
@@ -81,7 +81,7 @@ class Profile extends StatelessWidget {
                   borderRadius: BorderRadius.circular(75),
                   clipBehavior: Clip.hardEdge,
                   child: Image.asset(
-                    '',
+                    'assets/page-1/images/f4568d422a6c0ec14a0567d726b1ac9096212c2a-1.png',
                     width: 150,
                     height: 150,
                     fit: BoxFit.cover,
@@ -408,7 +408,7 @@ class Profile extends StatelessWidget {
                 left: 171,
                 top: 787,
                 child: Image.asset(
-                  '',
+                  'assets/page-1/images/Ellipse 1.png',
                   width: 70,
                   height: 70,
                   fit: BoxFit.contain,
@@ -458,20 +458,18 @@ class Profile extends StatelessWidget {
                       Color(0x0c7f7f7f),
                     ),
                     child: Container(
-                      width: 24,
-                      height: 24,
+                      width: 28,
+                      height: 28,
                       clipBehavior: Clip.hardEdge,
                       decoration: const BoxDecoration(),
                       child: Stack(
                         clipBehavior: Clip.none,
                         children: [
                           Positioned(
-                            left: 5,
-                            top: 5,
                             child: Image.asset(
-                              '',
-                              width: 14,
-                              height: 14,
+                              'assets/page-1/images/Group 1.png',
+                              width: 24,
+                              height: 24,
                               fit: BoxFit.contain,
                             ),
                           )
@@ -510,8 +508,8 @@ class Profile extends StatelessWidget {
                             left: 4,
                             top: 3,
                             child: Image.asset(
-                              '',
-                              width: 23,
+                              'assets/page-1/images/Home (1).png',
+                              width: 25,
                               height: 25,
                               fit: BoxFit.contain,
                             ),
@@ -545,9 +543,9 @@ class Profile extends StatelessWidget {
                             left: 4,
                             top: 2,
                             child: Image.asset(
-                              '',
-                              width: 21,
-                              height: 23,
+                              'assets/page-1/images/Noti.png',
+                              width: 25,
+                              height: 25,
                               fit: BoxFit.contain,
                             ),
                           )
@@ -580,9 +578,9 @@ class Profile extends StatelessWidget {
                             left: 4,
                             top: 2,
                             child: Image.asset(
-                              '',
-                              width: 21,
-                              height: 23,
+                              'assets/page-1/images/Calendar.png',
+                              width: 25,
+                              height: 25,
                               fit: BoxFit.contain,
                             ),
                           )
@@ -649,7 +647,7 @@ class Profile extends StatelessWidget {
                       decoration: BoxDecoration(
                         image: const DecorationImage(
                           image: AssetImage(
-                            '',
+                            'assets/page-1/images/avt.png',
                           ),
                           fit: BoxFit.cover,
                         ),
