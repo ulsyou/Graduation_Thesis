@@ -68,7 +68,7 @@ class Prediction extends StatelessWidget {
                 height: 303,
                 clipBehavior: Clip.hardEdge,
                 decoration: const BoxDecoration(
-                  color: Color(0x96D9D9D9),
+                  color: Color(0x7FD9D9D9),
                   borderRadius: BorderRadius.vertical(
                     top: Radius.circular(50),
                   ),
