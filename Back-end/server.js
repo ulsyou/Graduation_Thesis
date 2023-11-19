@@ -15,6 +15,8 @@ const fieldRoute = require("./routes/field-sample");
 const pesticideRoute = require("./routes/pesticides");
 const cropSeason = require("./routes/crop-season");
 const activitiesRoute = require("./routes/activities");
+const fileUpload = require('express-fileupload');
+app.use(fileUpload());
 
 // Connect Database
 connectDB();
@@ -47,28 +49,40 @@ app.use("/activities", activitiesRoute);
 app.use('/uploads', express.static('./uploads'));
 
 // Route for processing images
-app.post("/processImage", async (req, res) => {
+app.post('/processImage', async (req, res) => {
   try {
-    const { image } = req.body;
+    const { image } = req.files;
 
-    // Save the base64-encoded image to a temporary file
+    // Save the uploaded image to a temporary file
     const imagePath = path.join(__dirname, 'tempImage.jpg');
-    fs.writeFileSync(imagePath, Buffer.from(image, 'base64'));
-
-    // Call the Flask API using subprocess
-    const pythonScriptPath = 'path/to/your/estimate.py';  // Update with the actual path
-    const command = `python ${pythonScriptPath} --checkpoint_path=path/to/your/checkpoint.pth --image_dir=${imagePath} --csv`;
-
-    exec(command, (error, stdout, stderr) => {
-      if (error) {
-        console.error(`Error: ${stderr}`);
-        res.status(500).json({ error: stderr });
+    image.mv(imagePath, (err) => {
+      if (err) {
+        console.error('Error saving image:', err);
+        res.status(500).json({ error: 'Internal Server Error' });
         return;
       }
 
-      const result = stdout.trim();
-      console.log(`Script output: ${result}`);
-      res.json({ result });
+      // Call the Flask API using subprocess
+      const pythonScriptPath = path.join(__dirname, 'estimate.py');
+      const checkpointPath = path.join(__dirname, 'rice_yield_CNN.pth');
+      const command = `python estimate.py --checkpoint_path ${checkpointPath} --image_dir ${imageDir} --csv`;
+
+      console.log('Server directory:', __dirname);
+      console.log('Python script path:', pythonScriptPath);
+      console.log('Checkpoint path:', checkpointPath);
+
+      exec(command, (error, stdout, stderr) => {
+        console.log(stdout);
+        if (error) {
+          console.error(`Error: ${stderr}`);
+          res.status(500).json({ error: stderr });
+          return;
+        }
+
+        const result = stdout.trim();
+        console.log(`Script output: ${result}`);
+        res.json({ result });
+      });
     });
   } catch (error) {
     console.error('Error processing image:', error.message);

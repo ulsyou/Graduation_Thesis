@@ -486,7 +486,7 @@ class RicePrediction extends StatelessWidget {
             ),
             Positioned(
               left: 108,
-              top: 61,
+              top: 65,
               child: Text(
                 'Dự đoán năng suất',
                 style: GoogleFonts.getFont(

@@ -1,10 +1,103 @@
+import 'dart:io';
+import 'dart:convert';
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:http/http.dart' as http;
+import 'Prediction.dart';
 
 import 'crop_prediction.dart';
 
-class ImagePrediction extends StatelessWidget {
-  const ImagePrediction({super.key});
+class ImagePrediction extends StatefulWidget {
+  const ImagePrediction({Key? key}) : super(key: key);
+
+  @override
+  _ImagePredictionState createState() => _ImagePredictionState();
+}
+
+class _ImagePredictionState extends State<ImagePrediction> {
+  File? _imageFile;
+  String? _predictionResult;
+  double? _yieldGm2;
+  double? _yieldTha;
+
+  Future<void> _selectImage() async {
+    final pickedFile = await ImagePicker().pickImage(source: ImageSource.gallery);
+
+    if (pickedFile != null) {
+      _setImage(File(pickedFile.path));
+      await uploadImage(_imageFile!);
+
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => Prediction(
+            imageFile: _imageFile,
+            predictionResult: _predictionResult,
+            yieldGm2: _yieldGm2 ?? 0.0,
+            yieldTha: _yieldTha ?? 0.0,
+          ),
+        ),
+      );
+    }
+  }
+
+  Future<void> _captureImage() async {
+    final pickedFile = await ImagePicker().pickImage(source: ImageSource.camera);
+
+    if (pickedFile != null) {
+      _setImage(File(pickedFile.path));
+      await uploadImage(_imageFile!);
+
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => Prediction(
+            imageFile: _imageFile,
+            predictionResult: _predictionResult,
+            yieldGm2: _yieldGm2 ?? 0.0,
+            yieldTha: _yieldTha ?? 0.0,
+          ),
+        ),
+      );
+    }
+  }
+
+  void _setImage(File? imageFile) {
+    setState(() {
+      _imageFile = imageFile;
+    });
+  }
+
+
+  Future<void> uploadImage(File imageFile) async {
+    final url = 'http://10.0.2.2:3000/processImage';
+
+    Uint8List fileBytes = await imageFile.readAsBytes();
+
+    var request = http.MultipartRequest('POST', Uri.parse(url));
+    request.files.add(http.MultipartFile.fromBytes('image', fileBytes, filename: 'image.jpg'));
+
+    try {
+      var response = await request.send();
+      if (response.statusCode == 200) {
+        String responseBody = await response.stream.bytesToString();
+        Map<String, dynamic> result = Map<String, dynamic>.from(json.decode(responseBody));
+
+        setState(() {
+          _predictionResult = result['result'];
+          _yieldGm2 = result['yield_gm2'];
+          _yieldTha = result['yield_tha'];
+        });
+      } else {
+        print('Failed to upload image. Status code: ${response.statusCode}');
+      }
+    } catch (e) {
+      print('Error uploading image: $e');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -29,8 +122,8 @@ class ImagePrediction extends StatelessWidget {
                 clipBehavior: Clip.hardEdge,
                 decoration: BoxDecoration(
                   image: const DecorationImage(
-                    image: NetworkImage(
-                      'https://firebasestorage.googleapis.com/v0/b/codeless-app.appspot.com/o/projects%2FbBi0N1EZ1GlEm38rYJyr%2F179800e3ecb133fbb531b822ceb94009dc1a8493yuki-ho-_YGqbbZEmMI-unsplash%201.png?alt=media&token=73b50be2-443f-480a-8ace-22c8ecf94d80',
+                    image: AssetImage(
+                      'assets/page-1/images/yuki-ho-ygqbbzemmi-unsplash-1-bg.png',
                     ),
                     fit: BoxFit.none,
                     alignment: Alignment.centerLeft,
@@ -60,7 +153,9 @@ class ImagePrediction extends StatelessWidget {
                 type: MaterialType.transparency,
                 clipBehavior: Clip.antiAlias,
                 child: InkWell(
-                  onTap: () {},
+                  onTap: () {
+                    _captureImage();
+                  },
                   overlayColor: const MaterialStatePropertyAll<Color>(
                     Color(0x0c7f7f7f),
                   ),
@@ -82,7 +177,9 @@ class ImagePrediction extends StatelessWidget {
               child: Material(
                 type: MaterialType.transparency,
                 child: InkWell(
-                  onTap: () {},
+                  onTap: () {
+                    _captureImage();
+                  },
                   overlayColor: const MaterialStatePropertyAll<Color>(
                     Color(0x0c7f7f7f),
                   ),
@@ -109,7 +206,9 @@ class ImagePrediction extends StatelessWidget {
                 type: MaterialType.transparency,
                 clipBehavior: Clip.antiAlias,
                 child: InkWell(
-                  onTap: () {},
+                  onTap: () {
+                    _selectImage();
+                  },
                   overlayColor: const MaterialStatePropertyAll<Color>(
                     Color(0x0c7f7f7f),
                   ),
@@ -131,7 +230,9 @@ class ImagePrediction extends StatelessWidget {
               child: Material(
                 type: MaterialType.transparency,
                 child: InkWell(
-                  onTap: () {},
+                  onTap: () {
+                    _selectImage();
+                  },
                   overlayColor: const MaterialStatePropertyAll<Color>(
                     Color(0x0c7f7f7f),
                   ),
@@ -158,7 +259,9 @@ class ImagePrediction extends StatelessWidget {
                 type: MaterialType.transparency,
                 clipBehavior: Clip.antiAlias,
                 child: InkWell(
-                  onTap: () {},
+                  onTap: () {
+                    _selectImage();
+                  },
                   overlayColor: const MaterialStatePropertyAll<Color>(
                     Color(0x0c7f7f7f),
                   ),
@@ -167,8 +270,8 @@ class ImagePrediction extends StatelessWidget {
                     height: 100,
                     decoration: const BoxDecoration(
                       image: DecorationImage(
-                        image: NetworkImage(
-                          'https://firebasestorage.googleapis.com/v0/b/codeless-app.appspot.com/o/projects%2FbBi0N1EZ1GlEm38rYJyr%2F57cf041735a0d023efdd4795addb985ad3329a2bRectangle%2050.png?alt=media&token=f8a656ac-7ffa-456a-bfd3-3aaa23d8a29a',
+                        image: AssetImage(
+                          'assets/page-1/images/Rectangle 50.png',
                         ),
                         fit: BoxFit.cover,
                       ),
@@ -184,7 +287,9 @@ class ImagePrediction extends StatelessWidget {
                 type: MaterialType.transparency,
                 clipBehavior: Clip.antiAlias,
                 child: InkWell(
-                  onTap: () {},
+                  onTap: () {
+
+                  },
                   overlayColor: const MaterialStatePropertyAll<Color>(
                     Color(0x0c7f7f7f),
                   ),
@@ -193,8 +298,8 @@ class ImagePrediction extends StatelessWidget {
                     height: 100,
                     decoration: const BoxDecoration(
                       image: DecorationImage(
-                        image: NetworkImage(
-                          'https://firebasestorage.googleapis.com/v0/b/codeless-app.appspot.com/o/projects%2FbBi0N1EZ1GlEm38rYJyr%2F27d5d36351c0117b950f844d8f1ca699149ba33aRectangle%2051.png?alt=media&token=3a705b13-3bae-4af0-be85-4fca267634f0',
+                        image: AssetImage(
+                          'assets/page-1/images/Rectangle 51.png',
                         ),
                         fit: BoxFit.cover,
                       ),
@@ -290,9 +395,9 @@ class ImagePrediction extends StatelessWidget {
             ),
             Positioned(
               left: 113,
-              top: 61,
+              top: 65,
               child: Text(
-                'Sử  dụng hình ảnh',
+                'Sử dụng hình ảnh',
                 style: GoogleFonts.getFont(
                   'Noto Sans',
                   color: Colors.black,
