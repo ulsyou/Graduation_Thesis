@@ -764,8 +764,8 @@ class AddPages extends StatelessWidget {
                           top: 66 * fem,
                           child: Align(
                             child: SizedBox(
-                              width: 24 * fem,
-                              height: 24 * fem,
+                              width: 28 * fem,
+                              height: 28 * fem,
                               child: TextButton(
                                 onPressed: () {
                                   Navigator.of(context).push(

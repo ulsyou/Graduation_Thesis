@@ -1,8 +1,10 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-
 import 'add-pages.dart';
 import 'expert-manager-page.dart';
+import 'package:myapp/login-page.dart';
 
 class Profile extends StatelessWidget {
   const Profile({super.key});
@@ -26,7 +28,7 @@ class Profile extends StatelessWidget {
                 top: -13,
                 child: Container(
                   width: 412,
-                  height: 915,
+                  height: 930,
                   clipBehavior: Clip.hardEdge,
                   decoration: BoxDecoration(
                     image: const DecorationImage(
@@ -47,7 +49,7 @@ class Profile extends StatelessWidget {
                 top: -13,
                 child: Container(
                   width: 412,
-                  height: 915,
+                  height: 930,
                   clipBehavior: Clip.hardEdge,
                   decoration: const BoxDecoration(
                     color: Color(0x84FFFDF4),
@@ -340,11 +342,23 @@ class Profile extends StatelessWidget {
                 child: Container(
                   width: 412,
                   height: 127,
-                  clipBehavior: Clip.hardEdge,
-                  decoration: const BoxDecoration(
-                    color: Color(0xFFFFFA96),
-                    borderRadius: BorderRadius.vertical(
-                      bottom: Radius.circular(20),
+                  decoration: BoxDecoration(
+                    color: Color(0xfffffa96),
+                    borderRadius: BorderRadius.only(
+                      bottomRight: Radius.circular(20),
+                      bottomLeft: Radius.circular(20),
+                    ),
+                  ),
+                  child: Align(
+                    alignment: Alignment.topLeft,
+                    child: SizedBox(
+                      width: 360,
+                      height: 115,
+                      child: Image.asset(
+                        'assets/page-1/images/mask-group.png',
+                        width: 360,
+                        height: 115,
+                      ),
                     ),
                   ),
                 ),
@@ -368,7 +382,7 @@ class Profile extends StatelessWidget {
                         left: -100,
                         top: -118,
                         child: Image.asset(
-                          '',
+                          'assets/page-1/images/mask-group.png',
                           width: 307,
                           height: 254,
                           fit: BoxFit.contain,
@@ -379,7 +393,7 @@ class Profile extends StatelessWidget {
                 ),
               ),
               Positioned(
-                left: 99,
+                left: 30,
                 top: 65,
                 child: Text(
                   'Thông tin cá nhân',
@@ -388,6 +402,37 @@ class Profile extends StatelessWidget {
                     color: Colors.black,
                     fontSize: 24,
                     fontWeight: FontWeight.w600,
+                  ),
+                ),
+              ),
+              Positioned(
+                left: 320,
+                top: 70,
+                child: Align(
+                  child: SizedBox(
+                    width: 93,
+                    height: 20,
+                    child: Material(
+                      child: InkWell(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => Scene()),
+                          );
+                        },
+                        child: Text(
+                          'Đăng xuất',
+                          style: TextStyle(
+                            fontFamily: 'Cabin',
+                            fontSize: 18,
+                            fontWeight: FontWeight.w600,
+                            height: 1.215,
+                            fontStyle: FontStyle.normal,
+                            color: Color(0xff000000),
+                          ),
+                        ),
+                      ),
+                    ),
                   ),
                 ),
               ),

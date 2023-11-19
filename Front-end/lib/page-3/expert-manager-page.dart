@@ -5,6 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 
 import 'add-pages.dart';
 import 'catatalog-list.dart';
+import 'crop_prediction.dart';
 import 'profile.dart';
 import 'season-list.dart';
 
@@ -517,7 +518,13 @@ class ExpertManagerPage extends StatelessWidget {
                   borderRadius: BorderRadius.circular(25),
                   clipBehavior: Clip.antiAlias,
                   child: InkWell(
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => RicePrediction(),
+                        ),
+                      );
+                    },
                     overlayColor: const MaterialStatePropertyAll<Color>(
                       Color(0x0c7f7f7f),
                     ),
@@ -535,7 +542,13 @@ class ExpertManagerPage extends StatelessWidget {
                 child: Material(
                   type: MaterialType.transparency,
                   child: InkWell(
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => RicePrediction(),
+                        ),
+                      );
+                    },
                     overlayColor: const MaterialStatePropertyAll<Color>(
                       Color(0x0c7f7f7f),
                     ),
@@ -571,7 +584,13 @@ class ExpertManagerPage extends StatelessWidget {
                           type: MaterialType.transparency,
                           clipBehavior: Clip.antiAlias,
                           child: InkWell(
-                            onTap: () {},
+                            onTap: () {
+                              Navigator.of(context).push(
+                                MaterialPageRoute(
+                                  builder: (context) => RicePrediction(),
+                                ),
+                              );
+                            },
                             overlayColor: const MaterialStatePropertyAll<Color>(
                               Color(0x0c7f7f7f),
                             ),

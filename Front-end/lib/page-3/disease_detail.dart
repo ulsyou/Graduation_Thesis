@@ -84,8 +84,8 @@ class _DiseaseDetail extends State<DiseaseDetail> {
                   clipBehavior: Clip.hardEdge,
                   decoration: BoxDecoration(
                     image: const DecorationImage(
-                      image: NetworkImage(
-                        'https://firebasestorage.googleapis.com/v0/b/codeless-app.appspot.com/o/projects%2FTeD8q4fMRDdW3VSyJEbH%2F179800e3ecb133fbb531b822ceb94009dc1a8493yuki-ho-_YGqbbZEmMI-unsplash%201.png?alt=media&token=0e68b143-d7bd-4799-abdc-74dfc50c2820',
+                      image: AssetImage(
+                        'assets/page-1/images/yuki-ho-ygqbbzemmi-unsplash-1-bg.png',
                       ),
                       fit: BoxFit.none,
                       alignment: Alignment.centerLeft,
@@ -114,8 +114,8 @@ class _DiseaseDetail extends State<DiseaseDetail> {
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(20),
                   clipBehavior: Clip.hardEdge,
-                  child: Image.network(
-                    'https://firebasestorage.googleapis.com/v0/b/codeless-app.appspot.com/o/projects%2FTeD8q4fMRDdW3VSyJEbH%2Ff4568d422a6c0ec14a0567d726b1ac9096212c2aRectangle%2032.png?alt=media&token=d81587b1-88fb-481e-9c7c-6498eae24250',
+                  child: Image.asset(
+                    'assets/page-1/images/mask-group.png',
                     width: 318,
                     height: 180,
                     fit: BoxFit.cover,

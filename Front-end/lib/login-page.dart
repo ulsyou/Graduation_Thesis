@@ -57,6 +57,8 @@ class _SceneState extends State<Scene> {
         // Decode response JSON
         Map<String, dynamic> responseData = jsonDecode(response.body);
 
+        print('Response data: $responseData');
+
         // Kiểm tra xem có thuộc tính "role" trong dữ liệu hay không
         if (responseData.containsKey('role')) {
           String role = responseData['role'];
