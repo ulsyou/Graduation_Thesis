@@ -16,6 +16,7 @@ class AdminManagerPage extends StatelessWidget {
         child: Container(
           padding: EdgeInsets.fromLTRB(0 * fem, 37 * fem, 0 * fem, 0 * fem),
           width: double.infinity,
+          height: 915,
           decoration: BoxDecoration(
             color: Color(0xffffffff),
             image: DecorationImage(
@@ -46,6 +47,7 @@ class AdminManagerPage extends StatelessWidget {
                 padding:
                     EdgeInsets.fromLTRB(43 * fem, 47 * fem, 37 * fem, 32 * fem),
                 width: double.infinity,
+                height: 798,
                 decoration: BoxDecoration(
                   color: Color(0x8effffff),
                 ),

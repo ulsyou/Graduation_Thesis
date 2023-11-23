@@ -429,7 +429,7 @@ class _AddSeasonState extends State<AddSeason> {
                         ),
                       ),
                       Positioned(
-                        left: 160,
+                        left: 195,
                         top: -6,
                         child: FutureBuilder<List<String>>(
                           future: fetchFieldSamplesFromMongoDB(),
@@ -515,7 +515,7 @@ class _AddSeasonState extends State<AddSeason> {
                         ),
                       ),
                       Positioned(
-                        left: 160,
+                        left: 195,
                         top: -6,
                         child: FutureBuilder<List<String>>(
                           future: fetchRiceStrainsFromMongoDB(),
@@ -623,7 +623,7 @@ class _AddSeasonState extends State<AddSeason> {
                                 style: TextStyle(
                                   fontSize: 16,
                                   fontWeight: FontWeight.w500,
-                                  color: Color(0xb57e7e7e),
+                                  color: Color(0xFF000000),
                                 ),
                               ),
                             );
