@@ -339,7 +339,7 @@ class _SeasonsState extends State<Seasons> {
                                 onPressed: () {
                                   Navigator.of(context).push(
                                     MaterialPageRoute(
-                                      builder: (context) => ExpertManagerPage(),
+                                      builder: (context) => ExpertManagerPage(isNavigatedFromOtherPage: true),
                                     ),
                                   );
                                 },

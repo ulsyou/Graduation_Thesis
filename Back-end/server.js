@@ -30,7 +30,7 @@ app.use(
 
 // Cấu hình tùy chọn cors
 const corsOptions = {
-  origin: "http://10.0.2.2:5000", 
+  origin: "*", 
   methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
   credentials: true,
 };

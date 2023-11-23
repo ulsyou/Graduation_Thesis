@@ -1,16 +1,130 @@
 import 'dart:math';
-
+import 'dart:convert' as convert;
+import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-
+import 'package:geolocator/geolocator.dart';
+import 'package:geocoding/geocoding.dart';
+import 'dart:async';
 import 'add-pages.dart';
 import 'catatalog-list.dart';
 import 'crop_prediction.dart';
 import 'profile.dart';
 import 'season-list.dart';
 
-class ExpertManagerPage extends StatelessWidget {
-  const ExpertManagerPage({super.key});
+class ExpertManagerPage extends StatefulWidget {
+  final bool isNavigatedFromOtherPage;
+
+  ExpertManagerPage({Key? key, this.isNavigatedFromOtherPage = false}) : super(key: key);
+
+  @override
+  _ExpertManagerPageState createState() => _ExpertManagerPageState();
+}
+
+class _ExpertManagerPageState extends State<ExpertManagerPage> {
+  String cityName = '';
+  bool isLoading = true;
+  String error = '';
+  String tempC = '';
+  String uv = '';
+  String humidity = '';
+  String condition = '';
+  String icon = '';
+  Timer? timer;
+
+  @override
+  void initState() {
+     super.initState();
+    if (widget.isNavigatedFromOtherPage) {
+      isLoading = false;
+    }
+    _getCurrentLocation();
+  }
+
+  _getCurrentLocation() async {
+    LocationPermission permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+      if (permission == LocationPermission.denied) {
+        setState(() {
+          error = 'User denied permission to access the device location';
+          isLoading = false;
+        });
+        return;
+      }
+    }
+    try {
+      Position position = await Geolocator.getCurrentPosition(
+          desiredAccuracy: LocationAccuracy.high);
+      print('Position: $position');
+      List<Placemark> placemarks =
+      await placemarkFromCoordinates(position.latitude, position.longitude);
+      print('Placemarks: $placemarks');
+      cityName = placemarks[0].administrativeArea!;
+      startFetchingData(cityName);
+    } catch (e) {
+      setState(() {
+        error = e.toString();
+        isLoading = false;
+      });
+    }
+  }
+
+  Future<Map<String, dynamic>> fetchWeatherData(String cityName) async {
+    print('Fetching weather data for $cityName');
+    final response = await http.get(Uri.parse(
+        'http://api.weatherapi.com/v1/current.json?key=1376e706c2e540de91173325231911&q=$cityName&aqi=no&lang=vi'));
+
+    if (response.statusCode == 200) {
+      String responseBody = convert.utf8.decode(response.bodyBytes);
+      print('Response body: $responseBody');
+
+      Map<String, dynamic> data = convert.jsonDecode(responseBody);
+      print('Decoded data: $data');
+
+      double tempC = data['current']['temp_c'] ?? 0.0;
+      String condition = data['current']['condition']['text'] ?? '';
+      int humidity = data['current']['humidity'] ?? 0;
+      double uv = data['current']['uv'] ?? 0.0;
+      String icon = data['current']['condition']['icon'] ?? '';
+      return {
+        'tempC': tempC,
+        'condition': condition,
+        'humidity': humidity,
+        'uv': uv,
+        'icon': icon,
+      };
+    } else {
+      throw Exception('Failed to load weather data');
+    }
+  }
+
+  void startFetchingData(String cityName) {
+    timer = Timer.periodic(Duration(seconds: 5), (Timer t) async {
+      try {
+        Map<String, dynamic> weatherData = await fetchWeatherData(cityName);
+        setState(() {
+          tempC = weatherData['tempC'].toString();
+          uv = weatherData['uv'].toString();
+          humidity = weatherData['humidity'].toString();
+          condition = weatherData['condition'];
+          icon = 'http:${weatherData['icon']}';
+          isLoading = false;
+        });
+      } catch (e) {
+        error = e.toString();
+        setState(() {
+          isLoading = false;
+        });
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    timer?.cancel();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -67,12 +181,11 @@ class ExpertManagerPage extends StatelessWidget {
                   borderRadius: BorderRadius.circular(24),
                   clipBehavior: Clip.antiAlias,
                   child: InkWell(
-                    onTap: () {},
                     overlayColor: const MaterialStatePropertyAll<Color>(
                       Color(0x0c7f7f7f),
                     ),
                     child: Ink(
-                      color: const Color(0xCCFFFFFF),
+                      color: const Color(0xFFF4FFB5),
                       width: 190,
                       height: 190,
                     ),
@@ -83,10 +196,10 @@ class ExpertManagerPage extends StatelessWidget {
                 left: 247,
                 top: 127,
                 child: SizedBox(
-                  width: 78,
-                  height: 38,
+                  width: 100,
+                  height: 50,
                   child: Text(
-                    ' 24°C',
+                    ' $tempC°C',
                     style: GoogleFonts.getFont(
                       'Noto Sans',
                       color: const Color(0xFF292929),
@@ -96,23 +209,28 @@ class ExpertManagerPage extends StatelessWidget {
                   ),
                 ),
               ),
-              Positioned(
-                left: 227,
-                top: 97,
-                child: SizedBox(
-                  width: 77,
-                  height: 26,
-                  child: Text(
-                    'Hà Nội',
-                    style: GoogleFonts.getFont(
-                      'Noto Sans',
-                      color: Colors.black,
-                      fontSize: 18,
-                      fontWeight: FontWeight.w600,
+              if (isLoading)
+                const Center(child: CircularProgressIndicator())
+              else if (error != '')
+                Center(child: Text('Error: $error'))
+              else
+                Positioned(
+                  left: 215,
+                  top: 97,
+                  child: SizedBox(
+                    width: 300,
+                    height: 26,
+                    child: Text(
+                      cityName,
+                      style: GoogleFonts.getFont(
+                        'Noto Sans',
+                        color: Colors.black,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
+                      ),
                     ),
                   ),
                 ),
-              ),
               Positioned(
                 left: 235,
                 top: 249,
@@ -136,7 +254,7 @@ class ExpertManagerPage extends StatelessWidget {
                 child: SizedBox(
                   height: 18,
                   child: Text(
-                    '8',
+                    '$uv',
                     style: GoogleFonts.getFont(
                       'Noto Sans',
                       color: Colors.black,
@@ -170,7 +288,7 @@ class ExpertManagerPage extends StatelessWidget {
                   width: 41,
                   height: 19,
                   child: Text(
-                    '41%',
+                    '$humidity%',
                     style: GoogleFonts.getFont(
                       'Noto Sans',
                       color: const Color(0xFF292929),
@@ -184,10 +302,10 @@ class ExpertManagerPage extends StatelessWidget {
                 left: 222,
                 top: 204,
                 child: SizedBox(
-                  width: 81,
+                  width: 200,
                   height: 20,
                   child: Text(
-                    'Trời nắng',
+                    condition,
                     textAlign: TextAlign.center,
                     style: GoogleFonts.getFont(
                       'Noto Sans',
@@ -199,27 +317,17 @@ class ExpertManagerPage extends StatelessWidget {
                 ),
               ),
               Positioned(
-                left: 220,
-                top: 164,
+                left: 210,
+                top: 150,
                 child: Container(
-                  width: 40,
-                  height: 40,
+                  width: 80,
+                  height: 80,
                   clipBehavior: Clip.hardEdge,
-                  decoration: const BoxDecoration(
+                  decoration: BoxDecoration(
                     image: DecorationImage(
-                      image: AssetImage(
-                        'assets/page-1/images/clear-1.png',
-                      ),
+                      image: NetworkImage(icon),
                       fit: BoxFit.cover,
                     ),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Color(0x3F000000),
-                        spreadRadius: 0,
-                        offset: Offset(0, 0),
-                        blurRadius: 25,
-                      )
-                    ],
                   ),
                 ),
               ),
@@ -538,7 +646,7 @@ class ExpertManagerPage extends StatelessWidget {
               ),
               Positioned(
                 left: 111,
-                top: 615,
+                top: 612,
                 child: Material(
                   type: MaterialType.transparency,
                   child: InkWell(

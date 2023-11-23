@@ -15,8 +15,8 @@ class AddSeason extends StatefulWidget {
 class _AddSeasonState extends State<AddSeason> {
   TextEditingController cropSeasonNameController = TextEditingController();
   TextEditingController yieldController = TextEditingController();
-  DateTime selectedGieoSaDate = DateTime.now();
-  DateTime selectedThuHoachDate = DateTime.now();
+  DateTime? selectedGieoSaDate;
+  DateTime? selectedThuHoachDate;
   List<String> riceStrains = [];
   List<String> fieldSamples = [];
   String selectedRice = '';
@@ -104,8 +104,8 @@ class _AddSeasonState extends State<AddSeason> {
         ..fields['yield'] = yieldController.text
         ..fields['fieldSample'] = selectedFieldSample
         ..fields['riceVariety'] = selectedRice
-        ..fields['plantingDate'] = selectedGieoSaDate.toIso8601String()
-        ..fields['harvestDate'] = selectedThuHoachDate.toIso8601String()
+        ..fields['plantingDate'] = selectedGieoSaDate!.toIso8601String()
+        ..fields['harvestDate'] = selectedThuHoachDate!.toIso8601String()
         ..files.add(await http.MultipartFile.fromPath(
           'image',
           image.path,
@@ -243,7 +243,7 @@ class _AddSeasonState extends State<AddSeason> {
                         top: 5,
                         child: GestureDetector(
                           onTap: () {
-                            _selectDate(context, selectedThuHoachDate,
+                            _selectDate(context, selectedThuHoachDate!,
                                 (DateTime newDate) {
                               setState(() {
                                 selectedThuHoachDate = newDate;
@@ -251,7 +251,9 @@ class _AddSeasonState extends State<AddSeason> {
                             });
                           },
                           child: Text(
-                            '${selectedThuHoachDate.day}/${selectedThuHoachDate.month}/${selectedThuHoachDate.year}',
+                            selectedThuHoachDate != null
+                                ? '${selectedThuHoachDate!.day}/${selectedThuHoachDate!.month}/${selectedThuHoachDate!.year}'
+                                : 'Chọn ngày',
                             style: TextStyle(
                               fontSize: 16,
                               fontWeight: FontWeight.w500,
@@ -306,13 +308,17 @@ class _AddSeasonState extends State<AddSeason> {
                         top: 5,
                         child: GestureDetector(
                           onTap: () {
-                            _selectDate(context, selectedGieoSaDate,
+                            _selectDate(context, selectedGieoSaDate!,
                                 (DateTime newDate) {
-                              selectedGieoSaDate = newDate;
+                              setState(() {
+                                selectedGieoSaDate = newDate;
+                              });
                             });
                           },
                           child: Text(
-                            '${selectedGieoSaDate.day}/${selectedGieoSaDate.month}/${selectedGieoSaDate.year}',
+                            selectedGieoSaDate != null
+                                ? '${selectedGieoSaDate!.day}/${selectedGieoSaDate!.month}/${selectedGieoSaDate!.year}'
+                                : 'Chọn ngày',
                             style: TextStyle(
                               fontSize: 16,
                               fontWeight: FontWeight.w500,
@@ -869,7 +875,7 @@ class _AddSeasonState extends State<AddSeason> {
                 ),
               ),
               Positioned(
-                left: 115,
+                left: 130,
                 top: 65,
                 child: SizedBox(
                   width: 240,

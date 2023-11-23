@@ -20,7 +20,7 @@ class _SceneState extends State<Scene> {
   bool isPasswordVisible = false;
 
   Future<void> loginUser() async {
-    String url = 'http://10.0.2.2:5000/user/login';
+    String url = 'http://10.0.2.2:5000/user/login'; //192.168.139.183
     Map<String, String> headers = {
       'Content-Type': 'application/json',
     };
@@ -59,7 +59,6 @@ class _SceneState extends State<Scene> {
 
         print('Response data: $responseData');
 
-        // Kiểm tra xem có thuộc tính "role" trong dữ liệu hay không
         if (responseData.containsKey('role')) {
           String role = responseData['role'];
 
@@ -72,7 +71,7 @@ class _SceneState extends State<Scene> {
           } else if (role == 'Chuyên gia') {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => ExpertManagerPage()),
+              MaterialPageRoute(builder: (context) => ExpertManagerPage(isNavigatedFromOtherPage: true)),
             );
           } else if (role == 'Nhân viên') {
             Navigator.push(
@@ -302,8 +301,8 @@ class _SceneState extends State<Scene> {
                             controller: emailController,
                             decoration: InputDecoration(
                               hintText: 'Tên tài khoản',
-                              hintStyle: SafeGoogleFont(
-                                'Cabin',
+                              hintStyle: TextStyle(
+                                fontFamily: 'Cabin',
                                 fontSize: 18 * ffem,
                                 fontWeight: FontWeight.w600,
                                 height: 0.215 * ffem / fem,

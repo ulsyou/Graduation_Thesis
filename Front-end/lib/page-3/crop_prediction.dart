@@ -453,7 +453,7 @@ class RicePrediction extends StatelessWidget {
                   onTap: () {
                     Navigator.of(context).push(
                       MaterialPageRoute(
-                        builder: (context) => ExpertManagerPage(),
+                        builder: (context) => ExpertManagerPage(isNavigatedFromOtherPage: true),
                       ),
                     );
                   },
