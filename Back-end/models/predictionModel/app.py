@@ -26,29 +26,39 @@ def predict():
     temp = data['temp']
     model_type = data['model_type']
 
-    # Predict with each model
-    if model_type == '1':
-        yield_pr_DTR = model_DTR.predict([[ 1,0,0, float(temp["precipitation"]), float(temp["temperature"]), float(temp["humitidity"]), float(temp["windSpeed"]), float(temp["solarRadiation"]), float(temp["area"]) ]])
-        yield_pr_LR = model_LR.predict([[ 1,0,0, float(temp["precipitation"]), float(temp["temperature"]), float(temp["humitidity"]), float(temp["windSpeed"]), float(temp["solarRadiation"]), float(temp["area"]), float(temp["N"]), float(temp["P"]), float(temp["K"]) ]])
-        yield_pr_RFR = model_RFR.predict([[ 1,0,0, float(temp["precipitation"]), float(temp["temperature"]), float(temp["humitidity"]), float(temp["windSpeed"]), float(temp["solarRadiation"]), float(temp["area"]), float(temp["N"]), float(temp["P"]), float(temp["K"])  ]])
-        yield_pr_GBR = model_GBR.predict([[ 1,0,0, float(temp["precipitation"]), float(temp["temperature"]), float(temp["humitidity"]), float(temp["windSpeed"]), float(temp["solarRadiation"]), float(temp["area"]) ]])
-    elif model_type == '2':
-        yield_pr_DTR = model_DTR.predict([[ 1,0,0, float(temp["precipitation"]), float(temp["temperature"]), float(temp["humitidity"]), float(temp["windSpeed"]), float(temp["solarRadiation"]), float(temp["area"]) ]])
-        yield_pr_LR = model_LR.predict([[ 0,1,0, float(temp["precipitation"]), float(temp["temperature"]), float(temp["humitidity"]), float(temp["windSpeed"]), float(temp["solarRadiation"]), float(temp["area"]), float(temp["N"]), float(temp["P"]), float(temp["K"])  ]])
-        yield_pr_RFR = model_RFR.predict([[ 0,1,0, float(temp["precipitation"]), float(temp["temperature"]), float(temp["humitidity"]), float(temp["windSpeed"]), float(temp["solarRadiation"]), float(temp["area"]), float(temp["N"]), float(temp["P"]), float(temp["K"]) ]])
-        yield_pr_GBR = model_GBR.predict([[ 1,0,0, float(temp["precipitation"]), float(temp["temperature"]), float(temp["humitidity"]), float(temp["windSpeed"]), float(temp["solarRadiation"]), float(temp["area"]) ]])
-    else:
-        yield_pr_DTR = model_DTR.predict([[ 1,0,0, float(temp["precipitation"]), float(temp["temperature"]), float(temp["humitidity"]), float(temp["windSpeed"]), float(temp["solarRadiation"]), float(temp["area"]) ]])
-        yield_pr_LR = model_LR.predict([[ 0,0,1, float(temp["precipitation"]), float(temp["temperature"]), float(temp["humitidity"]), float(temp["windSpeed"]), float(temp["solarRadiation"]), float(temp["area"]), float(temp["N"]), float(temp["P"]), float(temp["K"])  ]])
-        yield_pr_RFR = model_RFR.predict([[ 0,0,1, float(temp["precipitation"]), float(temp["temperature"]), float(temp["humitidity"]), float(temp["windSpeed"]), float(temp["solarRadiation"]), float(temp["area"]), float(temp["N"]), float(temp["P"]), float(temp["K"]) ]])
-        yield_pr_GBR = model_GBR.predict([[ 1,0,0, float(temp["precipitation"]), float(temp["temperature"]), float(temp["humitidity"]), float(temp["windSpeed"]), float(temp["solarRadiation"]), float(temp["area"]) ]])
+    # Prepare features
+    features = [float(temp[field]) for field in ['precipitation', 'temperature', 'humitidity', 'windSpeed', 'solarRadiation', 'area', 'N', 'P', 'K']]
 
-    # Return results
+    # Adjust features based on model type
+    if model_type == '1':
+        features = [1, 0, 0] + features
+    elif model_type == '2':
+        features = [0, 1, 0] + features
+    else:
+        features = [0, 0, 1] + features
+
+    # Predict with each model
+    yield_pr_DTR = model_DTR.predict([features]) / 1000
+    yield_pr_LR = model_LR.predict([features]) / 1000
+    yield_pr_RFR = model_RFR.predict([features]) / 1000
+    yield_pr_GBR = model_GBR.predict([features]) / 1000
+
+    # Return predictions
     return jsonify({
-        'yield_pr_DTR': yield_pr_DTR.tolist(),
-        'yield_pr_LR': yield_pr_LR.tolist(),
-        'yield_pr_RFR': yield_pr_RFR.tolist(),
-        'yield_pr_GBR': yield_pr_GBR.tolist()
+        'Crop': temp['crop'],
+        'Precipitation': temp['precipitation'],
+        'Temperature': temp['temperature'],
+        'Humidity': temp['humitidity'],
+        'WindSpeed': temp['windSpeed'],
+        'SolarRadiation': temp['solarRadiation'],
+        'Area': temp['area'],
+        'N': temp['N'],
+        'P': temp['P'],
+        'K': temp['K'],
+        'Yield_DTR': yield_pr_DTR.tolist(),
+        'Yield_LR': yield_pr_LR.tolist(),
+        'Yield_RFR': yield_pr_RFR.tolist(),
+        'Yield_GBR': yield_pr_GBR.tolist()
     })
 
 @app.route('/processImage', methods=['POST'])

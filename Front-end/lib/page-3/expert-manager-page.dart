@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:math';
 import 'dart:convert' as convert;
 import 'package:http/http.dart' as http;
@@ -15,7 +16,8 @@ import 'season-list.dart';
 class ExpertManagerPage extends StatefulWidget {
   final bool isNavigatedFromOtherPage;
 
-  ExpertManagerPage({Key? key, this.isNavigatedFromOtherPage = false}) : super(key: key);
+  ExpertManagerPage({Key? key, this.isNavigatedFromOtherPage = false})
+      : super(key: key);
 
   @override
   _ExpertManagerPageState createState() => _ExpertManagerPageState();
@@ -30,11 +32,13 @@ class _ExpertManagerPageState extends State<ExpertManagerPage> {
   String humidity = '';
   String condition = '';
   String icon = '';
+  String precipMm = ''; 
+  String windKph = '';
   Timer? timer;
 
   @override
   void initState() {
-     super.initState();
+    super.initState();
     if (widget.isNavigatedFromOtherPage) {
       isLoading = false;
     }
@@ -58,7 +62,7 @@ class _ExpertManagerPageState extends State<ExpertManagerPage> {
           desiredAccuracy: LocationAccuracy.high);
       print('Position: $position');
       List<Placemark> placemarks =
-      await placemarkFromCoordinates(position.latitude, position.longitude);
+          await placemarkFromCoordinates(position.latitude, position.longitude);
       print('Placemarks: $placemarks');
       cityName = placemarks[0].administrativeArea!;
       startFetchingData(cityName);
@@ -87,12 +91,16 @@ class _ExpertManagerPageState extends State<ExpertManagerPage> {
       int humidity = data['current']['humidity'] ?? 0;
       double uv = data['current']['uv'] ?? 0.0;
       String icon = data['current']['condition']['icon'] ?? '';
+      double precipMm = data['current']['precip_mm'] ?? 0.0;
+      double windKph = data['current']['wind_kph'] ?? 0.0;
       return {
         'tempC': tempC,
         'condition': condition,
         'humidity': humidity,
         'uv': uv,
         'icon': icon,
+        'precipMm': precipMm,
+        'windKph': windKph,
       };
     } else {
       throw Exception('Failed to load weather data');
@@ -100,25 +108,44 @@ class _ExpertManagerPageState extends State<ExpertManagerPage> {
   }
 
   void startFetchingData(String cityName) {
-    timer = Timer.periodic(Duration(seconds: 5), (Timer t) async {
-      try {
-        Map<String, dynamic> weatherData = await fetchWeatherData(cityName);
-        setState(() {
-          tempC = weatherData['tempC'].toString();
-          uv = weatherData['uv'].toString();
-          humidity = weatherData['humidity'].toString();
-          condition = weatherData['condition'];
-          icon = 'http:${weatherData['icon']}';
-          isLoading = false;
-        });
-      } catch (e) {
-        error = e.toString();
-        setState(() {
-          isLoading = false;
-        });
-      }
-    });
+  timer = Timer.periodic(Duration(seconds: 5), (Timer t) async {
+    try {
+      Map<String, dynamic> weatherData = await fetchWeatherData(cityName);
+      setState(() {
+        tempC = weatherData['tempC'].toString();
+        uv = weatherData['uv'].toString();
+        humidity = weatherData['humidity'].toString();
+        condition = weatherData['condition'];
+        icon = 'http:${weatherData['icon']}';
+        precipMm = weatherData['precip_mm'].toString();
+        windKph = weatherData['wind_kph'].toString();
+        isLoading = false;
+      });
+      await saveWeatherData(weatherData); 
+    } catch (e) {
+      error = e.toString();
+      setState(() {
+        isLoading = false;
+      });
+    }
+  });
+}
+
+  Future<void> saveWeatherData(Map<String, dynamic> weatherData) async {
+  final response = await http.post(
+    Uri.parse('http://10.0.2.2:5000/weather/weather'),
+    headers: <String, String>{
+      'Content-Type': 'application/json; charset=UTF-8',
+    },
+    body: jsonEncode(weatherData),
+  );
+
+  if (response.statusCode == 200) {
+    print('Weather data saved successfully.');
+  } else {
+    throw Exception('Failed to save weather data.');
   }
+}
 
   @override
   void dispose() {
@@ -185,7 +212,7 @@ class _ExpertManagerPageState extends State<ExpertManagerPage> {
                       Color(0x0c7f7f7f),
                     ),
                     child: Ink(
-                      color: const Color(0xFFF4FFB5),
+                      color: const Color(0xDBFFFFFF),
                       width: 190,
                       height: 190,
                     ),
@@ -193,8 +220,8 @@ class _ExpertManagerPageState extends State<ExpertManagerPage> {
                 ),
               ),
               Positioned(
-                left: 247,
-                top: 127,
+                left: 295,
+                top: 137,
                 child: SizedBox(
                   width: 100,
                   height: 50,
@@ -216,7 +243,7 @@ class _ExpertManagerPageState extends State<ExpertManagerPage> {
               else
                 Positioned(
                   left: 215,
-                  top: 97,
+                  top: 103,
                   child: SizedBox(
                     width: 300,
                     height: 26,
@@ -225,7 +252,7 @@ class _ExpertManagerPageState extends State<ExpertManagerPage> {
                       style: GoogleFonts.getFont(
                         'Noto Sans',
                         color: Colors.black,
-                        fontSize: 16,
+                        fontSize: 18,
                         fontWeight: FontWeight.w600,
                       ),
                     ),
@@ -299,7 +326,7 @@ class _ExpertManagerPageState extends State<ExpertManagerPage> {
                 ),
               ),
               Positioned(
-                left: 222,
+                left: 232,
                 top: 204,
                 child: SizedBox(
                   width: 200,
@@ -317,8 +344,8 @@ class _ExpertManagerPageState extends State<ExpertManagerPage> {
                 ),
               ),
               Positioned(
-                left: 210,
-                top: 150,
+                left: 215,
+                top: 130,
                 child: Container(
                   width: 80,
                   height: 80,

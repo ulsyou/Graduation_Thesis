@@ -16,6 +16,7 @@ const pesticideRoute = require("./routes/pesticides");
 const cropSeason = require("./routes/crop-season");
 const activitiesRoute = require("./routes/activities");
 const fileUpload = require('express-fileupload');
+const weatherRoute = require("./routes/WeatherData");
 app.use(fileUpload());
 
 // Connect Database
@@ -47,6 +48,7 @@ app.use("/pesticide", pesticideRoute);
 app.use("/crops-season", cropSeason);
 app.use("/activities", activitiesRoute);
 app.use('/uploads', express.static('./uploads'));
+app.use("/weather", weatherRoute);
 
 // Route for processing images
 app.post('/processImage', async (req, res) => {

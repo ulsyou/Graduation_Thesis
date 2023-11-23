@@ -3,6 +3,9 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:myapp/page-3/expert-manager-page.dart';
 
 import 'crop_prediction_img.dart';
+import 'Prediction_Decision_tree.dart';
+import 'Prediction_Linear_Regression.dart';
+import 'Prediction_Random_Forest.dart';
 
 class RicePrediction extends StatelessWidget {
   const RicePrediction({super.key});
@@ -62,8 +65,11 @@ class RicePrediction extends StatelessWidget {
                 clipBehavior: Clip.antiAlias,
                 child: InkWell(
                   onTap: () {
-
-
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => Prediction_3(),
+                      ),
+                    );
                   },
                   overlayColor: const MaterialStatePropertyAll<Color>(
                     Color(0x0c7f7f7f),
@@ -87,8 +93,11 @@ class RicePrediction extends StatelessWidget {
                 type: MaterialType.transparency,
                 child: InkWell(
                   onTap: () {
-
-
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => Prediction_3(),
+                      ),
+                    );
                   },
                   overlayColor: const MaterialStatePropertyAll<Color>(
                     Color(0x0c7f7f7f),
@@ -117,8 +126,11 @@ class RicePrediction extends StatelessWidget {
                 clipBehavior: Clip.antiAlias,
                 child: InkWell(
                   onTap: () {
-
-
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => Prediction_2(),
+                      ),
+                    );
                   },
                   overlayColor: const MaterialStatePropertyAll<Color>(
                     Color(0x0c7f7f7f),
@@ -142,8 +154,11 @@ class RicePrediction extends StatelessWidget {
                 type: MaterialType.transparency,
                 child: InkWell(
                   onTap: () {
-
-
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => Prediction_2(),
+                      ),
+                    );
                   },
                   overlayColor: const MaterialStatePropertyAll<Color>(
                     Color(0x0c7f7f7f),
@@ -172,8 +187,11 @@ class RicePrediction extends StatelessWidget {
                 clipBehavior: Clip.antiAlias,
                 child: InkWell(
                   onTap: () {
-
-
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => Prediction_1(),
+                      ),
+                    );
                   },
                   overlayColor: const MaterialStatePropertyAll<Color>(
                     Color(0x0c7f7f7f),
@@ -197,8 +215,11 @@ class RicePrediction extends StatelessWidget {
                 type: MaterialType.transparency,
                 child: InkWell(
                   onTap: () {
-
-
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => Prediction_1(),
+                      ),
+                    );
                   },
                   overlayColor: const MaterialStatePropertyAll<Color>(
                     Color(0x0c7f7f7f),
@@ -320,8 +341,11 @@ class RicePrediction extends StatelessWidget {
                 clipBehavior: Clip.antiAlias,
                 child: InkWell(
                   onTap: () {
-
-
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => Prediction_1(),
+                      ),
+                    );
                   },
                   overlayColor: const MaterialStatePropertyAll<Color>(
                     Color(0x0c7f7f7f),
@@ -349,8 +373,11 @@ class RicePrediction extends StatelessWidget {
                 clipBehavior: Clip.antiAlias,
                 child: InkWell(
                   onTap: () {
-
-
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => Prediction_2(),
+                      ),
+                    );
                   },
                   overlayColor: const MaterialStatePropertyAll<Color>(
                     Color(0x0c7f7f7f),
@@ -378,8 +405,11 @@ class RicePrediction extends StatelessWidget {
                 clipBehavior: Clip.antiAlias,
                 child: InkWell(
                   onTap: () {
-
-
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => Prediction_3(),
+                      ),
+                    );
                   },
                   overlayColor: const MaterialStatePropertyAll<Color>(
                     Color(0x0c7f7f7f),
@@ -453,7 +483,8 @@ class RicePrediction extends StatelessWidget {
                   onTap: () {
                     Navigator.of(context).push(
                       MaterialPageRoute(
-                        builder: (context) => ExpertManagerPage(isNavigatedFromOtherPage: true),
+                        builder: (context) =>
+                            ExpertManagerPage(isNavigatedFromOtherPage: true),
                       ),
                     );
                   },
