@@ -1,10 +1,8 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'add-pages.dart';
-import 'expert-manager-page.dart';
 import 'package:myapp/login-page.dart';
+
+import 'expert-manager-page.dart';
 
 class Profile extends StatelessWidget {
   const Profile({super.key});
@@ -393,7 +391,7 @@ class Profile extends StatelessWidget {
                 ),
               ),
               Positioned(
-                left: 30,
+                left: 95,
                 top: 65,
                 child: Text(
                   'Thông tin cá nhân',
@@ -406,33 +404,41 @@ class Profile extends StatelessWidget {
                 ),
               ),
               Positioned(
-                left: 320,
-                top: 70,
-                child: Align(
-                  child: SizedBox(
-                    width: 93,
-                    height: 20,
-                    child: Material(
-                      child: InkWell(
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) => Scene()),
-                          );
-                        },
-                        child: Text(
-                          'Đăng xuất',
-                          style: TextStyle(
-                            fontFamily: 'Cabin',
-                            fontSize: 18,
-                            fontWeight: FontWeight.w600,
-                            height: 1.215,
-                            fontStyle: FontStyle.normal,
-                            color: Color(0xff000000),
-                          ),
-                        ),
-                      ),
+                left: 124,
+                top: 761,
+                child: Material(
+                  type: MaterialType.transparency,
+                  borderRadius: BorderRadius.circular(35),
+                  clipBehavior: Clip.antiAlias,
+                  child: InkWell(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => Scene()),
+                      );
+                    },
+                    overlayColor: const MaterialStatePropertyAll<Color>(
+                      Color(0x0c7f7f7f),
                     ),
+                    child: Ink(
+                      color: const Color(0xB4FFFFFF),
+                      width: 163,
+                      height: 52,
+                    ),
+                  ),
+                ),
+              ),
+              Positioned(
+                left: 163,
+                top: 779,
+                child: Text(
+                  'Đăng xuất',
+                  style: GoogleFonts.getFont(
+                    'Noto Sans',
+                    color: Colors.black,
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    height: 0.9,
                   ),
                 ),
               ),
@@ -450,81 +456,6 @@ class Profile extends StatelessWidget {
                 ),
               ),
               Positioned(
-                left: 171,
-                top: 787,
-                child: Image.asset(
-                  'assets/page-1/images/Ellipse 1.png',
-                  width: 70,
-                  height: 70,
-                  fit: BoxFit.contain,
-                ),
-              ),
-              Positioned(
-                left: 176,
-                top: 792,
-                child: Material(
-                  type: MaterialType.transparency,
-                  borderRadius: BorderRadius.circular(30),
-                  clipBehavior: Clip.antiAlias,
-                  child: InkWell(
-                    onTap: () {
-                      Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (context) => AddPages(),
-                        ),
-                      );
-                    },
-                    overlayColor: const MaterialStatePropertyAll<Color>(
-                      Color(0x0c7f7f7f),
-                    ),
-                    child: Ink(
-                      color: const Color(0xFFC5FFBC),
-                      width: 60,
-                      height: 60,
-                    ),
-                  ),
-                ),
-              ),
-              Positioned(
-                left: 194,
-                top: 810,
-                child: Material(
-                  type: MaterialType.transparency,
-                  clipBehavior: Clip.antiAlias,
-                  child: InkWell(
-                    onTap: () {
-                      Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (context) => AddPages(),
-                        ),
-                      );
-                    },
-                    overlayColor: const MaterialStatePropertyAll<Color>(
-                      Color(0x0c7f7f7f),
-                    ),
-                    child: Container(
-                      width: 28,
-                      height: 28,
-                      clipBehavior: Clip.hardEdge,
-                      decoration: const BoxDecoration(),
-                      child: Stack(
-                        clipBehavior: Clip.none,
-                        children: [
-                          Positioned(
-                            child: Image.asset(
-                              'assets/page-1/images/Group 1.png',
-                              width: 24,
-                              height: 24,
-                              fit: BoxFit.contain,
-                            ),
-                          )
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-              Positioned(
                 left: 27,
                 top: 838,
                 child: Material(
@@ -534,7 +465,8 @@ class Profile extends StatelessWidget {
                     onTap: () {
                       Navigator.of(context).push(
                         MaterialPageRoute(
-                          builder: (context) => ExpertManagerPage(isNavigatedFromOtherPage: true),
+                          builder: (context) =>
+                              ExpertManagerPage(isNavigatedFromOtherPage: true),
                         ),
                       );
                     },
@@ -632,19 +564,6 @@ class Profile extends StatelessWidget {
                         ],
                       ),
                     ),
-                  ),
-                ),
-              ),
-              Positioned(
-                left: 347,
-                top: 840,
-                child: Container(
-                  width: 29,
-                  height: 29,
-                  clipBehavior: Clip.hardEdge,
-                  decoration: BoxDecoration(
-                    color: const Color(0xFFD9D9D9),
-                    borderRadius: BorderRadius.circular(15),
                   ),
                 ),
               ),

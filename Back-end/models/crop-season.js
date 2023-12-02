@@ -1,4 +1,3 @@
-const { ObjectId } = require("mongodb");
 const mongoose = require("mongoose");
 
 const cropSeasonSchema = mongoose.Schema({
@@ -27,7 +26,7 @@ const cropSeasonSchema = mongoose.Schema({
         required: true
     },
     yield: {
-        type: String
+        type: Number,
     },
     plantingDate: {
         type: Date

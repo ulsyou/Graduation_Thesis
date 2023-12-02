@@ -2,6 +2,8 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'dart:math';
+import 'package:google_fonts/google_fonts.dart';
 
 import 'admin-manager.dart';
 import 'employee-add.dart';
@@ -59,325 +61,376 @@ class _EmployeeManagerState extends State<EmployeeManager> {
 
   @override
   Widget build(BuildContext context) {
-    double baseWidth = 360;
-    double fem = MediaQuery.of(context).size.width / baseWidth;
-    double ffem = fem * 0.97;
-    return Material(
-      child: SingleChildScrollView(
-        child: Container(
-          width: double.infinity,
-          padding: EdgeInsets.fromLTRB(0 * fem, 37 * fem, 0 * fem, 0 * fem),
-          decoration: BoxDecoration(
-            color: Color(0xffffffff),
-            image: DecorationImage(
-              image: AssetImage(
-                'assets/page-1/images/wolfgang-hasselmann-ucnhoxas6pq-unsplash-1-bg-vS5.png',
-              ),
-              fit: BoxFit.cover,
-            ),
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Container(
-                margin:
-                    EdgeInsets.fromLTRB(19 * fem, 0 * fem, 45 * fem, 33 * fem),
-                width: double.infinity,
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) =>
-                                AdminManagerPage(), // Thay thế AdminManagerPage bằng tên trang của bạn
-                          ),
-                        );
-                      },
-                      child: Container(
-                        margin: EdgeInsets.fromLTRB(
-                            0 * fem, 5 * fem, 25 * fem, 3 * fem),
-                        width: 24 * fem,
-                        height: 24 * fem,
-                        child: Image.asset(
-                          'assets/page-1/images/arrow-left.png',
-                          width: 24 * fem,
-                          height: 24 * fem,
-                        ),
-                      ),
-                    ),
-                    Text(
-                      'Quản trị người dùng',
-                      style: TextStyle(
-                        fontSize: 28 * ffem,
-                        fontWeight: FontWeight.w600,
-                        height: 1.215 * ffem / fem,
-                        color: Color(0xff000000),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              Container(
-                padding:
-                    EdgeInsets.fromLTRB(16 * fem, 13 * fem, 16 * fem, 18 * fem),
-                width: double.infinity,
+    return Container(
+      width: 412,
+      height: 915,
+      clipBehavior: Clip.hardEdge,
+      decoration: const BoxDecoration(
+        color: Colors.white,
+      ),
+      child: SizedBox(
+        width: double.infinity,
+        child: Stack(
+          clipBehavior: Clip.none,
+          children: [
+            Positioned(
+              left: 0,
+              top: 0,
+              child: Container(
+                width: 412,
+                height: 918,
+                clipBehavior: Clip.hardEdge,
                 decoration: BoxDecoration(
-                  color: Color(0x8effffff),
+                  border: Border.all(color: Color(0x99000000)),
+                  color: Color(0x84FFFDF4),
+                  image: DecorationImage(
+                    image: AssetImage(
+                        'assets/page-1/images/yuki-ho-ygqbbzemmi-unsplash-1-bg.png'),
+                    fit: BoxFit.fill,
+                    colorFilter: ColorFilter.mode(
+                        Colors.black.withOpacity(0.4), BlendMode.dstATop),
+                  ),
                 ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
-                    Container(
-                      margin: EdgeInsets.fromLTRB(
-                          0 * fem, 10 * fem, 0 * fem, 17 * fem),
-                      padding: EdgeInsets.fromLTRB(
-                          15 * fem, 16 * fem, 198 * fem, 13 * fem),
-                      width: double.infinity,
-                      decoration: BoxDecoration(
-                        color: Color(0xb2ffffff),
-                        borderRadius: BorderRadius.circular(45 * fem),
-                      ),
-                      //Search bar
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Container(
-                            margin: EdgeInsets.fromLTRB(
-                                0 * fem, 0 * fem, 8 * fem, 1 * fem),
-                            width: 24 * fem,
-                            height: 24 * fem,
-                            child: Image.asset(
-                              'assets/page-1/images/search.png',
-                              width: 24 * fem,
-                              height: 24 * fem,
-                            ),
-                          ),
-                          Expanded(
-                            child: TextField(
-                              focusNode: searchFocus,
-                              onChanged: (value) {
-                                performSearch(value);
-                              },
-                              decoration: InputDecoration(
-                                hintText: 'Tìm kiếm',
-                                hintStyle: TextStyle(
-                                  fontSize: 20 * ffem,
-                                  fontWeight: FontWeight.w600,
-                                  color: Color(0x7f000000),
-                                ),
-                                border: InputBorder.none,
-                                suffixIcon: searchQuery.isNotEmpty
-                                    ? IconButton(
-                                        icon: Icon(Icons.clear),
-                                        onPressed: () {
-                                          resetSearch();
-                                        },
-                                      )
-                                    : null,
-                              ),
-                            ),
-                          ),
-                        ],
+                ),
+              ),
+
+            Positioned(
+              left: 73,
+              top: 231,
+              child: Material(
+                type: MaterialType.transparency,
+                borderRadius: BorderRadius.circular(30),
+                clipBehavior: Clip.antiAlias,
+                child: InkWell(
+                  onTap: () {
+
+                  },
+                  overlayColor: const MaterialStatePropertyAll<Color>(
+                    Color(0x0c7f7f7f),
+                  ),
+                  child: Ink(
+                    width: 311,
+                    height: 138,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(30),
+                      gradient: const LinearGradient(
+                        colors: [Color(0xFFD3FFBF), Color(0x00FFFACD)],
+                        stops: [0.12, 1],
+                        transform: GradientRotation(180 * pi / 180),
                       ),
                     ),
-                    Column(
-                      children:
-                          (searchQuery.isEmpty ? employees : filteredEmployees)
-                              .map((employee) {
-                        return GestureDetector(
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) =>
-                                    EmployeeInformation(employeeData: employee),
-                              ),
-                            );
-                          },
-                          child: Container(
-                            margin: EdgeInsets.fromLTRB(
-                                0 * fem, 0 * fem, 0 * fem, 17 * fem),
-                            padding: EdgeInsets.fromLTRB(
-                                12 * fem, 17 * fem, 0 * fem, 17 * fem),
-                            width: double.infinity,
-                            height: 169 * fem,
-                            decoration: BoxDecoration(
-                              color: Color(0xbffdffc8),
-                              borderRadius: BorderRadius.circular(35 * fem),
-                            ),
-                            child: Row(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Container(
-                                  margin: EdgeInsets.fromLTRB(
-                                      5 * fem, 0 * fem, 10 * fem, 0 * fem),
-                                  width: 120 * fem,
-                                  height: double.infinity,
-                                  decoration: BoxDecoration(
-                                    color: Color(0xffffffff),
-                                    borderRadius:
-                                        BorderRadius.circular(25 * fem),
-                                  ),
-                                  child: Container(
-                                    padding: EdgeInsets.fromLTRB(16.67 * fem,
-                                        16.88 * fem, 16.67 * fem, 16.88 * fem),
-                                    width: double.infinity,
-                                    height: double.infinity,
-                                    decoration: BoxDecoration(
-                                      color: Color(0xceffffff),
-                                      borderRadius:
-                                          BorderRadius.circular(25 * fem),
-                                    ),
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      children: [
-                                        Container(
-                                          margin: EdgeInsets.fromLTRB(0 * fem,
-                                              0 * fem, 0 * fem, 22.5 * fem),
-                                          width: 33.33 * fem,
-                                          height: 45 * fem,
-                                          child: Image.asset(
-                                            'assets/page-1/images/vector.png',
-                                            width: 33.33 * fem,
-                                            height: 45 * fem,
-                                          ),
-                                        ),
-                                        Container(
-                                          width: 66.67 * fem,
-                                          height: 33.7 * fem,
-                                          child: Image.asset(
-                                            'assets/page-1/images/vector-Lmo.png',
-                                            width: 66.67 * fem,
-                                            height: 33.75 * fem,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                                Container(
-                                  width: 161 * fem,
-                                  height: double.infinity,
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    children: [
-                                      Container(
-                                        width: double.infinity,
-                                        height: 35 * fem,
-                                        decoration: BoxDecoration(
-                                          color: Color(0xfffffafa),
-                                          borderRadius:
-                                              BorderRadius.circular(25 * fem),
-                                        ),
-                                        child: Center(
-                                          child: Text(
-                                            employee['expertise'],
-                                            style: TextStyle(
-                                              fontSize: 14 * ffem,
-                                              fontWeight: FontWeight.w500,
-                                              height: 1.215 * ffem / fem,
-                                              color: Color(0xff000000),
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        height: 15 * fem,
-                                      ),
-                                      Container(
-                                        padding: EdgeInsets.fromLTRB(18 * fem,
-                                            9 * fem, 18 * fem, 7 * fem),
-                                        width: double.infinity,
-                                        decoration: BoxDecoration(
-                                          color: Color(0xfffffafa),
-                                          borderRadius:
-                                              BorderRadius.circular(25 * fem),
-                                        ),
-                                        child: Text(
-                                          employee['fullName'],
-                                          style: TextStyle(
-                                            fontSize: 14 * ffem,
-                                            fontWeight: FontWeight.w500,
-                                            height: 1.215 * ffem / fem,
-                                            color: Color(0xff000000),
-                                          ),
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        height: 15 * fem,
-                                      ),
-                                      Container(
-                                        padding: EdgeInsets.fromLTRB(18 * fem,
-                                            10 * fem, 18 * fem, 8 * fem),
-                                        width: double.infinity,
-                                        decoration: BoxDecoration(
-                                          color: Color(0xfffffafa),
-                                          borderRadius:
-                                              BorderRadius.circular(25 * fem),
-                                        ),
-                                        child: Text(
-                                          employee['phoneNumber'],
-                                          style: TextStyle(
-                                            fontSize: 14 * ffem,
-                                            fontWeight: FontWeight.w500,
-                                            height: 1.215 * ffem / fem,
-                                            color: Color(0xff000000),
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        );
-                      }).toList(),
-                    ),
-                    //Thêm nhân viên
-                    InkWell(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => AddEmployee()),
-                        );
-                      },
-                      child: Transform.translate(
-                        offset: Offset(0, 0 * fem),
-                        child: Container(
-                          margin: EdgeInsets.fromLTRB(
-                              250 * fem, 0 * fem, 0 * fem, 0 * fem),
-                          padding: EdgeInsets.fromLTRB(
-                              20 * fem, 20 * fem, 20 * fem, 20 * fem),
-                          decoration: BoxDecoration(
-                            color: Color(0xff14ff00),
-                            borderRadius: BorderRadius.circular(35 * fem),
-                          ),
-                          child: Center(
-                            child: SizedBox(
-                              width: 30 * fem,
-                              height: 30 * fem,
-                              child: Image.asset(
-                                'assets/page-1/images/user-plus.png',
-                                width: 30 * fem,
-                                height: 30 * fem,
-                              ),
-                            ),
-                          ),
+                  ),
+                ),
+              ),
+            ),
+            Positioned(
+              left: 45,
+              top: 245,
+              child: Material(
+                type: MaterialType.transparency,
+                borderRadius: BorderRadius.circular(20),
+                clipBehavior: Clip.antiAlias,
+                child: InkWell(
+                  onTap: () {},
+                  overlayColor: const MaterialStatePropertyAll<Color>(
+                    Color(0x0c7f7f7f),
+                  ),
+                  child: Ink(
+                    width: 165,
+                    height: 100,
+                    decoration: BoxDecoration(
+                      image: const DecorationImage(
+                        image: NetworkImage(
+                          'https://firebasestorage.googleapis.com/v0/b/codeless-app.appspot.com/o/projects%2FbBi0N1EZ1GlEm38rYJyr%2Ff4568d422a6c0ec14a0567d726b1ac9096212c2aRectangle%2026.png?alt=media&token=e6124bc2-14f7-40e7-bceb-4bef15e3c37a',
                         ),
+                        fit: BoxFit.cover,
+                      ),
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            Positioned(
+              left: 216,
+              top: 238,
+              child: Text(
+                'Tên nhân viên',
+                style: GoogleFonts.getFont(
+                  'Noto Sans',
+                  color: Colors.black,
+                  fontSize: 18,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+            ),
+            Positioned(
+              left: 217,
+              top: 315,
+              child: Text(
+                'Vai trò:',
+                style: GoogleFonts.getFont(
+                  'Noto Sans',
+                  color: Colors.black,
+                  fontSize: 14,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+            ),
+            Positioned(
+              left: 216,
+              top: 268,
+              child: SizedBox(
+                width: 112,
+                child: Text(
+                  'Mã nhân viên:',
+                  style: GoogleFonts.getFont(
+                    'Noto Sans',
+                    color: Colors.black,
+                    fontSize: 14,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+              ),
+            ),
+            Positioned(
+              left: 246,
+              top: 294,
+              child: Text(
+                'RC00002',
+                style: GoogleFonts.getFont(
+                  'Noto Sans',
+                  color: const Color(0xFF777777),
+                  fontSize: 12,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+            ),
+            Positioned(
+              left: 246,
+              top: 339,
+              child: Text(
+                'Vụ mùa',
+                style: GoogleFonts.getFont(
+                  'Noto Sans',
+                  color: const Color(0xFF777777),
+                  fontSize: 12,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+            ),
+            Positioned(
+              left: 378,
+              top: 270,
+              child: Transform.rotate(
+                angle: 180 * pi / 180,
+                child: Container(
+                  width: 6,
+                  height: 50,
+                  clipBehavior: Clip.hardEdge,
+                  decoration: const BoxDecoration(
+                    color: Color(0xFFFFF400),
+                    borderRadius: BorderRadius.horizontal(
+                      right: Radius.circular(50),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+
+            Positioned(
+              left: 26,
+              top: 144,
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(35),
+                clipBehavior: Clip.hardEdge,
+                child: Image.network(
+                  'https://storage.googleapis.com/codeless-dev.appspot.com/uploads%2Fimages%2FbBi0N1EZ1GlEm38rYJyr%2F0fbad377eca9bcae2be58b854caef4f0.png',
+                  width: 360,
+                  height: 50,
+                  fit: BoxFit.contain,
+                ),
+              ),
+            ),
+            Positioned(
+              left: 53,
+              top: 155,
+              child: Text(
+                'Tìm kiếm',
+                style: GoogleFonts.getFont(
+                  'Noto Sans',
+                  color: const Color(0xFF646464),
+                  fontSize: 20,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+            ),
+            Positioned(
+              left: 293,
+              top: 800,
+              child: Material(
+                type: MaterialType.transparency,
+                borderRadius: BorderRadius.circular(35),
+                clipBehavior: Clip.antiAlias,
+                child: InkWell(
+                  onTap: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => AddEmployee(),
+                      ),
+                    );
+                  },
+                  overlayColor: const MaterialStatePropertyAll<Color>(
+                    Color(0x0c7f7f7f),
+                  ),
+                  child: Ink(
+                    color: const Color(0xFF7CFF5B),
+                    width: 70,
+                    height: 70,
+                  ),
+                ),
+              ),
+            ),
+            Positioned(
+              left: 316,
+              top: 822,
+              child: Material(
+                type: MaterialType.transparency,
+                clipBehavior: Clip.antiAlias,
+                child: InkWell(
+                  onTap: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => AddEmployee(),
+                      ),
+                    );
+                  },
+                  overlayColor: const MaterialStatePropertyAll<Color>(
+                    Color(0x0c7f7f7f),
+                  ),
+                  child: Container(
+                    width: 24,
+                    height: 24,
+                    clipBehavior: Clip.hardEdge,
+                    decoration: const BoxDecoration(),
+                    child: Stack(
+                      clipBehavior: Clip.none,
+                      children: [
+                        Positioned(
+                          left: 5,
+                          top: 5,
+                          child: Image.network(
+                            'https://storage.googleapis.com/codeless-dev.appspot.com/uploads%2Fimages%2FbBi0N1EZ1GlEm38rYJyr%2Fb3e9c2f4ae02858e93b665c13e511eda.png',
+                            width: 14,
+                            height: 14,
+                            fit: BoxFit.contain,
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            Positioned(
+              left: 0,
+              top: 0,
+              child: Container(
+                width: 412,
+                height: 127,
+                clipBehavior: Clip.hardEdge,
+                decoration: const BoxDecoration(
+                  color: Color(0xFFD7FF96),
+                  borderRadius: BorderRadius.vertical(
+                    bottom: Radius.circular(20),
+                  ),
+                ),
+              ),
+            ),
+            Positioned(
+              left: 0,
+              top: 0,
+              child: Container(
+                width: 360,
+                height: 115,
+                clipBehavior: Clip.hardEdge,
+                decoration: const BoxDecoration(
+                  borderRadius: BorderRadius.vertical(
+                    bottom: Radius.circular(20),
+                  ),
+                ),
+                child: Stack(
+                  clipBehavior: Clip.none,
+                  children: [
+                    Positioned(
+                      left: -100,
+                      top: -118,
+                      child: Image.network(
+                        'https://storage.googleapis.com/codeless-dev.appspot.com/uploads%2Fimages%2FbBi0N1EZ1GlEm38rYJyr%2Fb321c41cffe9bedffce10c943759ce90.png',
+                        width: 307,
+                        height: 254,
+                        fit: BoxFit.contain,
                       ),
                     )
                   ],
                 ),
               ),
-            ],
-          ),
+            ),
+            Positioned(
+              left: 31,
+              top: 66,
+              child: Material(
+                type: MaterialType.transparency,
+                clipBehavior: Clip.antiAlias,
+                child: InkWell(
+                  onTap: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => AdminManagerPage(),
+                      ),
+                    );
+                  },
+                  overlayColor: const MaterialStatePropertyAll<Color>(
+                    Color(0x0c7f7f7f),
+                  ),
+                  child: Container(
+                    width: 28,
+                    height: 28,
+                    clipBehavior: Clip.hardEdge,
+                    decoration: const BoxDecoration(),
+                    child: Stack(
+                      clipBehavior: Clip.none,
+                      children: [
+                        Positioned(
+                          left: 4,
+                          top: 4,
+                          child: Image.asset(
+                            'assets/page-1/images/Group 25.png',
+                            width: 24,
+                            height: 24,
+                            fit: BoxFit.contain,
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            Positioned(
+              left: 93,
+              top: 61,
+              child: Text(
+                'Quản trị người dùng',
+                style: GoogleFonts.getFont(
+                  'Noto Sans',
+                  color: Colors.black,
+                  fontSize: 24,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+            )
+          ],
         ),
       ),
     );

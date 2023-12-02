@@ -1,10 +1,12 @@
-import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
-import 'package:mongo_dart/mongo_dart.dart' as mongo;
-import 'package:google_fonts/google_fonts.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:http_parser/http_parser.dart';
 import 'dart:io';
+
+import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:http/http.dart' as http;
+import 'package:http_parser/http_parser.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:mongo_dart/mongo_dart.dart' as mongo;
+
 import 'add-pages.dart';
 
 class AddSeason extends StatefulWidget {
@@ -241,23 +243,27 @@ class _AddSeasonState extends State<AddSeason> {
                       Positioned(
                         left: 205,
                         top: 5,
-                        child: GestureDetector(
-                          onTap: () {
-                            _selectDate(context, selectedThuHoachDate!,
-                                (DateTime newDate) {
-                              setState(() {
-                                selectedThuHoachDate = newDate;
+                        child: Material(
+                          type: MaterialType.transparency,
+                          child: GestureDetector(
+                            onTap: () {
+                              _selectDate(context,
+                                  selectedThuHoachDate ?? DateTime.now(),
+                                  (DateTime newDate) {
+                                setState(() {
+                                  selectedThuHoachDate = newDate;
+                                });
                               });
-                            });
-                          },
-                          child: Text(
-                            selectedThuHoachDate != null
-                                ? '${selectedThuHoachDate!.day}/${selectedThuHoachDate!.month}/${selectedThuHoachDate!.year}'
-                                : 'Chọn ngày',
-                            style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w500,
-                              color: Color(0xb57e7e7e),
+                            },
+                            child: Text(
+                              selectedThuHoachDate != null
+                                  ? '${selectedThuHoachDate!.day}/${selectedThuHoachDate!.month}/${selectedThuHoachDate!.year}'
+                                  : 'Chọn ngày',
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.w500,
+                                color: Color(0xb57e7e7e),
+                              ),
                             ),
                           ),
                         ),
@@ -306,23 +312,27 @@ class _AddSeasonState extends State<AddSeason> {
                       Positioned(
                         left: 205,
                         top: 5,
-                        child: GestureDetector(
-                          onTap: () {
-                            _selectDate(context, selectedGieoSaDate!,
-                                (DateTime newDate) {
-                              setState(() {
-                                selectedGieoSaDate = newDate;
+                        child: Material(
+                          type: MaterialType.transparency,
+                          child: GestureDetector(
+                            onTap: () {
+                              _selectDate(
+                                  context, selectedGieoSaDate ?? DateTime.now(),
+                                  (DateTime newDate) {
+                                setState(() {
+                                  selectedGieoSaDate = newDate;
+                                });
                               });
-                            });
-                          },
-                          child: Text(
-                            selectedGieoSaDate != null
-                                ? '${selectedGieoSaDate!.day}/${selectedGieoSaDate!.month}/${selectedGieoSaDate!.year}'
-                                : 'Chọn ngày',
-                            style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w500,
-                              color: Color(0xb57e7e7e),
+                            },
+                            child: Text(
+                              selectedGieoSaDate != null
+                                  ? '${selectedGieoSaDate!.day}/${selectedGieoSaDate!.month}/${selectedGieoSaDate!.year}'
+                                  : 'Chọn ngày',
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.w500,
+                                color: Color(0xb57e7e7e),
+                              ),
                             ),
                           ),
                         ),

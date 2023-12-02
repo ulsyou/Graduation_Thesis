@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import 'package:myapp/page-1/employee-manager.dart';
 import 'package:myapp/utils.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class AddEmployee extends StatefulWidget {
   @override
@@ -39,576 +40,505 @@ class _AddEmployeeState extends State<AddEmployee> {
 
   @override
   Widget build(BuildContext context) {
-    double baseWidth = 360;
-    double fem = MediaQuery.of(context).size.width / baseWidth;
-    double ffem = fem * 0.97;
-    return Scaffold(
-      body: SingleChildScrollView(
-        child: Container(
-          // addemployeeeKj (74:246)
-          padding: EdgeInsets.fromLTRB(0 * fem, 38 * fem, 0 * fem, 0 * fem),
-          width: double.infinity,
-          decoration: BoxDecoration(
-            color: Color(0xffffffff),
-            image: DecorationImage(
-              image: AssetImage(
-                'assets/page-1/images/wolfgang-hasselmann-ucnhoxas6pq-unsplash-1-bg-vS5.png',
-              ),
-              fit: BoxFit.fill,
-            ),
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Container(
-                // autogroupw24hzhw (CQPXsufzDnMRHEVvfcW24h)
-                margin:
-                    EdgeInsets.fromLTRB(19 * fem, 0 * fem, 45 * fem, 33 * fem),
-                width: double.infinity,
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) =>
-                                EmployeeManager(), // Thay thế AdminManagerPage bằng tên trang của bạn
-                          ),
-                        );
-                      },
-                      child: Container(
-                        // group82Ro (68:180)
-                        margin: EdgeInsets.fromLTRB(
-                            0 * fem, 5 * fem, 40 * fem, 3 * fem),
-                        width: 24 * fem,
-                        height: 24 * fem,
-                        child: Image.asset(
-                          'assets/page-1/images/arrow-left.png',
-                          width: 24 * fem,
-                          height: 24 * fem,
-                        ),
-                      ),
-                    ),
-                    Text(
-                      // quntrngidnguCd (63:62)
-                      'Thêm người dùng',
-                      style: SafeGoogleFont(
-                        'Cabin',
-                        fontSize: 28 * ffem,
-                        fontWeight: FontWeight.w600,
-                        height: 1.215 * ffem / fem,
-                        color: Color(0xff000000),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              Container(
-                // autogroupyvmtpfT (KxhnKUf423TxKmxMevyVmT)
-                padding:
-                    EdgeInsets.fromLTRB(16 * fem, 21 * fem, 16 * fem, 72 * fem),
-                width: double.infinity,
+    return Container(
+      width: 412,
+      height: 915,
+      clipBehavior: Clip.hardEdge,
+      decoration: const BoxDecoration(
+        color: Colors.white,
+      ),
+      child: SizedBox(
+        width: double.infinity,
+        child: Stack(
+          clipBehavior: Clip.none,
+          children: [
+            Positioned(
+              left: 0,
+              top: 0,
+              child: Container(
+                width: 412,
+                height: 915,
+                clipBehavior: Clip.hardEdge,
                 decoration: BoxDecoration(
-                  color: Color(0x8effffff),
+                  image: const DecorationImage(
+                    image: AssetImage(
+                      'assets/page-1/images/yuki-ho-ygqbbzemmi-unsplash-1-bg.png',
+                    ),
+                    fit: BoxFit.fill,
+                    alignment: Alignment.centerLeft,
+                    opacity: 0.7,
+                    scale: 3.1,
+                  ),
+                  border: Border.all(),
                 ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
+              ),
+            ),
+            Positioned(
+              left: 0,
+              top: 0,
+              child: Container(
+                width: 412,
+                height: 915,
+                clipBehavior: Clip.hardEdge,
+                decoration: const BoxDecoration(
+                  color: Color(0x84FFFDF4),
+                ),
+              ),
+            ),
+            Positioned(
+              left: 44,
+              top: 659,
+              child: Container(
+                width: 328,
+                height: 35,
+                clipBehavior: Clip.hardEdge,
+                decoration: BoxDecoration(
+                  color: const Color(0xCCFFFFFF),
+                  borderRadius: BorderRadius.circular(15),
+                ),
+              ),
+            ),
+            Positioned(
+              left: 51,
+              top: 664,
+              child: Text(
+                'Vai trò:',
+                style: GoogleFonts.getFont(
+                  'Noto Sans',
+                  color: Colors.black,
+                  fontSize: 16,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+            ),
+            Positioned(
+              left: 249,
+              top: 664,
+              child: Text(
+                'RC00002',
+                style: GoogleFonts.getFont(
+                  'Noto Sans',
+                  color: Colors.black,
+                  fontSize: 16,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+            ),
+            Positioned(
+              left: 44,
+              top: 603,
+              child: Container(
+                width: 328,
+                height: 35,
+                clipBehavior: Clip.hardEdge,
+                decoration: BoxDecoration(
+                  color: const Color(0xCCFFFFFF),
+                  borderRadius: BorderRadius.circular(15),
+                ),
+              ),
+            ),
+            Positioned(
+              left: 51,
+              top: 608,
+              child: Text(
+                'Số điện thoại:',
+                style: GoogleFonts.getFont(
+                  'Noto Sans',
+                  color: Colors.black,
+                  fontSize: 16,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+            ),
+            Positioned(
+              left: 249,
+              top: 608,
+              child: Text(
+                'RC00002',
+                style: GoogleFonts.getFont(
+                  'Noto Sans',
+                  color: Colors.black,
+                  fontSize: 16,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+            ),
+            Positioned(
+              left: 44,
+              top: 547,
+              child: Container(
+                width: 328,
+                height: 35,
+                clipBehavior: Clip.hardEdge,
+                decoration: BoxDecoration(
+                  color: const Color(0xCCFFFFFF),
+                  borderRadius: BorderRadius.circular(15),
+                ),
+              ),
+            ),
+            Positioned(
+              left: 51,
+              top: 552,
+              child: Text(
+                'Vị trí:',
+                style: GoogleFonts.getFont(
+                  'Noto Sans',
+                  color: Colors.black,
+                  fontSize: 16,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+            ),
+            Positioned(
+              left: 249,
+              top: 552,
+              child: Text(
+                'RC00002',
+                style: GoogleFonts.getFont(
+                  'Noto Sans',
+                  color: Colors.black,
+                  fontSize: 16,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+            ),
+            Positioned(
+              left: 44,
+              top: 491,
+              child: Container(
+                width: 328,
+                height: 35,
+                clipBehavior: Clip.hardEdge,
+                decoration: BoxDecoration(
+                  color: const Color(0xCCFFFFFF),
+                  borderRadius: BorderRadius.circular(15),
+                ),
+              ),
+            ),
+            Positioned(
+              left: 51,
+              top: 496,
+              child: Text(
+                'Chuyên môn:',
+                style: GoogleFonts.getFont(
+                  'Noto Sans',
+                  color: Colors.black,
+                  fontSize: 16,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+            ),
+            Positioned(
+              left: 249,
+              top: 496,
+              child: Text(
+                'RC00002',
+                style: GoogleFonts.getFont(
+                  'Noto Sans',
+                  color: Colors.black,
+                  fontSize: 16,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+            ),
+            Positioned(
+              left: 44,
+              top: 435,
+              child: Container(
+                width: 328,
+                height: 35,
+                clipBehavior: Clip.hardEdge,
+                decoration: BoxDecoration(
+                  color: const Color(0xCCFFFFFF),
+                  borderRadius: BorderRadius.circular(15),
+                ),
+              ),
+            ),
+            Positioned(
+              left: 51,
+              top: 440,
+              child: Text(
+                'Email:',
+                style: GoogleFonts.getFont(
+                  'Noto Sans',
+                  color: Colors.black,
+                  fontSize: 16,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+            ),
+            Positioned(
+              left: 249,
+              top: 440,
+              child: Text(
+                'RC00002',
+                style: GoogleFonts.getFont(
+                  'Noto Sans',
+                  color: Colors.black,
+                  fontSize: 16,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+            ),
+            Positioned(
+              left: 44,
+              top: 379,
+              child: Container(
+                width: 328,
+                height: 35,
+                clipBehavior: Clip.hardEdge,
+                decoration: BoxDecoration(
+                  color: const Color(0xCCFFFFFF),
+                  borderRadius: BorderRadius.circular(15),
+                ),
+              ),
+            ),
+            Positioned(
+              left: 51,
+              top: 383,
+              child: Text(
+                'Họ và tên:',
+                style: GoogleFonts.getFont(
+                  'Noto Sans',
+                  color: Colors.black,
+                  fontSize: 16,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+            ),
+            Positioned(
+              left: 249,
+              top: 383,
+              child: Text(
+                'RC00002',
+                style: GoogleFonts.getFont(
+                  'Noto Sans',
+                  color: Colors.black,
+                  fontSize: 16,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+            ),
+            Positioned(
+              left: 47,
+              top: 164,
+              child: Material(
+                type: MaterialType.transparency,
+                borderRadius: BorderRadius.circular(20),
+                clipBehavior: Clip.antiAlias,
+                child: InkWell(
+                  onTap: () {},
+                  overlayColor: const MaterialStatePropertyAll<Color>(
+                    Color(0x0c7f7f7f),
+                  ),
+                  child: Ink(
+                    color: Colors.white,
+                    width: 318,
+                    height: 180,
+                  ),
+                ),
+              ),
+            ),
+            Positioned(
+              left: 26,
+              top: 790,
+              child: Material(
+                type: MaterialType.transparency,
+                borderRadius: BorderRadius.circular(35),
+                clipBehavior: Clip.antiAlias,
+                child: InkWell(
+                  onTap: () {},
+                  overlayColor: const MaterialStatePropertyAll<Color>(
+                    Color(0x0c7f7f7f),
+                  ),
+                  child: Ink(
+                    color: Colors.white,
+                    width: 170,
+                    height: 58,
+                  ),
+                ),
+              ),
+            ),
+            Positioned(
+              left: 216,
+              top: 790,
+              child: Material(
+                type: MaterialType.transparency,
+                borderRadius: BorderRadius.circular(35),
+                clipBehavior: Clip.antiAlias,
+                child: InkWell(
+                  onTap: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => EmployeeManager(),
+                      ),
+                    );
+                  },
+                  overlayColor: const MaterialStatePropertyAll<Color>(
+                    Color(0x0c7f7f7f),
+                  ),
+                  child: Ink(
+                    color: const Color(0xFFFD9C9C),
+                    width: 173,
+                    height: 58,
+                  ),
+                ),
+              ),
+            ),
+            Positioned(
+              left: 71,
+              top: 810,
+              child: Material(
+                type: MaterialType.transparency,
+                child: InkWell(
+                  onTap: () {},
+                  overlayColor: const MaterialStatePropertyAll<Color>(
+                    Color(0x0c7f7f7f),
+                  ),
+                  child: Text(
+                    'Xác nhận',
+                    style: GoogleFonts.getFont(
+                      'Noto Sans',
+                      color: Colors.black,
+                      fontSize: 18,
+                      fontWeight: FontWeight.w500,
+                      height: 0.9,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            Positioned(
+              left: 287,
+              top: 810,
+              child: Material(
+                type: MaterialType.transparency,
+                child: InkWell(
+                  onTap: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => EmployeeManager(),
+                      ),
+                    );
+                  },
+                  overlayColor: const MaterialStatePropertyAll<Color>(
+                    Color(0x0c7f7f7f),
+                  ),
+                  child: Text(
+                    'Huỷ',
+                    style: GoogleFonts.getFont(
+                      'Noto Sans',
+                      color: Colors.white,
+                      fontSize: 18,
+                      fontWeight: FontWeight.w500,
+                      height: 0.9,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            Positioned(
+              left: 0,
+              top: 0,
+              child: Container(
+                width: 412,
+                height: 127,
+                clipBehavior: Clip.hardEdge,
+                decoration: const BoxDecoration(
+                  color: Color(0xFFD7FF96),
+                  borderRadius: BorderRadius.vertical(
+                    bottom: Radius.circular(20),
+                  ),
+                ),
+              ),
+            ),
+            Positioned(
+              left: 0,
+              top: 0,
+              child: Container(
+                width: 412,
+                height: 115,
+                clipBehavior: Clip.hardEdge,
+                decoration: const BoxDecoration(
+                  borderRadius: BorderRadius.vertical(
+                    bottom: Radius.circular(20),
+                  ),
+                ),
+                child: Stack(
+                  clipBehavior: Clip.none,
                   children: [
-                    //Ảnh
-                    Container(
-                      // autogrouplncy6N5 (KxhnrYbcsCwadmYYztLNCy)
-                      margin: EdgeInsets.fromLTRB(
-                          89 * fem, 0 * fem, 89 * fem, 28 * fem),
-                      padding: EdgeInsets.fromLTRB(
-                          111 * fem, 126 * fem, 15 * fem, 0 * fem),
-                      width: double.infinity,
-                      decoration: BoxDecoration(
-                        color: Color(0xffffffff),
-                        borderRadius: BorderRadius.circular(75 * fem),
-                      ),
-                      child: Align(
-                          // group17PMB (97:28)
-                          alignment: Alignment.bottomRight,
-                          child: InkWell(
-                            onTap: () {
-                              // Handle button tap
-                            },
-                            child: SizedBox(
-                              width: 24 * fem,
-                              height: 24 * fem,
-                              child: Image.asset(
-                                'assets/page-1/images/plus-circle.png',
-                                width: 24 * fem,
-                                height: 24 * fem,
-                              ),
-                            ),
-                          )),
-                    ),
-                    //Họ tên
-                    Container(
-                      margin: EdgeInsets.fromLTRB(
-                          0 * fem, 0 * fem, 0 * fem, 25 * fem),
-                      padding: EdgeInsets.fromLTRB(
-                          20 * fem, 0 * fem, 175 * fem, 0 * fem),
-                      width: double.infinity,
-                      decoration: BoxDecoration(
-                        color: Color(0xfffffafa),
-                        borderRadius: BorderRadius.only(
-                          topRight: Radius.circular(25 * fem),
-                          bottomRight: Radius.circular(25 * fem),
-                        ),
-                      ),
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Container(
-                            margin: EdgeInsets.fromLTRB(
-                                0 * fem, 0 * fem, 17 * fem, 0 * fem),
-                            width: 24 * fem,
-                            height: 24 * fem,
-                            child: Image.asset(
-                              'assets/page-1/images/black-user.png',
-                              width: 24 * fem,
-                              height: 24 * fem,
-                            ),
-                          ),
-                          Container(
-                            width: 1 * fem,
-                            height: 60 * fem,
-                            decoration: BoxDecoration(
-                              color: Color(0xa384aa88),
-                            ),
-                          ),
-                          Expanded(
-                            child: Padding(
-                              padding: EdgeInsets.only(left: 16 * fem),
-                              // Add some spacing
-                              child: TextFormField(
-                                controller: nameController,
-                                style: TextStyle(
-                                  fontSize: 16 * ffem,
-                                  fontWeight: FontWeight.w500,
-                                ),
-                                decoration: InputDecoration(
-                                  hintText: 'Họ và tên',
-                                  hintStyle: TextStyle(
-                                    color: Color(0xb57e7e7e),
-                                  ),
-                                  border: InputBorder.none,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    //SĐT
-                    Container(
-                      margin: EdgeInsets.fromLTRB(
-                          0 * fem, 0 * fem, 0 * fem, 25 * fem),
-                      padding: EdgeInsets.fromLTRB(
-                          22.11 * fem, 0 * fem, 0 * fem, 0 * fem),
-                      width: double.infinity,
-                      decoration: BoxDecoration(
-                        color: Color(0xfffffafa),
-                        borderRadius: BorderRadius.only(
-                          topRight: Radius.circular(25 * fem),
-                          bottomRight: Radius.circular(25 * fem),
-                        ),
-                      ),
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Container(
-                            margin: EdgeInsets.fromLTRB(
-                                0 * fem, 0 * fem, 18 * fem, 0.07 * fem),
-                            width: 19.89 * fem,
-                            height: 19.93 * fem,
-                            child: Image.asset(
-                              'assets/page-1/images/phone.png',
-                              width: 19.89 * fem,
-                              height: 19.93 * fem,
-                            ),
-                          ),
-                          Container(
-                            margin: EdgeInsets.fromLTRB(
-                                0 * fem, 2 * fem, 17 * fem, 0 * fem),
-                            width: 1 * fem,
-                            height: 60 * fem,
-                            decoration: BoxDecoration(
-                              color: Color(0xa384aa88),
-                            ),
-                          ),
-                          Expanded(
-                            child: TextFormField(
-                              controller: phoneController,
-                              style: SafeGoogleFont(
-                                'Cabin',
-                                fontSize: 16 * ffem,
-                                fontWeight: FontWeight.w500,
-                                height: 1.215 * ffem / fem,
-                              ),
-                              decoration: InputDecoration(
-                                hintText: 'Số điện thoại',
-                                hintStyle: TextStyle(
-                                  color: Color(0xb57e7e7e),
-                                ),
-                                border: InputBorder.none,
-                              ),
-                              keyboardType: TextInputType.phone,
-                              // Để hiển thị bàn phím số
-                              inputFormatters: [
-                                // Định dạng số điện thoại (XXX-XXX-XXXX)
-                                FilteringTextInputFormatter.digitsOnly,
-                                LengthLimitingTextInputFormatter(10),
-                                // Giới hạn số ký tự
-                                TextInputFormatter.withFunction(
-                                    (oldValue, newValue) {
-                                  if (newValue.text.isNotEmpty) {
-                                    final text = newValue.text.replaceAll(
-                                        RegExp(r'\D'),
-                                        ''); // Remove non-numeric characters
-                                    final formattedText = <String>[];
-
-                                    for (var i = 0; i < text.length; i++) {
-                                      if (i == 3 || i == 6) {
-                                        formattedText.add('-');
-                                      }
-                                      formattedText.add(text[i]);
-                                    }
-
-                                    final newText = formattedText.join('');
-
-                                    return TextEditingValue(
-                                      text: newText,
-                                      selection: TextSelection.collapsed(
-                                          offset: newText.length),
-                                    );
-                                  }
-                                  return newValue;
-                                })
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    //Email
-                    Container(
-                      margin: EdgeInsets.fromLTRB(
-                          0 * fem, 0 * fem, 0 * fem, 25 * fem),
-                      padding: EdgeInsets.fromLTRB(
-                          20 * fem, 0 * fem, 207 * fem, 0 * fem),
-                      width: double.infinity,
-                      decoration: BoxDecoration(
-                        color: Color(0xfffffafa),
-                        borderRadius: BorderRadius.only(
-                          topRight: Radius.circular(25 * fem),
-                          bottomRight: Radius.circular(25 * fem),
-                        ),
-                      ),
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Container(
-                            margin: EdgeInsets.fromLTRB(
-                                0 * fem, 0 * fem, 17 * fem, 0 * fem),
-                            width: 24 * fem,
-                            height: 24 * fem,
-                            child: Image.asset(
-                              'assets/page-1/images/mail.png',
-                              width: 24 * fem,
-                              height: 24 * fem,
-                            ),
-                          ),
-                          Container(
-                            margin: EdgeInsets.fromLTRB(
-                                0 * fem, 0 * fem, 16 * fem, 0 * fem),
-                            width: 1 * fem,
-                            height: 60 * fem,
-                            decoration: BoxDecoration(
-                              color: Color(0xa384aa88),
-                            ),
-                          ),
-                          Expanded(
-                            child: TextFormField(
-                              controller: emailController,
-                              style: TextStyle(
-                                fontSize: 16 * ffem,
-                                fontWeight: FontWeight.w500,
-                              ),
-                              decoration: InputDecoration(
-                                hintText: 'Email',
-                                hintStyle: TextStyle(
-                                  color: Color(0xb57e7e7e),
-                                ),
-                                border: InputBorder.none,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    //Pass
-                    Container(
-                      margin: EdgeInsets.fromLTRB(
-                          0 * fem, 0 * fem, 0 * fem, 25 * fem),
-                      padding: EdgeInsets.fromLTRB(
-                          20 * fem, 0 * fem, 175 * fem, 0 * fem),
-                      width: double.infinity,
-                      decoration: BoxDecoration(
-                        color: Color(0xfffffafa),
-                        borderRadius: BorderRadius.only(
-                          topRight: Radius.circular(25 * fem),
-                          bottomRight: Radius.circular(25 * fem),
-                        ),
-                      ),
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Container(
-                            margin: EdgeInsets.fromLTRB(
-                                0 * fem, 0 * fem, 17 * fem, 0 * fem),
-                            width: 24 * fem,
-                            height: 24 * fem,
-                            child: Image.asset(
-                              'assets/page-1/images/key.png',
-                              width: 24 * fem,
-                              height: 24 * fem,
-                            ),
-                          ),
-                          Container(
-                            margin: EdgeInsets.fromLTRB(
-                                0 * fem, 0 * fem, 16 * fem, 0 * fem),
-                            width: 1 * fem,
-                            height: 60 * fem,
-                            decoration: BoxDecoration(
-                              color: Color(0xa384aa88),
-                            ),
-                          ),
-                          Expanded(
-                            child: TextFormField(
-                              controller: passwordController,
-                              style: TextStyle(
-                                fontSize: 16 * ffem,
-                                fontWeight: FontWeight.w500,
-                              ),
-                              decoration: InputDecoration(
-                                hintText: 'Mật khẩu',
-                                hintStyle: TextStyle(
-                                  fontSize: 16 * fem,
-                                  fontWeight: FontWeight.w500,
-                                  color: Color(0xb57e7e7e),
-                                ),
-                                border: InputBorder.none,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    //Chuyên môn
-                    Container(
-                      margin: EdgeInsets.fromLTRB(
-                          0 * fem, 0 * fem, 0 * fem, 25 * fem),
-                      padding: EdgeInsets.fromLTRB(
-                          23 * fem, 0 * fem, 151 * fem, 0 * fem),
-                      width: double.infinity,
-                      decoration: BoxDecoration(
-                        color: Color(0xfffffafa),
-                        borderRadius: BorderRadius.only(
-                          topRight: Radius.circular(25 * fem),
-                          bottomRight: Radius.circular(25 * fem),
-                        ),
-                      ),
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Container(
-                            margin: EdgeInsets.fromLTRB(
-                                0 * fem, 0 * fem, 19 * fem, 0 * fem),
-                            width: 18 * fem,
-                            height: 18 * fem,
-                            child: Image.asset(
-                              'assets/page-1/images/command.png',
-                              width: 18 * fem,
-                              height: 18 * fem,
-                            ),
-                          ),
-                          Container(
-                            margin: EdgeInsets.fromLTRB(
-                                0 * fem, 0 * fem, 17 * fem, 0 * fem),
-                            width: 1 * fem,
-                            height: 60 * fem,
-                            decoration: BoxDecoration(
-                              color: Color(0xa384aa88),
-                            ),
-                          ),
-                          Expanded(
-                            child: TextFormField(
-                              controller: expertiseController,
-                              style: TextStyle(
-                                fontSize: 16 * ffem,
-                                fontWeight: FontWeight.w500,
-                              ),
-                              decoration: InputDecoration(
-                                hintText: 'Chuyên môn',
-                                hintStyle: TextStyle(
-                                  fontSize: 16 * fem,
-                                  fontWeight: FontWeight.w500,
-                                  color: Color(0xb57e7e7e),
-                                ),
-                                border: InputBorder.none,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    // Vai trò
-                    Container(
-                      margin: EdgeInsets.fromLTRB(
-                          0 * fem, 0 * fem, 0 * fem, 51 * fem),
-                      padding: EdgeInsets.fromLTRB(
-                          20 * fem, 0 * fem, 139 * fem, 0 * fem),
-                      width: double.infinity,
-                      decoration: BoxDecoration(
-                        color: Color(0xfffffafa),
-                        borderRadius: BorderRadius.only(
-                          topRight: Radius.circular(25 * fem),
-                          bottomRight: Radius.circular(25 * fem),
-                        ),
-                      ),
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Container(
-                            margin: EdgeInsets.fromLTRB(
-                                0 * fem, 0 * fem, 16 * fem, 0 * fem),
-                            width: 24 * fem,
-                            height: 24 * fem,
-                            child: Image.asset(
-                              'assets/page-1/images/users.png',
-                              width: 24 * fem,
-                              height: 24 * fem,
-                            ),
-                          ),
-                          Container(
-                            margin: EdgeInsets.fromLTRB(
-                                0 * fem, 0 * fem, 17 * fem, 0 * fem),
-                            width: 1 * fem,
-                            height: 60 * fem,
-                            decoration: BoxDecoration(
-                              color: Color(0xa384aa88),
-                            ),
-                          ),
-                          Expanded(
-                            child: DropdownButton<String>(
-                              value: selectedRole,
-                              onChanged: (String? newValue) {
-                                if (newValue != null) {
-                                  setState(() {
-                                    selectedRole = newValue;
-                                  });
-                                }
-                              },
-                              items: <String>[
-                                'Quản trị viên',
-                                'Chuyên gia',
-                                'Nhân viên',
-                              ].map<DropdownMenuItem<String>>((String value) {
-                                return DropdownMenuItem<String>(
-                                  value: value,
-                                  child: Text(
-                                    value,
-                                    style: TextStyle(
-                                      fontSize: 16 * fem,
-                                      fontWeight: FontWeight.w500,
-                                    ),
-                                  ),
-                                );
-                              }).toList(),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    //Confirm + Cancel
-                    Container(
-                      width: double.infinity,
-                      height: 58 * fem,
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Expanded(
-                            child: ElevatedButton(
-                              onPressed: () {
-                                addEmployee().then((_) {
-                                  Navigator.pushReplacement(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => EmployeeManager(),
-                                    ),
-                                  );
-                                });
-                              },
-                              style: ElevatedButton.styleFrom(
-                                primary: Color(0xffffffff),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(25 * fem),
-                                ),
-                              ),
-                              child: Text(
-                                'Xác nhận',
-                                style: SafeGoogleFont(
-                                  'Cabin',
-                                  fontSize: 20 * ffem,
-                                  fontWeight: FontWeight.w500,
-                                  height: 1.215 * ffem / fem,
-                                  color: Color(0xff000000),
-                                ),
-                              ),
-                            ),
-                          ),
-                          SizedBox(width: 16 * fem),
-                          // Add some spacing between buttons
-                          Expanded(
-                            child: OutlinedButton(
-                              onPressed: () {
-                                Navigator.pushReplacement(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => EmployeeManager(),
-                                  ),
-                                );
-                              },
-                              style: OutlinedButton.styleFrom(
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(25 * fem),
-                                ),
-                              ),
-                              child: Text(
-                                'Hủy bỏ',
-                                style: SafeGoogleFont(
-                                  'Cabin',
-                                  fontSize: 20 * ffem,
-                                  fontWeight: FontWeight.w500,
-                                  height: 1.215 * ffem / fem,
-                                  color: Color(0xff000000),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
+                    Positioned(
+                      left: -115,
+                      top: -118,
+                      child: Image.network(
+                        'https://storage.googleapis.com/codeless-dev.appspot.com/uploads%2Fimages%2FbBi0N1EZ1GlEm38rYJyr%2Fc635059ff9273dae3cfa4172964d22eb.png',
+                        width: 351,
+                        height: 254,
+                        fit: BoxFit.contain,
                       ),
                     )
                   ],
                 ),
               ),
-            ],
-          ),
+            ),
+            Positioned(
+              left: 31,
+              top: 66,
+              child: Material(
+                type: MaterialType.transparency,
+                clipBehavior: Clip.antiAlias,
+                child: InkWell(
+                  onTap: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => EmployeeManager(),
+                      ),
+                    );
+                  },
+                  overlayColor: const MaterialStatePropertyAll<Color>(
+                    Color(0x0c7f7f7f),
+                  ),
+                  child: Container(
+                    width: 28,
+                    height: 28,
+                    clipBehavior: Clip.hardEdge,
+                    decoration: const BoxDecoration(),
+                    child: Stack(
+                      clipBehavior: Clip.none,
+                      children: [
+                        Positioned(
+                          left: 4,
+                          top: 4,
+                          child: Image.asset(
+                            'assets/page-1/images/Group 25.png',
+                            width: 24,
+                            height: 24,
+                            fit: BoxFit.contain,
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            Positioned(
+              left: 106,
+              top: 65,
+              child: SizedBox(
+                width: 214,
+                child: Text(
+                  'Thêm người dùng',
+                  style: GoogleFonts.getFont(
+                    'Noto Sans',
+                    color: Colors.black,
+                    fontSize: 24,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+              ),
+            )
+          ],
         ),
       ),
     );

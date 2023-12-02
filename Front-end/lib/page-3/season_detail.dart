@@ -257,7 +257,7 @@ class _SeasonDetailState extends State<SeasonDetail> {
                 left: 249,
                 top: 618,
                 child: Text(
-                  widget.seasonData['yield'] ?? 'N/A',
+                  widget.seasonData['yield']?.toString() ?? 'N/A',
                   style: GoogleFonts.getFont(
                     'Noto Sans',
                     color: Colors.black,

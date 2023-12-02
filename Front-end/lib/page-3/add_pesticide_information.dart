@@ -1,11 +1,12 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
 import 'package:google_fonts/google_fonts.dart';
-import 'package:image_picker/image_picker.dart';
+import 'package:http/http.dart' as http;
 import 'package:http_parser/http_parser.dart';
-import 'dart:io';
+import 'package:image_picker/image_picker.dart';
+
 import 'add-pages.dart';
 
 class AddPesticide extends StatefulWidget {
@@ -661,10 +662,10 @@ class _AddPesticideState extends State<AddPesticide> {
                   ),
                 ),
                 Positioned(
-                  left: 115,
+                  left: 95,
                   top: 65,
                   child: SizedBox(
-                    width: 240,
+                    width: 350,
                     child: Text(
                       'Thêm thuốc trị bệnh',
                       style: GoogleFonts.getFont(

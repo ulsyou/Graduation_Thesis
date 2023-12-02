@@ -27,10 +27,10 @@ const fertilizerSchema = mongoose.Schema({
         required: true,
     },
     nutrients: {
-        kali: { type: String, required: true },
-        nitro: { type: String, required: true },
-        phosphate: { type: String, required: true },
-        others: { type: String, required: true },
+        kali: { type: Number, required: true },
+        nitro: { type: Number, required: true },
+        phosphate: { type: Number, required: true },
+        others: { type: Number, required: true },
     },
 });
 

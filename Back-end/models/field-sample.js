@@ -11,7 +11,7 @@ const fieldSampleSchema = mongoose.Schema({
         required: false,
       },
     area: {
-        type: String,
+        type: Number,
         required: true,
     },
     latitude: {

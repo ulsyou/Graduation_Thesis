@@ -7,17 +7,23 @@ import shutil
 app = Flask(__name__)
 
 # Load models
-filename_DTR = os.path.dirname(os.path.abspath(__file__))+"/ModelTrained/DecisionTreeRegressor.sav"
+# filename_DTR = os.path.dirname(os.path.abspath(__file__))+"/ModelTrained/DecisionTreeRegressor.sav"
+# model_DTR = pickle.load(open(filename_DTR, 'rb'))
+#
+# filename_LR = os.path.dirname(os.path.abspath(__file__))+"/ModelTrained/predictionByLinearRegression1.sav"
+# model_LR = pickle.load(open(filename_LR, 'rb'))
+#
+# filename_RFR = os.path.dirname(os.path.abspath(__file__))+"/ModelTrained/predictionByRandomForestRegression1.sav"
+# model_RFR = pickle.load(open(filename_RFR, 'rb'))
+
+filename_DTR = os.path.dirname(os.path.abspath(__file__))+"/ModelTrained/model_6_split_6.sav"
 model_DTR = pickle.load(open(filename_DTR, 'rb'))
 
-filename_LR = os.path.dirname(os.path.abspath(__file__))+"/ModelTrained/predictionByLinearRegression1.sav"
+filename_LR = os.path.dirname(os.path.abspath(__file__))+"/ModelTrained/model_4_split_4.sav"
 model_LR = pickle.load(open(filename_LR, 'rb'))
 
-filename_RFR = os.path.dirname(os.path.abspath(__file__))+"/ModelTrained/predictionByRandomForestRegression1.sav"
+filename_RFR = os.path.dirname(os.path.abspath(__file__))+"/ModelTrained/model_6_split_6.sav"
 model_RFR = pickle.load(open(filename_RFR, 'rb'))
-
-filename_GBR = os.path.dirname(os.path.abspath(__file__))+"/ModelTrained/GradientBoostingRegressor.sav"
-model_GBR = pickle.load(open(filename_GBR, 'rb'))
 
 @app.route('/predict', methods=['POST'])
 def predict():
@@ -41,7 +47,6 @@ def predict():
     yield_pr_DTR = model_DTR.predict([features]) / 1000
     yield_pr_LR = model_LR.predict([features]) / 1000
     yield_pr_RFR = model_RFR.predict([features]) / 1000
-    yield_pr_GBR = model_GBR.predict([features]) / 1000
 
     # Return predictions
     return jsonify({
@@ -58,7 +63,6 @@ def predict():
         'Yield_DTR': yield_pr_DTR.tolist(),
         'Yield_LR': yield_pr_LR.tolist(),
         'Yield_RFR': yield_pr_RFR.tolist(),
-        'Yield_GBR': yield_pr_GBR.tolist()
     })
 
 @app.route('/processImage', methods=['POST'])
