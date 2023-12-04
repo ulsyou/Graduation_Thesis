@@ -87,7 +87,7 @@ class _SeasonsState extends State<Seasons> {
               children: [
                 Positioned(
                   left: 0 * fem,
-                  top: 0 * fem,
+                  top: 50 * fem,
                   child: Container(
                     padding: EdgeInsets.fromLTRB(
                         71 * fem, 0 * fem, 29 * fem, 0 * fem),
@@ -339,7 +339,8 @@ class _SeasonsState extends State<Seasons> {
                                 onPressed: () {
                                   Navigator.of(context).push(
                                     MaterialPageRoute(
-                                      builder: (context) => ExpertManagerPage(isNavigatedFromOtherPage: true),
+                                      builder: (context) => ExpertManagerPage(
+                                          isNavigatedFromOtherPage: true),
                                     ),
                                   );
                                 },
@@ -376,6 +377,36 @@ class _SeasonsState extends State<Seasons> {
                           ),
                         ),
                       ],
+                    ),
+                  ),
+                ),
+                Positioned(
+                  left: 0 * fem,
+                  top: 120 * fem,
+                  child: Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: Container(
+                      padding: EdgeInsets.all(8.0),
+                      width: MediaQuery.of(context).size.width - 16,
+                      child: TextField(
+                        onChanged: (value) {
+                          searchQuery = value;
+                          filteredSeasons = seasons.where((season) {
+                            return season['cropSeasonName']
+                                .toLowerCase()
+                                .contains(searchQuery.toLowerCase());
+                          }).toList();
+                        },
+                        decoration: InputDecoration(
+                          labelText: "Search",
+                          hintText: "Search",
+                          prefixIcon: Icon(Icons.search),
+                          border: OutlineInputBorder(
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(25.0)),
+                          ),
+                        ),
+                      ),
                     ),
                   ),
                 ),

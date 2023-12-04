@@ -23,7 +23,6 @@ class _AddSeasonState extends State<AddSeason> {
   List<String> fieldSamples = [];
   String selectedRice = '';
   String selectedFieldSample = '';
-  String selectedRiceStrain = '';
   String? imagePath;
   File? image;
 

@@ -4,7 +4,7 @@ const cors = require("cors");
 const connectDB = require("./config/db");
 const { exec } = require("child_process");
 const path = require("path");
-
+const mongoose = require('mongoose');
 const app = express();
 const userRoute = require("./routes/user");
 const riceStrainRoute = require("./routes/rice");
@@ -16,7 +16,8 @@ const cropSeason = require("./routes/crop-season");
 const activitiesRoute = require("./routes/activities");
 const fileUpload = require('express-fileupload');
 const weatherRoute = require("./routes/WeatherData");
-app.use(fileUpload());
+const statisticsRoute = express.Router();
+
 
 // Connect Database
 connectDB();
@@ -48,6 +49,10 @@ app.use("/crops-season", cropSeason);
 app.use("/activities", activitiesRoute);
 app.use('/uploads', express.static('./uploads'));
 app.use("/weather", weatherRoute);
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: true}));
+app.use(fileUpload());
+app.use("/statistics", statisticsRoute);
 
 // Route for processing images
 app.post('/processImage', async (req, res) => {
@@ -90,6 +95,53 @@ app.post('/processImage', async (req, res) => {
     res.status(500).json({ error: 'Internal Server Error' });
   }
 });
+
+
+statisticsRoute.get('/', async (req, res) => {
+  try {
+      // Fetch data from each collection
+      const cropSeasonsStats = await mongoose.connection.db.collection('cropseasons').aggregate([
+          { $group: { _id: "$seasonType", count: { $sum: 1 } } }
+      ]).toArray();
+
+      const diseasesStats = await mongoose.connection.db.collection('diseases').aggregate([
+          { $group: { _id: "$classification", count: { $sum: 1 } } }
+      ]).toArray();
+
+      const fertilizersStats = await mongoose.connection.db.collection('fertilizers').aggregate([
+          { $group: { _id: "$nutrients", count: { $sum: 1 } } }
+      ]).toArray();
+
+      const fieldSamplesStats = await mongoose.connection.db.collection('fieldsamples').aggregate([
+          { $group: { _id: "$classification", count: { $sum: 1 } } }
+      ]).toArray();
+
+      const pesticidesStats = await mongoose.connection.db.collection('pesticides').aggregate([
+          { $group: { _id: "$treatingDiseases", count: { $sum: 1 } } }
+      ]).toArray();
+
+      const riceStrainsStats = await mongoose.connection.db.collection('ricestrains').aggregate([
+          { $group: { _id: "$strainName", count: { $sum: 1 } } }
+      ]).toArray();
+
+      // Combine the results into a single object
+      const statistics = {
+          cropSeasonsStats: cropSeasonsStats.map(item => ({name: item._id, value: item.count})),
+          diseasesStats: diseasesStats.map(item => ({name: item._id, value: item.count})),
+          fertilizersStats: fertilizersStats.map(item => ({name: item._id, value: item.count})),
+          fieldSamplesStats: fieldSamplesStats.map(item => ({name: item._id, value: item.count})),
+          pesticidesStats: pesticidesStats.map(item => ({name: item._id, value: item.count})),
+          riceStrainsStats: riceStrainsStats.map(item => ({name: item._id, value: item.count}))
+      };
+
+      // Send the statistics as a response
+      res.json(statistics);
+  } catch (err) {
+      console.error(err);
+      res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
 
 const port = process.env.PORT || 5000;
 

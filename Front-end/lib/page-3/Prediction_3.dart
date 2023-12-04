@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 import 'package:myapp/page-3/season_activities_manager.dart';
+
 import 'Prediction_Random_Forest.dart';
 
 class Prediction3 extends StatefulWidget {
@@ -296,7 +296,7 @@ class _Prediction3State extends State<Prediction3> {
               left: 248,
               top: 386,
               child: Text(
-                widget.predictionData['yield'] ?? 'N/A',
+                widget.predictionData['yield']?.toString() ?? 'N/A',
                 style: GoogleFonts.getFont(
                   'Noto Sans',
                   color: Colors.black,

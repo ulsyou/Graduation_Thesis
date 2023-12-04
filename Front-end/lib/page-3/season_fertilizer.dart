@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:myapp/page-3/season_activities_manager.dart';
+import 'package:myapp/page-3/season_fertilizer_use.dart';
 
 class SeasonFertilizer extends StatelessWidget {
   final Map<String, dynamic> seasonData;
@@ -31,10 +32,9 @@ class SeasonFertilizer extends StatelessWidget {
                   clipBehavior: Clip.hardEdge,
                   decoration: BoxDecoration(
                     image: const DecorationImage(
-                      image: NetworkImage(
-                        'https://firebasestorage.googleapis.com/v0/b/codeless-app.appspot.com/o/projects%2FTeD8q4fMRDdW3VSyJEbH%2F179800e3ecb133fbb531b822ceb94009dc1a8493yuki-ho-_YGqbbZEmMI-unsplash%201.png?alt=media&token=bc032393-156b-48e2-89eb-88063d9d34de',
-                      ),
-                      fit: BoxFit.none,
+                      image: AssetImage(
+                          'assets/page-1/images/yuki-ho-ygqbbzemmi-unsplash-1-bg.png'),
+                      fit: BoxFit.fill,
                       alignment: Alignment.centerLeft,
                       opacity: 0.7,
                       scale: 1.8,
@@ -56,8 +56,37 @@ class SeasonFertilizer extends StatelessWidget {
                 ),
               ),
               Positioned(
+                left: 0,
+                top: 120,
+                child: Padding(
+                  padding: EdgeInsets.all(8.0),
+                  child: Container(
+                    padding: EdgeInsets.all(8.0),
+                    width: MediaQuery.of(context).size.width - 16,
+                    child: TextField(
+                      onChanged: (value) {
+                        // searchQuery = value;
+                        // filteredSeasons = seasons.where((season) {
+                        //   return season['cropSeasonName']
+                        //       .toLowerCase()
+                        //       .contains(searchQuery.toLowerCase());
+                        // }).toList();
+                      },
+                      decoration: InputDecoration(
+                        labelText: "Search",
+                        hintText: "Search",
+                        prefixIcon: Icon(Icons.search),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(25.0)),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              Positioned(
                 left: 40,
-                top: 144,
+                top: 224,
                 child: Container(
                   width: 341,
                   height: 150,
@@ -73,7 +102,7 @@ class SeasonFertilizer extends StatelessWidget {
               ),
               Positioned(
                 left: 188,
-                top: 142,
+                top: 222,
                 child: Text(
                   'Lần',
                   style: GoogleFonts.getFont(
@@ -86,7 +115,7 @@ class SeasonFertilizer extends StatelessWidget {
               ),
               Positioned(
                 left: 229,
-                top: 142,
+                top: 222,
                 child: Text(
                   '1',
                   style: GoogleFonts.getFont(
@@ -99,7 +128,7 @@ class SeasonFertilizer extends StatelessWidget {
               ),
               Positioned(
                 left: 78,
-                top: 171,
+                top: 251,
                 child: Text(
                   'Phân:',
                   style: GoogleFonts.getFont(
@@ -112,7 +141,7 @@ class SeasonFertilizer extends StatelessWidget {
               ),
               Positioned(
                 left: 127,
-                top: 171,
+                top: 251,
                 child: Text(
                   'Phân bón SUPE LÂN Long Thành',
                   style: GoogleFonts.getFont(
@@ -125,7 +154,7 @@ class SeasonFertilizer extends StatelessWidget {
               ),
               Positioned(
                 left: 78,
-                top: 194,
+                top: 274,
                 child: Text(
                   'Số lượng (kg/ha):',
                   style: GoogleFonts.getFont(
@@ -138,7 +167,7 @@ class SeasonFertilizer extends StatelessWidget {
               ),
               Positioned(
                 left: 219,
-                top: 194,
+                top: 274,
                 child: Text(
                   '50',
                   style: GoogleFonts.getFont(
@@ -151,7 +180,7 @@ class SeasonFertilizer extends StatelessWidget {
               ),
               Positioned(
                 left: 78,
-                top: 217,
+                top: 297,
                 child: Text(
                   'Ngày bón:',
                   style: GoogleFonts.getFont(
@@ -164,7 +193,7 @@ class SeasonFertilizer extends StatelessWidget {
               ),
               Positioned(
                 left: 165,
-                top: 217,
+                top: 297,
                 child: Text(
                   '12-05-2023',
                   style: GoogleFonts.getFont(
@@ -177,7 +206,7 @@ class SeasonFertilizer extends StatelessWidget {
               ),
               Positioned(
                 left: 78,
-                top: 240,
+                top: 320,
                 child: Text(
                   'Ngày hoàn thành:',
                   style: GoogleFonts.getFont(
@@ -190,7 +219,7 @@ class SeasonFertilizer extends StatelessWidget {
               ),
               Positioned(
                 left: 225,
-                top: 240,
+                top: 320,
                 child: Text(
                   '12-05-2023',
                   style: GoogleFonts.getFont(
@@ -203,7 +232,7 @@ class SeasonFertilizer extends StatelessWidget {
               ),
               Positioned(
                 left: 78,
-                top: 263,
+                top: 343,
                 child: Text(
                   'Nhân viên:',
                   style: GoogleFonts.getFont(
@@ -216,7 +245,7 @@ class SeasonFertilizer extends StatelessWidget {
               ),
               Positioned(
                 left: 169,
-                top: 263,
+                top: 343,
                 child: Text(
                   'Võ Văn Hướng',
                   style: GoogleFonts.getFont(
@@ -229,7 +258,7 @@ class SeasonFertilizer extends StatelessWidget {
               ),
               Positioned(
                 left: 356,
-                top: 147,
+                top: 227,
                 child: Material(
                   type: MaterialType.transparency,
                   clipBehavior: Clip.antiAlias,
@@ -239,20 +268,18 @@ class SeasonFertilizer extends StatelessWidget {
                       Color(0x0c7f7f7f),
                     ),
                     child: Container(
-                      width: 24,
-                      height: 24,
+                      width: 28,
+                      height: 28,
                       clipBehavior: Clip.hardEdge,
                       decoration: const BoxDecoration(),
                       child: Stack(
                         clipBehavior: Clip.none,
                         children: [
                           Positioned(
-                            left: 4,
-                            top: 4,
-                            child: Image.network(
-                              'https://storage.googleapis.com/codeless-dev.appspot.com/uploads%2Fimages%2FTeD8q4fMRDdW3VSyJEbH%2Fc2299194a340c55bdec0af648a6babc5.png',
-                              width: 16,
-                              height: 16,
+                            child: Image.asset(
+                              'assets/page-1/images/Group 43.png',
+                              width: 24,
+                              height: 24,
                               fit: BoxFit.contain,
                             ),
                           )
@@ -264,7 +291,7 @@ class SeasonFertilizer extends StatelessWidget {
               ),
               Positioned(
                 left: 40,
-                top: 314,
+                top: 394,
                 child: Container(
                   width: 341,
                   height: 150,
@@ -280,7 +307,7 @@ class SeasonFertilizer extends StatelessWidget {
               ),
               Positioned(
                 left: 188,
-                top: 312,
+                top: 392,
                 child: Text(
                   'Lần',
                   style: GoogleFonts.getFont(
@@ -293,9 +320,9 @@ class SeasonFertilizer extends StatelessWidget {
               ),
               Positioned(
                 left: 229,
-                top: 312,
+                top: 392,
                 child: Text(
-                  '1',
+                  '2',
                   style: GoogleFonts.getFont(
                     'Noto Sans',
                     color: Colors.black,
@@ -306,7 +333,7 @@ class SeasonFertilizer extends StatelessWidget {
               ),
               Positioned(
                 left: 78,
-                top: 341,
+                top: 421,
                 child: Text(
                   'Phân:',
                   style: GoogleFonts.getFont(
@@ -319,7 +346,7 @@ class SeasonFertilizer extends StatelessWidget {
               ),
               Positioned(
                 left: 127,
-                top: 341,
+                top: 421,
                 child: Text(
                   'Phân bón SUPE LÂN Long Thành',
                   style: GoogleFonts.getFont(
@@ -332,7 +359,7 @@ class SeasonFertilizer extends StatelessWidget {
               ),
               Positioned(
                 left: 78,
-                top: 364,
+                top: 444,
                 child: Text(
                   'Số lượng (kg/ha):',
                   style: GoogleFonts.getFont(
@@ -345,7 +372,7 @@ class SeasonFertilizer extends StatelessWidget {
               ),
               Positioned(
                 left: 219,
-                top: 364,
+                top: 444,
                 child: Text(
                   '50',
                   style: GoogleFonts.getFont(
@@ -358,7 +385,7 @@ class SeasonFertilizer extends StatelessWidget {
               ),
               Positioned(
                 left: 78,
-                top: 387,
+                top: 467,
                 child: Text(
                   'Ngày bón:',
                   style: GoogleFonts.getFont(
@@ -371,7 +398,7 @@ class SeasonFertilizer extends StatelessWidget {
               ),
               Positioned(
                 left: 165,
-                top: 387,
+                top: 467,
                 child: Text(
                   '12-05-2023',
                   style: GoogleFonts.getFont(
@@ -384,7 +411,7 @@ class SeasonFertilizer extends StatelessWidget {
               ),
               Positioned(
                 left: 78,
-                top: 410,
+                top: 490,
                 child: Text(
                   'Ngày hoàn thành:',
                   style: GoogleFonts.getFont(
@@ -397,7 +424,7 @@ class SeasonFertilizer extends StatelessWidget {
               ),
               Positioned(
                 left: 225,
-                top: 410,
+                top: 490,
                 child: Text(
                   '12-05-2023',
                   style: GoogleFonts.getFont(
@@ -410,7 +437,7 @@ class SeasonFertilizer extends StatelessWidget {
               ),
               Positioned(
                 left: 78,
-                top: 433,
+                top: 513,
                 child: Text(
                   'Nhân viên:',
                   style: GoogleFonts.getFont(
@@ -423,7 +450,7 @@ class SeasonFertilizer extends StatelessWidget {
               ),
               Positioned(
                 left: 169,
-                top: 433,
+                top: 513,
                 child: Text(
                   'Võ Văn Hướng',
                   style: GoogleFonts.getFont(
@@ -436,7 +463,7 @@ class SeasonFertilizer extends StatelessWidget {
               ),
               Positioned(
                 left: 356,
-                top: 317,
+                top: 397,
                 child: Material(
                   type: MaterialType.transparency,
                   clipBehavior: Clip.antiAlias,
@@ -446,20 +473,18 @@ class SeasonFertilizer extends StatelessWidget {
                       Color(0x0c7f7f7f),
                     ),
                     child: Container(
-                      width: 24,
-                      height: 24,
+                      width: 28,
+                      height: 28,
                       clipBehavior: Clip.hardEdge,
                       decoration: const BoxDecoration(),
                       child: Stack(
                         clipBehavior: Clip.none,
                         children: [
                           Positioned(
-                            left: 4,
-                            top: 4,
-                            child: Image.network(
-                              'https://storage.googleapis.com/codeless-dev.appspot.com/uploads%2Fimages%2FTeD8q4fMRDdW3VSyJEbH%2Fc2299194a340c55bdec0af648a6babc5.png',
-                              width: 16,
-                              height: 16,
+                            child: Image.asset(
+                              'assets/page-1/images/Group 43.png',
+                              width: 24,
+                              height: 24,
                               fit: BoxFit.contain,
                             ),
                           )
@@ -475,46 +500,29 @@ class SeasonFertilizer extends StatelessWidget {
                 child: Container(
                   width: 412,
                   height: 127,
-                  clipBehavior: Clip.hardEdge,
-                  decoration: const BoxDecoration(
-                    color: Color(0xFFFFFA96),
-                    borderRadius: BorderRadius.vertical(
-                      bottom: Radius.circular(20),
+                  decoration: BoxDecoration(
+                    color: Color(0xfffffa96),
+                    borderRadius: BorderRadius.only(
+                      bottomRight: Radius.circular(20),
+                      bottomLeft: Radius.circular(20),
+                    ),
+                  ),
+                  child: Align(
+                    alignment: Alignment.topLeft,
+                    child: SizedBox(
+                      width: 360,
+                      height: 115,
+                      child: Image.asset(
+                        'assets/page-1/images/mask-group.png',
+                        width: 360,
+                        height: 115,
+                      ),
                     ),
                   ),
                 ),
               ),
               Positioned(
-                left: 0,
-                top: 0,
-                child: Container(
-                  width: 360,
-                  height: 115,
-                  clipBehavior: Clip.hardEdge,
-                  decoration: const BoxDecoration(
-                    borderRadius: BorderRadius.vertical(
-                      bottom: Radius.circular(20),
-                    ),
-                  ),
-                  child: Stack(
-                    clipBehavior: Clip.none,
-                    children: [
-                      Positioned(
-                        left: -100,
-                        top: -118,
-                        child: Image.network(
-                          'https://storage.googleapis.com/codeless-dev.appspot.com/uploads%2Fimages%2FTeD8q4fMRDdW3VSyJEbH%2Fc812d1126cec9c4a866c5d413962a12e.png',
-                          width: 307,
-                          height: 254,
-                          fit: BoxFit.contain,
-                        ),
-                      )
-                    ],
-                  ),
-                ),
-              ),
-              Positioned(
-                left: 31,
+                left: 35,
                 top: 66,
                 child: Material(
                   type: MaterialType.transparency,
@@ -532,8 +540,8 @@ class SeasonFertilizer extends StatelessWidget {
                       Color(0x0c7f7f7f),
                     ),
                     child: Container(
-                      width: 24,
-                      height: 24,
+                      width: 28,
+                      height: 28,
                       clipBehavior: Clip.hardEdge,
                       decoration: const BoxDecoration(),
                       child: Stack(
@@ -542,10 +550,77 @@ class SeasonFertilizer extends StatelessWidget {
                           Positioned(
                             left: 4,
                             top: 4,
-                            child: Image.network(
-                              'https://storage.googleapis.com/codeless-dev.appspot.com/uploads%2Fimages%2FTeD8q4fMRDdW3VSyJEbH%2F27779bc9b3ca41161ea5511599390cdd.png',
-                              width: 16,
-                              height: 16,
+                            child: Image.asset(
+                              'assets/page-1/images/Group 25.png',
+                              width: 24,
+                              height: 24,
+                              fit: BoxFit.contain,
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              Positioned(
+                left: 293,
+                top: 800,
+                child: Material(
+                  type: MaterialType.transparency,
+                  borderRadius: BorderRadius.circular(35),
+                  clipBehavior: Clip.antiAlias,
+                  child: InkWell(
+                    onTap: () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) =>
+                              Fertilizer_use(seasonData: seasonData),
+                        ),
+                      );
+                    },
+                    overlayColor: const MaterialStatePropertyAll<Color>(
+                      Color(0x0c7f7f7f),
+                    ),
+                    child: Ink(
+                      color: const Color(0xFF7CFF5B),
+                      width: 70,
+                      height: 70,
+                    ),
+                  ),
+                ),
+              ),
+              Positioned(
+                left: 316,
+                top: 822,
+                child: Material(
+                  type: MaterialType.transparency,
+                  clipBehavior: Clip.antiAlias,
+                  child: InkWell(
+                    onTap: () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) =>
+                              Fertilizer_use(seasonData: seasonData),
+                        ),
+                      );
+                    },
+                    overlayColor: const MaterialStatePropertyAll<Color>(
+                      Color(0x0c7f7f7f),
+                    ),
+                    child: Container(
+                      width: 28,
+                      height: 28,
+                      clipBehavior: Clip.hardEdge,
+                      decoration: const BoxDecoration(),
+                      child: Stack(
+                        clipBehavior: Clip.none,
+                        children: [
+                          Positioned(
+                            child: Image.asset(
+                              'assets/page-1/images/Group 1.png',
+                              width: 24,
+                              height: 24,
                               fit: BoxFit.contain,
                             ),
                           )
@@ -568,147 +643,6 @@ class SeasonFertilizer extends StatelessWidget {
                   ),
                 ),
               ),
-              Positioned(
-                left: 42,
-                top: 825,
-                child: Material(
-                  type: MaterialType.transparency,
-                  borderRadius: BorderRadius.circular(25),
-                  clipBehavior: Clip.antiAlias,
-                  child: InkWell(
-                    onTap: () {},
-                    overlayColor: const MaterialStatePropertyAll<Color>(
-                      Color(0x0c7f7f7f),
-                    ),
-                    child: Ink(
-                      color: const Color(0xFFFFF9C7),
-                      width: 141,
-                      height: 47,
-                    ),
-                  ),
-                ),
-              ),
-              Positioned(
-                left: 74,
-                top: 837,
-                child: Material(
-                  type: MaterialType.transparency,
-                  child: InkWell(
-                    onTap: () {},
-                    overlayColor: const MaterialStatePropertyAll<Color>(
-                      Color(0x0c7f7f7f),
-                    ),
-                    child: Text(
-                      'Cập nhật',
-                      textAlign: TextAlign.center,
-                      style: GoogleFonts.getFont(
-                        'Noto Sans',
-                        color: Colors.black,
-                        fontSize: 16,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-              Positioned(
-                left: 230,
-                top: 825,
-                child: Material(
-                  type: MaterialType.transparency,
-                  borderRadius: BorderRadius.circular(25),
-                  clipBehavior: Clip.antiAlias,
-                  child: InkWell(
-                    onTap: () {},
-                    overlayColor: const MaterialStatePropertyAll<Color>(
-                      Color(0x0c7f7f7f),
-                    ),
-                    child: Ink(
-                      color: const Color(0xFFFF3838),
-                      width: 141,
-                      height: 47,
-                    ),
-                  ),
-                ),
-              ),
-              Positioned(
-                left: 342,
-                top: 839,
-                child: Material(
-                  type: MaterialType.transparency,
-                  clipBehavior: Clip.antiAlias,
-                  child: InkWell(
-                    onTap: () {},
-                    overlayColor: const MaterialStatePropertyAll<Color>(
-                      Color(0x0c7f7f7f),
-                    ),
-                    child: Ink(
-                      width: 20,
-                      height: 20,
-                      decoration: const BoxDecoration(
-                        image: DecorationImage(
-                          image: NetworkImage(
-                            'https://storage.googleapis.com/codeless-dev.appspot.com/uploads%2Fimages%2FTeD8q4fMRDdW3VSyJEbH%2F463e314fadee8c2dcb74cc8452af9f34.png',
-                          ),
-                          fit: BoxFit.contain,
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-              Positioned(
-                left: 247,
-                top: 834,
-                child: Material(
-                  type: MaterialType.transparency,
-                  borderRadius: BorderRadius.circular(25),
-                  clipBehavior: Clip.antiAlias,
-                  child: InkWell(
-                    onTap: () {},
-                    overlayColor: const MaterialStatePropertyAll<Color>(
-                      Color(0x0c7f7f7f),
-                    ),
-                    child: Ink(
-                      color: Colors.white,
-                      width: 59,
-                      height: 30,
-                    ),
-                  ),
-                ),
-              ),
-              Positioned(
-                left: 261,
-                top: 837,
-                child: Material(
-                  type: MaterialType.transparency,
-                  child: InkWell(
-                    onTap: () {},
-                    overlayColor: const MaterialStatePropertyAll<Color>(
-                      Color(0x0c7f7f7f),
-                    ),
-                    child: Text(
-                      'Xoá',
-                      style: GoogleFonts.getFont(
-                        'Noto Sans',
-                        color: Colors.black,
-                        fontSize: 16,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-              Positioned(
-                left: 324,
-                top: 834,
-                child: Image.network(
-                  'https://storage.googleapis.com/codeless-dev.appspot.com/uploads%2Fimages%2FTeD8q4fMRDdW3VSyJEbH%2Fcdee8630b6a5f6a443dda5106daafabc.png',
-                  width: 4,
-                  height: 30,
-                  fit: BoxFit.contain,
-                ),
-              )
             ],
           ),
         ),

@@ -27,10 +27,10 @@ class SeasonEmployee extends StatelessWidget {
               clipBehavior: Clip.hardEdge,
               decoration: BoxDecoration(
                 image: const DecorationImage(
-                  image: NetworkImage(
-                    'https://firebasestorage.googleapis.com/v0/b/codeless-app.appspot.com/o/projects%2FTeD8q4fMRDdW3VSyJEbH%2F179800e3ecb133fbb531b822ceb94009dc1a8493yuki-ho-_YGqbbZEmMI-unsplash%201.png?alt=media&token=bf923455-769c-48bb-94d4-9a1b20d32042',
+                  image: AssetImage(
+                    'assets/page-1/images/yuki-ho-ygqbbzemmi-unsplash-1-bg.png',
                   ),
-                  fit: BoxFit.none,
+                  fit: BoxFit.fill,
                   alignment: Alignment.centerLeft,
                   opacity: 0.7,
                   scale: 3.1,

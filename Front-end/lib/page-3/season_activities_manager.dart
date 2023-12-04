@@ -3,8 +3,8 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:myapp/page-3/season_activities.dart';
-import 'package:myapp/page-3/season_deseases.dart';
 import 'package:myapp/page-3/season_detail.dart';
+import 'package:myapp/page-3/season_diseases.dart';
 import 'package:myapp/page-3/season_employees.dart';
 import 'package:myapp/page-3/season_fertilizer.dart';
 import 'package:myapp/page-3/season_images.dart';
@@ -48,7 +48,7 @@ class _SeasonActivitiesManagerState extends State<SeasonActivitiesManager> {
   void navigateToSeasonDeseases() {
     Navigator.of(context).push(
       MaterialPageRoute(
-        builder: (context) => SeasonDeseases(seasonData: widget.seasonData),
+        builder: (context) => SeasonDiseases(seasonData: widget.seasonData),
       ),
     );
   }
@@ -103,7 +103,7 @@ class _SeasonActivitiesManagerState extends State<SeasonActivitiesManager> {
                       image: AssetImage(
                         'assets/page-1/images/yuki-ho-ygqbbzemmi-unsplash-1-bg.png',
                       ),
-                      fit: BoxFit.none,
+                      fit: BoxFit.fill,
                       alignment: Alignment.centerLeft,
                       opacity: 0.7,
                       scale: 2.8,
@@ -436,41 +436,24 @@ class _SeasonActivitiesManagerState extends State<SeasonActivitiesManager> {
                 child: Container(
                   width: 412,
                   height: 127,
-                  clipBehavior: Clip.hardEdge,
-                  decoration: const BoxDecoration(
-                    color: Color(0xFFFFFA96),
-                    borderRadius: BorderRadius.vertical(
-                      bottom: Radius.circular(20),
+                  decoration: BoxDecoration(
+                    color: Color(0xfffffa96),
+                    borderRadius: BorderRadius.only(
+                      bottomRight: Radius.circular(20),
+                      bottomLeft: Radius.circular(20),
                     ),
                   ),
-                ),
-              ),
-              Positioned(
-                left: 0,
-                top: 0,
-                child: Container(
-                  width: 360,
-                  height: 115,
-                  clipBehavior: Clip.hardEdge,
-                  decoration: const BoxDecoration(
-                    borderRadius: BorderRadius.vertical(
-                      bottom: Radius.circular(20),
+                  child: Align(
+                    alignment: Alignment.topLeft,
+                    child: SizedBox(
+                      width: 360,
+                      height: 115,
+                      child: Image.asset(
+                        'assets/page-1/images/mask-group.png',
+                        width: 360,
+                        height: 115,
+                      ),
                     ),
-                  ),
-                  child: Stack(
-                    clipBehavior: Clip.none,
-                    children: [
-                      Positioned(
-                        left: -100,
-                        top: -118,
-                        child: Image.asset(
-                          'assets/page-1/images/mask-group.png',
-                          width: 307,
-                          height: 254,
-                          fit: BoxFit.contain,
-                        ),
-                      )
-                    ],
                   ),
                 ),
               ),

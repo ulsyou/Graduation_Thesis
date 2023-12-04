@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
 import 'package:myapp/page-1/employee-manager.dart';
-import 'package:myapp/utils.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class AddEmployee extends StatefulWidget {
   @override
@@ -87,45 +85,6 @@ class _AddEmployeeState extends State<AddEmployee> {
             ),
             Positioned(
               left: 44,
-              top: 659,
-              child: Container(
-                width: 328,
-                height: 35,
-                clipBehavior: Clip.hardEdge,
-                decoration: BoxDecoration(
-                  color: const Color(0xCCFFFFFF),
-                  borderRadius: BorderRadius.circular(15),
-                ),
-              ),
-            ),
-            Positioned(
-              left: 51,
-              top: 664,
-              child: Text(
-                'Vai trò:',
-                style: GoogleFonts.getFont(
-                  'Noto Sans',
-                  color: Colors.black,
-                  fontSize: 16,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-            ),
-            Positioned(
-              left: 249,
-              top: 664,
-              child: Text(
-                'RC00002',
-                style: GoogleFonts.getFont(
-                  'Noto Sans',
-                  color: Colors.black,
-                  fontSize: 16,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-            ),
-            Positioned(
-              left: 44,
               top: 603,
               child: Container(
                 width: 328,
@@ -151,10 +110,10 @@ class _AddEmployeeState extends State<AddEmployee> {
               ),
             ),
             Positioned(
-              left: 249,
+              left: 219,
               top: 608,
               child: Text(
-                'RC00002',
+                '012345679',
                 style: GoogleFonts.getFont(
                   'Noto Sans',
                   color: Colors.black,
@@ -180,7 +139,7 @@ class _AddEmployeeState extends State<AddEmployee> {
               left: 51,
               top: 552,
               child: Text(
-                'Vị trí:',
+                'Vai trò:',
                 style: GoogleFonts.getFont(
                   'Noto Sans',
                   color: Colors.black,
@@ -190,10 +149,10 @@ class _AddEmployeeState extends State<AddEmployee> {
               ),
             ),
             Positioned(
-              left: 249,
+              left: 219,
               top: 552,
               child: Text(
-                'RC00002',
+                'Chuyên gia',
                 style: GoogleFonts.getFont(
                   'Noto Sans',
                   color: Colors.black,
@@ -229,10 +188,10 @@ class _AddEmployeeState extends State<AddEmployee> {
               ),
             ),
             Positioned(
-              left: 249,
+              left: 219,
               top: 496,
               child: Text(
-                'RC00002',
+                'Kỹ sư nông nghiệp',
                 style: GoogleFonts.getFont(
                   'Noto Sans',
                   color: Colors.black,
@@ -268,10 +227,10 @@ class _AddEmployeeState extends State<AddEmployee> {
               ),
             ),
             Positioned(
-              left: 249,
+              left: 219,
               top: 440,
               child: Text(
-                'RC00002',
+                'nvca@gmail.com',
                 style: GoogleFonts.getFont(
                   'Noto Sans',
                   color: Colors.black,
@@ -307,10 +266,10 @@ class _AddEmployeeState extends State<AddEmployee> {
               ),
             ),
             Positioned(
-              left: 249,
+              left: 219,
               top: 383,
               child: Text(
-                'RC00002',
+                'Nguyễn Văn A',
                 style: GoogleFonts.getFont(
                   'Noto Sans',
                   color: Colors.black,

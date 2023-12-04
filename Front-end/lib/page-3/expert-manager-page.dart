@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:geocoding/geocoding.dart';
+import 'package:myapp/statistic.dart';
 import 'dart:async';
 import 'add-pages.dart';
 import 'catatalog-list.dart';
@@ -756,7 +757,13 @@ class _ExpertManagerPageState extends State<ExpertManagerPage> {
                   borderRadius: BorderRadius.circular(25),
                   clipBehavior: Clip.antiAlias,
                   child: InkWell(
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => StatisticsDashboard(),
+                        ),
+                      );
+                    },
                     overlayColor: const MaterialStatePropertyAll<Color>(
                       Color(0x0c7f7f7f),
                     ),
@@ -774,7 +781,13 @@ class _ExpertManagerPageState extends State<ExpertManagerPage> {
                 child: Material(
                   type: MaterialType.transparency,
                   child: InkWell(
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => StatisticsDashboard(),
+                        ),
+                      );
+                    },
                     overlayColor: const MaterialStatePropertyAll<Color>(
                       Color(0x0c7f7f7f),
                     ),
@@ -801,7 +814,13 @@ class _ExpertManagerPageState extends State<ExpertManagerPage> {
                   type: MaterialType.transparency,
                   clipBehavior: Clip.antiAlias,
                   child: InkWell(
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => StatisticsDashboard(),
+                        ),
+                      );
+                    },
                     overlayColor: const MaterialStatePropertyAll<Color>(
                       Color(0x0c7f7f7f),
                     ),

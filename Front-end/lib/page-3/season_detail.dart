@@ -525,7 +525,13 @@ class _SeasonDetailState extends State<SeasonDetail> {
                   clipBehavior: Clip.antiAlias,
                   child: InkWell(
                     onTap: () {
-                      // Add your onTap logic here
+                      // Navigator.of(context).push(
+                      //   MaterialPageRoute(
+                      //     builder: (context) => updateSeason(
+                      //       seasonData: seasonData,
+                      //     ),
+                      //   ),
+                      // );
                     },
                     overlayColor:
                         MaterialStateProperty.all<Color>(Color(0x0c7f7f7f)),
