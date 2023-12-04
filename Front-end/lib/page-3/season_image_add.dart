@@ -1,10 +1,100 @@
+import 'dart:convert';
+import 'dart:io';
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:http/http.dart' as http;
+import 'package:image_picker/image_picker.dart';
+import 'package:myapp/page-3/season_image_choose.dart';
+import 'package:myapp/page-3/season_images.dart';
 
-class Image_season extends StatelessWidget {
+class Image_season extends StatefulWidget {
   final Map<String, dynamic> seasonData;
 
   Image_season({required this.seasonData, Key? key}) : super(key: key);
+
+  @override
+  _Image_seasonState createState() => _Image_seasonState();
+}
+
+class _Image_seasonState extends State<Image_season> {
+  File? _imageFile;
+
+  Future<void> _selectImage() async {
+    final pickedFile =
+        await ImagePicker().pickImage(source: ImageSource.gallery);
+
+    if (pickedFile != null) {
+      _setImage(File(pickedFile.path));
+      await uploadImage(_imageFile!);
+
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => Image_season_choose(
+            imageFile: _imageFile,
+            seasonData: widget.seasonData,
+          ),
+        ),
+      );
+    }
+  }
+
+  Future<void> _captureImage() async {
+    final pickedFile =
+        await ImagePicker().pickImage(source: ImageSource.camera);
+
+    if (pickedFile != null) {
+      _setImage(File(pickedFile.path));
+      await uploadImage(_imageFile!);
+
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => Image_season_choose(
+            imageFile: _imageFile,
+            seasonData: widget.seasonData,
+          ),
+        ),
+      );
+    }
+  }
+
+  void _setImage(File? imageFile) {
+    setState(() {
+      _imageFile = imageFile;
+    });
+  }
+
+  Future<void> uploadImage(File imageFile) async {
+    final url = 'http://10.0.2.2:3000/processImage';
+
+    Uint8List fileBytes = await imageFile.readAsBytes();
+
+    var request = http.MultipartRequest('POST', Uri.parse(url));
+    request.files.add(http.MultipartFile.fromBytes('image', fileBytes,
+        filename: 'image.jpg'));
+
+    try {
+      var response = await request.send();
+      if (response.statusCode == 200) {
+        String responseBody = await response.stream.bytesToString();
+        Map<String, dynamic> result =
+            Map<String, dynamic>.from(json.decode(responseBody));
+
+        // setState(() {
+        //   _predictionResult = result['result'];
+        //   _yieldGm2 = result['yield_gm2'];
+        //   _yieldTha = result['yield_tha'];
+        // });
+      } else {
+        print('Failed to upload image. Status code: ${response.statusCode}');
+      }
+    } catch (e) {
+      print('Error uploading image: $e');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -31,8 +121,8 @@ class Image_season extends StatelessWidget {
                     clipBehavior: Clip.hardEdge,
                     decoration: BoxDecoration(
                       image: const DecorationImage(
-                        image: NetworkImage(
-                          'https://firebasestorage.googleapis.com/v0/b/codeless-app.appspot.com/o/projects%2FbBi0N1EZ1GlEm38rYJyr%2F179800e3ecb133fbb531b822ceb94009dc1a8493yuki-ho-_YGqbbZEmMI-unsplash%201.png?alt=media&token=2a9011d9-7c36-422e-ae61-3192a730fe8d',
+                        image: AssetImage(
+                          'assets/page-1/images/yuki-ho-ygqbbzemmi-unsplash-1-bg.png',
                         ),
                         fit: BoxFit.none,
                         alignment: Alignment.centerLeft,
@@ -56,117 +146,163 @@ class Image_season extends StatelessWidget {
                   ),
                 ),
                 Positioned(
-                  left: 47,
-                  top: 196,
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(20),
-                    clipBehavior: Clip.hardEdge,
-                    child: Image.network(
-                      'https://firebasestorage.googleapis.com/v0/b/codeless-app.appspot.com/o/projects%2FbBi0N1EZ1GlEm38rYJyr%2Ff4568d422a6c0ec14a0567d726b1ac9096212c2aRectangle%2032.png?alt=media&token=786e3384-b0be-408a-8d0a-7be34f7f6ab6',
-                      width: 318,
-                      height: 180,
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                ),
-                Positioned(
-                  left: 42,
-                  top: 785,
-                  child: Container(
-                    width: 141,
-                    height: 47,
-                    clipBehavior: Clip.hardEdge,
-                    decoration: BoxDecoration(
-                      color: const Color(0xFFFFF9C7),
-                      borderRadius: BorderRadius.circular(25),
-                    ),
-                  ),
-                ),
-                Positioned(
-                  left: 91,
-                  top: 796,
-                  child: Text(
-                    'Thêm',
-                    style: GoogleFonts.getFont(
-                      'Noto Sans',
-                      color: Colors.black,
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                ),
-                Positioned(
-                  left: 230,
-                  top: 785,
-                  child: Container(
-                    width: 141,
-                    height: 47,
-                    clipBehavior: Clip.hardEdge,
-                    decoration: BoxDecoration(
-                      color: const Color(0xFFFF3838),
-                      borderRadius: BorderRadius.circular(25),
-                    ),
-                  ),
-                ),
-                Positioned(
-                  left: 336,
-                  top: 796,
-                  child: Container(
-                    width: 24,
-                    height: 24,
-                    clipBehavior: Clip.hardEdge,
-                    decoration: const BoxDecoration(),
-                    child: Stack(
-                      clipBehavior: Clip.none,
-                      children: [
-                        Positioned(
-                          left: 2,
-                          top: 2,
-                          child: Image.network(
-                            'https://storage.googleapis.com/codeless-dev.appspot.com/uploads%2Fimages%2FbBi0N1EZ1GlEm38rYJyr%2F463e314fadee8c2dcb74cc8452af9f34.png',
-                            width: 20,
-                            height: 20,
-                            fit: BoxFit.contain,
+                  left: 39,
+                  top: 498,
+                  child: Material(
+                    type: MaterialType.transparency,
+                    clipBehavior: Clip.antiAlias,
+                    child: InkWell(
+                      onTap: () {
+                        _captureImage();
+                      },
+                      overlayColor: const MaterialStatePropertyAll<Color>(
+                        Color(0x0c7f7f7f),
+                      ),
+                      child: Ink(
+                        width: 333,
+                        height: 124,
+                        decoration: const BoxDecoration(
+                          gradient: LinearGradient(
+                            colors: [Color(0xCCFFFFFF), Color(0x00FFFFFF)],
                           ),
-                        )
-                      ],
+                        ),
+                      ),
                     ),
                   ),
                 ),
                 Positioned(
-                  left: 247,
-                  top: 794,
-                  child: Container(
-                    width: 59,
-                    height: 30,
-                    clipBehavior: Clip.hardEdge,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(25),
+                  left: 195,
+                  top: 545,
+                  child: Material(
+                    type: MaterialType.transparency,
+                    child: InkWell(
+                      onTap: () {
+                        _captureImage();
+                      },
+                      overlayColor: const MaterialStatePropertyAll<Color>(
+                        Color(0x0c7f7f7f),
+                      ),
+                      child: SizedBox(
+                        width: 155,
+                        height: 31,
+                        child: Text(
+                          'Ảnh từ máy ảnh',
+                          style: GoogleFonts.getFont(
+                            'Noto Sans',
+                            color: Colors.black,
+                            fontSize: 18,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                      ),
                     ),
                   ),
                 ),
                 Positioned(
-                  left: 261,
-                  top: 797,
-                  child: Text(
-                    'Xoá',
-                    style: GoogleFonts.getFont(
-                      'Noto Sans',
-                      color: Colors.black,
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600,
+                  left: 39,
+                  top: 268,
+                  child: Material(
+                    type: MaterialType.transparency,
+                    clipBehavior: Clip.antiAlias,
+                    child: InkWell(
+                      onTap: () {
+                        _selectImage();
+                      },
+                      overlayColor: const MaterialStatePropertyAll<Color>(
+                        Color(0x0c7f7f7f),
+                      ),
+                      child: Ink(
+                        width: 333,
+                        height: 124,
+                        decoration: const BoxDecoration(
+                          gradient: LinearGradient(
+                            colors: [Color(0xCCFFFFFF), Color(0x00FFFFFF)],
+                          ),
+                        ),
+                      ),
                     ),
                   ),
                 ),
                 Positioned(
-                  left: 325,
-                  top: 793,
-                  child: Image.network(
-                    'https://storage.googleapis.com/codeless-dev.appspot.com/uploads%2Fimages%2FbBi0N1EZ1GlEm38rYJyr%2Fcdee8630b6a5f6a443dda5106daafabc.png',
-                    width: 0,
-                    height: 30,
-                    fit: BoxFit.contain,
+                  left: 195,
+                  top: 314,
+                  child: Material(
+                    type: MaterialType.transparency,
+                    child: InkWell(
+                      onTap: () {
+                        _selectImage();
+                      },
+                      overlayColor: const MaterialStatePropertyAll<Color>(
+                        Color(0x0c7f7f7f),
+                      ),
+                      child: SizedBox(
+                        width: 143,
+                        height: 31,
+                        child: Text(
+                          'Ảnh từ thư viện',
+                          style: GoogleFonts.getFont(
+                            'Noto Sans',
+                            color: Colors.black,
+                            fontSize: 18,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                Positioned(
+                  left: 80,
+                  top: 279,
+                  child: Material(
+                    type: MaterialType.transparency,
+                    clipBehavior: Clip.antiAlias,
+                    child: InkWell(
+                      onTap: () {
+                        _selectImage();
+                      },
+                      overlayColor: const MaterialStatePropertyAll<Color>(
+                        Color(0x0c7f7f7f),
+                      ),
+                      child: Ink(
+                        width: 100,
+                        height: 100,
+                        decoration: const BoxDecoration(
+                          image: DecorationImage(
+                            image: AssetImage(
+                              'assets/page-1/images/Rectangle 50.png',
+                            ),
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                Positioned(
+                  left: 80,
+                  top: 510,
+                  child: Material(
+                    type: MaterialType.transparency,
+                    clipBehavior: Clip.antiAlias,
+                    child: InkWell(
+                      onTap: () {},
+                      overlayColor: const MaterialStatePropertyAll<Color>(
+                        Color(0x0c7f7f7f),
+                      ),
+                      child: Ink(
+                        width: 100,
+                        height: 100,
+                        decoration: const BoxDecoration(
+                          image: DecorationImage(
+                            image: AssetImage(
+                              'assets/page-1/images/Rectangle 51.png',
+                            ),
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                      ),
+                    ),
                   ),
                 ),
                 Positioned(
@@ -203,7 +339,7 @@ class Image_season extends StatelessWidget {
                           left: -100,
                           top: -118,
                           child: Image.network(
-                            'https://storage.googleapis.com/codeless-dev.appspot.com/uploads%2Fimages%2FbBi0N1EZ1GlEm38rYJyr%2F1979e4809a9158f955c1fd7b58386847.png',
+                            'https://storage.googleapis.com/codeless-dev.appspot.com/uploads%2Fimages%2FbBi0N1EZ1GlEm38rYJyr%2Fb321c41cffe9bedffce10c943759ce90.png',
                             width: 307,
                             height: 254,
                             fit: BoxFit.contain,
@@ -216,33 +352,50 @@ class Image_season extends StatelessWidget {
                 Positioned(
                   left: 31,
                   top: 66,
-                  child: Container(
-                    width: 24,
-                    height: 24,
-                    clipBehavior: Clip.hardEdge,
-                    decoration: const BoxDecoration(),
-                    child: Stack(
-                      clipBehavior: Clip.none,
-                      children: [
-                        Positioned(
-                          left: 4,
-                          top: 4,
-                          child: Image.network(
-                            'https://storage.googleapis.com/codeless-dev.appspot.com/uploads%2Fimages%2FbBi0N1EZ1GlEm38rYJyr%2F27779bc9b3ca41161ea5511599390cdd.png',
-                            width: 16,
-                            height: 16,
-                            fit: BoxFit.contain,
+                  child: Material(
+                    type: MaterialType.transparency,
+                    clipBehavior: Clip.antiAlias,
+                    child: InkWell(
+                      onTap: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) =>
+                                SeasonImages(seasonData: widget.seasonData),
                           ),
-                        )
-                      ],
+                        );
+                      },
+                      overlayColor: const MaterialStatePropertyAll<Color>(
+                        Color(0x0c7f7f7f),
+                      ),
+                      child: Container(
+                        width: 28,
+                        height: 28,
+                        clipBehavior: Clip.hardEdge,
+                        decoration: const BoxDecoration(),
+                        child: Stack(
+                          clipBehavior: Clip.none,
+                          children: [
+                            Positioned(
+                              left: 4,
+                              top: 4,
+                              child: Image.asset(
+                                'assets/page-1/images/Group 25.png',
+                                width: 24,
+                                height: 24,
+                                fit: BoxFit.contain,
+                              ),
+                            )
+                          ],
+                        ),
+                      ),
                     ),
                   ),
                 ),
                 Positioned(
-                  left: 110,
+                  left: 113,
                   top: 65,
                   child: Text(
-                    'Hình ảnh mùa vụ',
+                    'Thêm hình ảnh',
                     style: GoogleFonts.getFont(
                       'Noto Sans',
                       color: Colors.black,

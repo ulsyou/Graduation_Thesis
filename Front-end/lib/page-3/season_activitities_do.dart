@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:myapp/page-3/season_activities.dart';
 
 class Activities_do extends StatelessWidget {
-  const Activities_do({super.key});
+  final Map<String, dynamic> seasonData;
+  Activities_do({required this.seasonData, Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -327,101 +329,76 @@ class Activities_do extends StatelessWidget {
             Positioned(
               left: 41,
               top: 785,
-              child: Container(
-                width: 141,
-                height: 47,
-                clipBehavior: Clip.hardEdge,
-                decoration: BoxDecoration(
-                  color: const Color(0xFFFFF9C7),
-                  borderRadius: BorderRadius.circular(25),
-                ),
-              ),
-            ),
-            Positioned(
-              left: 88,
-              top: 797,
-              child: Text(
-                'Thêm',
-                style: GoogleFonts.getFont(
-                  'Noto Sans',
-                  color: Colors.black,
-                  fontSize: 16,
-                  fontWeight: FontWeight.w600,
+              child: Material(
+                type: MaterialType.transparency,
+                borderRadius: BorderRadius.circular(25),
+                clipBehavior: Clip.antiAlias,
+                child: InkWell(
+                  onTap: () {
+                    // Navigator.of(context).push(
+                    //   MaterialPageRoute(
+                    //     builder: (context) => updateSeason(
+                    //       seasonData: seasonData,
+                    //     ),
+                    //   ),
+                    // );
+                  },
+                  overlayColor:
+                      MaterialStateProperty.all<Color>(Color(0x0c7f7f7f)),
+                  child: Container(
+                    width: 141,
+                    height: 47,
+                    color: const Color(0xFFFFF9C7),
+                    child: Center(
+                      child: Text(
+                        'Thêm',
+                        textAlign: TextAlign.center,
+                        style: GoogleFonts.getFont(
+                          'Noto Sans',
+                          color: Colors.black,
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ),
+                  ),
                 ),
               ),
             ),
             Positioned(
               left: 229,
               top: 785,
-              child: Container(
-                width: 141,
-                height: 47,
-                clipBehavior: Clip.hardEdge,
-                decoration: BoxDecoration(
-                  color: const Color(0xFFFF3838),
-                  borderRadius: BorderRadius.circular(25),
-                ),
-              ),
-            ),
-            Positioned(
-              left: 335,
-              top: 796,
-              child: Container(
-                width: 24,
-                height: 24,
-                clipBehavior: Clip.hardEdge,
-                decoration: const BoxDecoration(),
-                child: Stack(
-                  clipBehavior: Clip.none,
-                  children: [
-                    Positioned(
-                      left: 2,
-                      top: 2,
-                      child: Image.network(
-                        'https://storage.googleapis.com/codeless-dev.appspot.com/uploads%2Fimages%2FbBi0N1EZ1GlEm38rYJyr%2F463e314fadee8c2dcb74cc8452af9f34.png',
-                        width: 20,
-                        height: 20,
-                        fit: BoxFit.contain,
+              child: Material(
+                type: MaterialType.transparency,
+                borderRadius: BorderRadius.circular(25),
+                clipBehavior: Clip.antiAlias,
+                child: InkWell(
+                  onTap: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => SeasonActivities(
+                          seasonData: seasonData,
+                        ),
                       ),
-                    )
-                  ],
+                    );
+                  },
+                  child: Ink(
+                    color: const Color(0xFFFF3838),
+                    width: 141,
+                    height: 47,
+                    child: Center(
+                      child: Text(
+                        'Huỷ',
+                        style: GoogleFonts.getFont(
+                          'Noto Sans',
+                          color: Colors.white,
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ),
+                  ),
                 ),
-              ),
-            ),
-            Positioned(
-              left: 246,
-              top: 794,
-              child: Container(
-                width: 59,
-                height: 30,
-                clipBehavior: Clip.hardEdge,
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(25),
-                ),
-              ),
-            ),
-            Positioned(
-              left: 260,
-              top: 797,
-              child: Text(
-                'Xoá',
-                style: GoogleFonts.getFont(
-                  'Noto Sans',
-                  color: Colors.black,
-                  fontSize: 16,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-            ),
-            Positioned(
-              left: 324,
-              top: 793,
-              child: Image.network(
-                'https://storage.googleapis.com/codeless-dev.appspot.com/uploads%2Fimages%2FbBi0N1EZ1GlEm38rYJyr%2Fcdee8630b6a5f6a443dda5106daafabc.png',
-                width: 0,
-                height: 30,
-                fit: BoxFit.contain,
               ),
             ),
             Positioned(
@@ -430,74 +407,74 @@ class Activities_do extends StatelessWidget {
               child: Container(
                 width: 412,
                 height: 127,
-                clipBehavior: Clip.hardEdge,
-                decoration: const BoxDecoration(
-                  color: Color(0xFFFFFA96),
-                  borderRadius: BorderRadius.vertical(
-                    bottom: Radius.circular(20),
+                decoration: BoxDecoration(
+                  color: Color(0xfffffa96),
+                  borderRadius: BorderRadius.only(
+                    bottomRight: Radius.circular(20),
+                    bottomLeft: Radius.circular(20),
+                  ),
+                ),
+                child: Align(
+                  alignment: Alignment.topLeft,
+                  child: SizedBox(
+                    width: 360,
+                    height: 115,
+                    child: Image.asset(
+                      'assets/page-1/images/mask-group.png',
+                      width: 360,
+                      height: 115,
+                    ),
                   ),
                 ),
               ),
             ),
             Positioned(
-              left: 0,
-              top: 0,
-              child: Container(
-                width: 360,
-                height: 115,
-                clipBehavior: Clip.hardEdge,
-                decoration: const BoxDecoration(
-                  borderRadius: BorderRadius.vertical(
-                    bottom: Radius.circular(20),
-                  ),
-                ),
-                child: Stack(
-                  clipBehavior: Clip.none,
-                  children: [
-                    Positioned(
-                      left: -100,
-                      top: -118,
-                      child: Image.network(
-                        'https://storage.googleapis.com/codeless-dev.appspot.com/uploads%2Fimages%2FbBi0N1EZ1GlEm38rYJyr%2Fc812d1126cec9c4a866c5d413962a12e.png',
-                        width: 307,
-                        height: 254,
-                        fit: BoxFit.contain,
-                      ),
-                    )
-                  ],
-                ),
-              ),
-            ),
-            Positioned(
-              left: 31,
+              left: 35,
               top: 66,
-              child: Container(
-                width: 24,
-                height: 24,
-                clipBehavior: Clip.hardEdge,
-                decoration: const BoxDecoration(),
-                child: Stack(
-                  clipBehavior: Clip.none,
-                  children: [
-                    Positioned(
-                      left: 4,
-                      top: 4,
-                      child: Image.network(
-                        'https://storage.googleapis.com/codeless-dev.appspot.com/uploads%2Fimages%2FbBi0N1EZ1GlEm38rYJyr%2F27779bc9b3ca41161ea5511599390cdd.png',
-                        width: 16,
-                        height: 16,
-                        fit: BoxFit.contain,
+              child: Material(
+                type: MaterialType.transparency,
+                clipBehavior: Clip.antiAlias,
+                child: InkWell(
+                  onTap: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) =>
+                            SeasonActivities(seasonData: seasonData),
                       ),
-                    )
-                  ],
+                    );
+                  },
+                  overlayColor: const MaterialStatePropertyAll<Color>(
+                    Color(0x0c7f7f7f),
+                  ),
+                  child: Container(
+                    width: 28,
+                    height: 28,
+                    clipBehavior: Clip.hardEdge,
+                    decoration: const BoxDecoration(),
+                    child: Stack(
+                      clipBehavior: Clip.none,
+                      children: [
+                        Positioned(
+                          left: 4,
+                          top: 4,
+                          child: Image.asset(
+                            'assets/page-1/images/Group 25.png',
+                            width: 24,
+                            height: 24,
+                            fit: BoxFit.contain,
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
                 ),
               ),
             ),
             Positioned(
-              left: 146,
+              left: 110,
               top: 65,
               child: Text(
-                'Hoạt động',
+                'Thêm hoạt động',
                 style: GoogleFonts.getFont(
                   'Noto Sans',
                   color: Colors.black,

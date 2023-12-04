@@ -383,7 +383,7 @@ class Disease_harm extends StatelessWidget {
                         height: 47,
                         child: Center(
                           child: Text(
-                            'Xoá',
+                            'Huỷ',
                             style: GoogleFonts.getFont(
                               'Noto Sans',
                               color: Colors.white,

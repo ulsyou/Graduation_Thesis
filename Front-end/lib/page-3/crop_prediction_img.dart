@@ -1,13 +1,13 @@
-import 'dart:io';
 import 'dart:convert';
+import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:http/http.dart' as http;
-import 'Prediction.dart';
+import 'package:image_picker/image_picker.dart';
 
+import 'Prediction.dart';
 import 'crop_prediction.dart';
 
 class ImagePrediction extends StatefulWidget {
@@ -24,7 +24,8 @@ class _ImagePredictionState extends State<ImagePrediction> {
   double? _yieldTha;
 
   Future<void> _selectImage() async {
-    final pickedFile = await ImagePicker().pickImage(source: ImageSource.gallery);
+    final pickedFile =
+        await ImagePicker().pickImage(source: ImageSource.gallery);
 
     if (pickedFile != null) {
       _setImage(File(pickedFile.path));
@@ -45,7 +46,8 @@ class _ImagePredictionState extends State<ImagePrediction> {
   }
 
   Future<void> _captureImage() async {
-    final pickedFile = await ImagePicker().pickImage(source: ImageSource.camera);
+    final pickedFile =
+        await ImagePicker().pickImage(source: ImageSource.camera);
 
     if (pickedFile != null) {
       _setImage(File(pickedFile.path));
@@ -71,20 +73,21 @@ class _ImagePredictionState extends State<ImagePrediction> {
     });
   }
 
-
   Future<void> uploadImage(File imageFile) async {
     final url = 'http://10.0.2.2:3000/processImage';
 
     Uint8List fileBytes = await imageFile.readAsBytes();
 
     var request = http.MultipartRequest('POST', Uri.parse(url));
-    request.files.add(http.MultipartFile.fromBytes('image', fileBytes, filename: 'image.jpg'));
+    request.files.add(http.MultipartFile.fromBytes('image', fileBytes,
+        filename: 'image.jpg'));
 
     try {
       var response = await request.send();
       if (response.statusCode == 200) {
         String responseBody = await response.stream.bytesToString();
-        Map<String, dynamic> result = Map<String, dynamic>.from(json.decode(responseBody));
+        Map<String, dynamic> result =
+            Map<String, dynamic>.from(json.decode(responseBody));
 
         setState(() {
           _predictionResult = result['result'];
@@ -125,7 +128,7 @@ class _ImagePredictionState extends State<ImagePrediction> {
                     image: AssetImage(
                       'assets/page-1/images/yuki-ho-ygqbbzemmi-unsplash-1-bg.png',
                     ),
-                    fit: BoxFit.none,
+                    fit: BoxFit.fill,
                     alignment: Alignment.centerLeft,
                     opacity: 0.7,
                     scale: 3.1,
@@ -187,7 +190,7 @@ class _ImagePredictionState extends State<ImagePrediction> {
                     width: 155,
                     height: 31,
                     child: Text(
-                      'Ảnh từ chụp ảnh',
+                      'Ảnh từ máy ảnh',
                       style: GoogleFonts.getFont(
                         'Noto Sans',
                         color: Colors.black,
@@ -287,9 +290,7 @@ class _ImagePredictionState extends State<ImagePrediction> {
                 type: MaterialType.transparency,
                 clipBehavior: Clip.antiAlias,
                 child: InkWell(
-                  onTap: () {
-
-                  },
+                  onTap: () {},
                   overlayColor: const MaterialStatePropertyAll<Color>(
                     Color(0x0c7f7f7f),
                   ),

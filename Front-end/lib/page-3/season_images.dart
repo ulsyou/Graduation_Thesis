@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:myapp/page-3/season_activities_manager.dart';
+import 'package:myapp/page-3/season_image_add.dart';
 
 class SeasonImages extends StatelessWidget {
   final Map<String, dynamic> seasonData;
@@ -310,12 +311,12 @@ class SeasonImages extends StatelessWidget {
                   clipBehavior: Clip.antiAlias,
                   child: InkWell(
                     onTap: () {
-                      // Navigator.of(context).push(
-                      //   MaterialPageRoute(
-                      //     builder: (context) =>
-                      //         Fertilizer_use(seasonData: seasonData),
-                      //   ),
-                      // );
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) =>
+                              Image_season(seasonData: seasonData),
+                        ),
+                      );
                     },
                     overlayColor: const MaterialStatePropertyAll<Color>(
                       Color(0x0c7f7f7f),
@@ -336,12 +337,12 @@ class SeasonImages extends StatelessWidget {
                   clipBehavior: Clip.antiAlias,
                   child: InkWell(
                     onTap: () {
-                      // Navigator.of(context).push(
-                      //   MaterialPageRoute(
-                      //     builder: (context) =>
-                      //         Fertilizer_use(seasonData: seasonData),
-                      //   ),
-                      // );
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) =>
+                              Image_season(seasonData: seasonData),
+                        ),
+                      );
                     },
                     overlayColor: const MaterialStatePropertyAll<Color>(
                       Color(0x0c7f7f7f),

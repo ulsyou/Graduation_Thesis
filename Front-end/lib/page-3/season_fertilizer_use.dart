@@ -425,7 +425,7 @@ class Fertilizer_use extends StatelessWidget {
                         height: 47,
                         child: Center(
                           child: Text(
-                            'Xoá',
+                            'Huỷ',
                             style: GoogleFonts.getFont(
                               'Noto Sans',
                               color: Colors.white,
