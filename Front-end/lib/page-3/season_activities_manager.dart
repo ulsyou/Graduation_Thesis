@@ -45,7 +45,7 @@ class _SeasonActivitiesManagerState extends State<SeasonActivitiesManager> {
     );
   }
 
-  void navigateToSeasonDeseases() {
+  void navigateToSeasonDiseases() {
     Navigator.of(context).push(
       MaterialPageRoute(
         builder: (context) => SeasonDiseases(seasonData: widget.seasonData),
@@ -254,7 +254,7 @@ class _SeasonActivitiesManagerState extends State<SeasonActivitiesManager> {
                   type: MaterialType.transparency,
                   clipBehavior: Clip.antiAlias,
                   child: InkWell(
-                    onTap: navigateToSeasonDeseases,
+                    onTap: navigateToSeasonDiseases,
                     overlayColor: const MaterialStatePropertyAll<Color>(
                       Color(0x0c7f7f7f),
                     ),

@@ -1,12 +1,14 @@
-import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
-import 'package:google_fonts/google_fonts.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:http_parser/http_parser.dart';
 import 'dart:io';
-import 'add-pages.dart';
+
+import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:http/http.dart' as http;
+import 'package:http_parser/http_parser.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
+
+import 'add-pages.dart';
 
 class AddField extends StatefulWidget {
   @override
@@ -224,19 +226,10 @@ class _AddFieldState extends State<AddField> {
                 ),
                 isPositionedVisible
                     ? Positioned(
-                        left: 209,
+                        left: 320,
                         top: 545,
                         child: Row(
                           children: [
-                            Text(
-                              'Chọn vị trí',
-                              style: GoogleFonts.getFont(
-                                'Noto Sans',
-                                fontSize: 16,
-                                fontWeight: FontWeight.w500,
-                                color: Color(0xb57e7e7e),
-                              ),
-                            ),
                             IconButton(
                               icon: Icon(Icons.location_on),
                               onPressed: () async {
@@ -244,9 +237,9 @@ class _AddFieldState extends State<AddField> {
                                 Position position = await _getCurrentLocation();
                                 setState(() {
                                   longitudeController.text =
-                                      position.longitude.toString();
+                                      position.longitude.toStringAsFixed(2);
                                   latitudeController.text =
-                                      position.latitude.toString();
+                                      position.latitude.toStringAsFixed(2);
                                   isPositionedVisible = false;
                                 });
                               },
@@ -352,7 +345,7 @@ class _AddFieldState extends State<AddField> {
                           style: TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.w500,
-                            color: Color(0xb57e7e7e),
+                            color: Colors.black,
                           ),
                         ),
                       );

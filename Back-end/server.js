@@ -17,7 +17,12 @@ const activitiesRoute = require("./routes/activities");
 const fileUpload = require('express-fileupload');
 const weatherRoute = require("./routes/WeatherData");
 const statisticsRoute = express.Router();
-
+const do_activitiesRoute = require("./routes/do_activities");
+const harm_diseaseRoute = require("./routes/harm_disease");
+const use_fertilizerRoute = require("./routes/use_fertilizer");
+const use_pesticideRoute = require("./routes/use_pesticide");
+const imageRoute = require("./routes/add_image");
+const predictionInputRoute = require("./routes/PredictionInput");
 
 // Connect Database
 connectDB();
@@ -38,6 +43,11 @@ const corsOptions = {
 
 app.use(cors(corsOptions));
 
+// Use body-parser middleware
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+
+
 // Route API
 app.use("/user", userRoute);
 app.use("/rice-strain", riceStrainRoute);
@@ -49,16 +59,20 @@ app.use("/crops-season", cropSeason);
 app.use("/activities", activitiesRoute);
 app.use('/uploads', express.static('./uploads'));
 app.use("/weather", weatherRoute);
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended: true}));
 app.use(fileUpload());
 app.use("/statistics", statisticsRoute);
+app.use("/do-activities", do_activitiesRoute);
+app.use("/harm-disease", harm_diseaseRoute);
+app.use("/use-fertilizer", use_fertilizerRoute);
+app.use("/use-pesticide", use_pesticideRoute);
+app.use("/image", imageRoute);
+app.use("/predict", predictionInputRoute);
+
 
 // Route for processing images
 app.post('/processImage', async (req, res) => {
   try {
     const { image } = req.files;
-
     // Save the uploaded image to a temporary file
     const imagePath = path.join(__dirname, 'tempImage.jpg');
     image.mv(imagePath, (err) => {
@@ -67,7 +81,6 @@ app.post('/processImage', async (req, res) => {
         res.status(500).json({ error: 'Internal Server Error' });
         return;
       }
-
       // Call the Flask API using subprocess
       const pythonScriptPath = path.join(__dirname, 'estimate.py');
       const checkpointPath = path.join(__dirname, 'rice_yield_CNN.pth');
@@ -84,7 +97,6 @@ app.post('/processImage', async (req, res) => {
           res.status(500).json({ error: stderr });
           return;
         }
-
         const result = stdout.trim();
         console.log(`Script output: ${result}`);
         res.json({ result });

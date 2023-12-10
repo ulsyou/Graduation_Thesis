@@ -4,6 +4,9 @@ const Pesticide = require('../models/pesticides');
 const upload = require('../config/upload');
 
 router.post("/create/pesticide", upload.single('image'), async (req, res) => {
+    if (typeof req.body.treatingDiseases !== 'string') {
+        return res.status(400).json({ error: 'treatingDiseases must be a string' });
+    }
     let treatingDiseases = req.body.treatingDiseases.split(',');
     try {
         const newPesticide = new Pesticide({

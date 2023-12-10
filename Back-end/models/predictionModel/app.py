@@ -7,14 +7,6 @@ import shutil
 app = Flask(__name__)
 
 # Load models
-# filename_DTR = os.path.dirname(os.path.abspath(__file__))+"/ModelTrained/DecisionTreeRegressor.sav"
-# model_DTR = pickle.load(open(filename_DTR, 'rb'))
-#
-# filename_LR = os.path.dirname(os.path.abspath(__file__))+"/ModelTrained/predictionByLinearRegression1.sav"
-# model_LR = pickle.load(open(filename_LR, 'rb'))
-#
-# filename_RFR = os.path.dirname(os.path.abspath(__file__))+"/ModelTrained/predictionByRandomForestRegression1.sav"
-# model_RFR = pickle.load(open(filename_RFR, 'rb'))
 
 filename_DTR = os.path.dirname(os.path.abspath(__file__))+"/ModelTrained/model_6_split_6.sav"
 model_DTR = pickle.load(open(filename_DTR, 'rb'))

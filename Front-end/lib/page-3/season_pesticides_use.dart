@@ -1,10 +1,102 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:http/http.dart' as http;
+import 'package:mongo_dart/mongo_dart.dart' as mongo;
 import 'package:myapp/page-3/season_pesticides.dart';
 
-class Pesticide_use extends StatelessWidget {
+class Pesticide_use extends StatefulWidget {
   final Map<String, dynamic> seasonData;
   Pesticide_use({required this.seasonData, Key? key}) : super(key: key);
+
+  @override
+  _Pesticide_useState createState() => _Pesticide_useState();
+}
+
+class _Pesticide_useState extends State<Pesticide_use> {
+  TextEditingController quantityPesticide = TextEditingController();
+  DateTime? selectedstartDate;
+  DateTime? selectedendDate;
+  List<String> pesticideNames = [];
+  String selectedPesticide = '';
+  String selectedTimes = 'Trương hạt';
+
+  Future<void> _selectDate(BuildContext context, DateTime selectedDate,
+      Function(DateTime) onSelect) async {
+    final DateTime? picked = await showDatePicker(
+      context: context,
+      initialDate: selectedDate,
+      firstDate: DateTime(2000),
+      lastDate: DateTime(2101),
+    );
+    if (picked != null && picked != selectedDate) {
+      setState(() {
+        onSelect(picked);
+      });
+    }
+  }
+
+  Future<List<String>> fetchPesticideFromMongoDB() async {
+    final mongo.Db mongoClient =
+        await mongo.Db.create('mongodb://10.0.2.2:27017/Graduation_Thesis');
+    await mongoClient.open();
+
+    final collection = mongoClient.collection('pesticides');
+    final List<Map<String, dynamic>> documents =
+        await collection.find().toList();
+
+    final List<String> pesticideNames =
+        documents.map((doc) => doc['pesticideName'] as String).toSet().toList();
+
+    await mongoClient.close();
+
+    return pesticideNames;
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    fetchPesticideFromMongoDB().then((pesticides) {
+      setState(() {
+        pesticideNames = pesticides;
+        selectedPesticide = pesticideNames.isNotEmpty ? pesticides[0] : '';
+      });
+    });
+  }
+
+  Future<void> addPesticideSeason() async {
+    final String apiUrl = 'http://10.0.2.2:5000/use-pesticide/UsePesticide';
+    String cropSeasonCode = widget.seasonData['cropSeasonCode'];
+    String employeeCode = widget.seasonData['employeeCode'];
+    if (cropSeasonCode != null) {
+      var response = await http.post(
+        Uri.parse(apiUrl),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: jsonEncode(<String, dynamic>{
+          'cropSeasonCode': cropSeasonCode,
+          'times': selectedTimes,
+          'employeeCode': employeeCode,
+          'pesticides': [
+            {
+              'pesticideName': selectedPesticide,
+              'quantity': int.parse(quantityPesticide.text),
+            },
+          ],
+          'startDate': selectedstartDate!.toIso8601String(),
+          'endDate': selectedendDate!.toIso8601String(),
+        }),
+      );
+      if (response.statusCode == 201) {
+        print('pesticide use add successful');
+      } else {
+        print('Request failed with status ${response.statusCode}');
+        print('Response body: ${response.body}');
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -84,7 +176,7 @@ class Pesticide_use extends StatelessWidget {
                   left: 255,
                   top: 167,
                   child: Text(
-                    'RC00002',
+                    widget.seasonData['cropSeasonCode'],
                     style: GoogleFonts.getFont(
                       'Noto Sans',
                       color: Colors.black,
@@ -123,7 +215,7 @@ class Pesticide_use extends StatelessWidget {
                   left: 255,
                   top: 224,
                   child: Text(
-                    'RC00002',
+                    widget.seasonData['employeeCode'] = 'RC0002',
                     style: GoogleFonts.getFont(
                       'Noto Sans',
                       color: Colors.black,
@@ -198,16 +290,40 @@ class Pesticide_use extends StatelessWidget {
                   ),
                 ),
                 Positioned(
-                  left: 257,
-                  top: 334,
-                  child: Text(
-                    'Trổ bông',
-                    style: GoogleFonts.getFont(
-                      'Noto Sans',
-                      color: Colors.black,
-                      fontSize: 14,
-                      fontWeight: FontWeight.w500,
-                    ),
+                  left: 250,
+                  top: 319,
+                  child: DropdownButton<String>(
+                    value: selectedTimes,
+                    onChanged: (String? newValue) {
+                      if (newValue != null) {
+                        setState(() {
+                          selectedTimes = newValue;
+                        });
+                      }
+                    },
+                    items: <String>[
+                      'Trương hạt',
+                      'Nảy mầm',
+                      'Đẻ nhánh',
+                      'Lóng thân',
+                      'Trổ bông',
+                      'Thụ tinh',
+                      'Chín sữa',
+                      'Chín sáp',
+                      'Chín hoàn toàn'
+                    ].map<DropdownMenuItem<String>>((String value) {
+                      return DropdownMenuItem<String>(
+                        value: value,
+                        child: Text(
+                          value,
+                          style: TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w500,
+                            color: Color(0xFF000000),
+                          ),
+                        ),
+                      );
+                    }).toList(),
                   ),
                 ),
                 Positioned(
@@ -239,13 +355,28 @@ class Pesticide_use extends StatelessWidget {
                 Positioned(
                   left: 256,
                   top: 391,
-                  child: Text(
-                    '2023-12-12',
-                    style: GoogleFonts.getFont(
-                      'Noto Sans',
-                      color: Colors.black,
-                      fontSize: 14,
-                      fontWeight: FontWeight.w500,
+                  child: Material(
+                    type: MaterialType.transparency,
+                    child: GestureDetector(
+                      onTap: () {
+                        _selectDate(
+                            context, selectedstartDate ?? DateTime.now(),
+                            (DateTime newDate) {
+                          setState(() {
+                            selectedstartDate = newDate;
+                          });
+                        });
+                      },
+                      child: Text(
+                        selectedstartDate != null
+                            ? '${selectedstartDate!.day}/${selectedstartDate!.month}/${selectedstartDate!.year}'
+                            : 'Chọn ngày',
+                        style: TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w500,
+                          color: Color(0xb57e7e7e),
+                        ),
+                      ),
                     ),
                   ),
                 ),
@@ -278,13 +409,24 @@ class Pesticide_use extends StatelessWidget {
                 Positioned(
                   left: 255,
                   top: 448,
-                  child: Text(
-                    '2023-12-12',
-                    style: GoogleFonts.getFont(
-                      'Noto Sans',
-                      color: Colors.black,
-                      fontSize: 14,
-                      fontWeight: FontWeight.w500,
+                  child: GestureDetector(
+                    onTap: () {
+                      _selectDate(context, selectedendDate ?? DateTime.now(),
+                          (DateTime newDate) {
+                        setState(() {
+                          selectedendDate = newDate;
+                        });
+                      });
+                    },
+                    child: Text(
+                      selectedendDate != null
+                          ? '${selectedendDate!.day}/${selectedendDate!.month}/${selectedendDate!.year}'
+                          : 'Chọn ngày',
+                      style: TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w500,
+                        color: Color(0xb57e7e7e),
+                      ),
                     ),
                   ),
                 ),
@@ -316,29 +458,63 @@ class Pesticide_use extends StatelessWidget {
                 ),
                 Positioned(
                   left: 31,
-                  top: 575,
-                  child: Text(
-                    'Chess 50WG',
-                    style: GoogleFonts.getFont(
-                      'Noto Sans',
-                      color: Colors.black,
-                      fontSize: 14,
-                      fontWeight: FontWeight.w500,
-                    ),
+                  top: 558,
+                  child: FutureBuilder<List<String>>(
+                    future: fetchPesticideFromMongoDB(),
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return Container();
+                      }
+
+                      if (snapshot.hasError) {
+                        return Text('Đã xảy ra lỗi: ${snapshot.error}');
+                      }
+
+                      List<String> pesticideNames = snapshot.data ?? [];
+
+                      return DropdownButton<String>(
+                        value: selectedPesticide.isNotEmpty
+                            ? selectedPesticide
+                            : null,
+                        onChanged: (String? newValue) {
+                          if (newValue != null) {
+                            setState(() {
+                              selectedPesticide = newValue;
+                            });
+                          }
+                        },
+                        items: pesticideNames
+                            .map<DropdownMenuItem<String>>((String value) {
+                          return DropdownMenuItem<String>(
+                            value: value,
+                            child: Text(
+                              value,
+                              style: TextStyle(
+                                fontSize: 14,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                          );
+                        }).toList(),
+                      );
+                    },
                   ),
                 ),
                 Positioned(
-                  left: 330,
-                  top: 575,
+                  left: 290,
+                  top: 558,
                   child: SizedBox(
-                    width: 28,
-                    child: Text(
-                      '50',
-                      style: GoogleFonts.getFont(
-                        'Noto Sans',
-                        color: Colors.black,
-                        fontSize: 14,
-                        fontWeight: FontWeight.w500,
+                    width: 100,
+                    child: TextFormField(
+                      controller: quantityPesticide,
+                      decoration: InputDecoration(
+                        hintText: 'Nhập số lượng',
+                        hintStyle: TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w500,
+                          color: Color(0xb57e7e7e),
+                        ),
+                        border: InputBorder.none,
                       ),
                     ),
                   ),
@@ -380,13 +556,15 @@ class Pesticide_use extends StatelessWidget {
                     clipBehavior: Clip.antiAlias,
                     child: InkWell(
                       onTap: () {
-                        // Navigator.of(context).push(
-                        //   MaterialPageRoute(
-                        //     builder: (context) => updateSeason(
-                        //       seasonData: seasonData,
-                        //     ),
-                        //   ),
-                        // );
+                        addPesticideSeason().then((_) {
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => SeasonPesticides(
+                                  seasonData: widget.seasonData),
+                            ),
+                          );
+                        });
                       },
                       overlayColor:
                           MaterialStateProperty.all<Color>(Color(0x0c7f7f7f)),
@@ -418,7 +596,14 @@ class Pesticide_use extends StatelessWidget {
                     borderRadius: BorderRadius.circular(25),
                     clipBehavior: Clip.antiAlias,
                     child: InkWell(
-                      onTap: () {},
+                      onTap: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) =>
+                                SeasonPesticides(seasonData: widget.seasonData),
+                          ),
+                        );
+                      },
                       child: Ink(
                         color: const Color(0xFFFF3838),
                         width: 141,
@@ -586,7 +771,7 @@ class Pesticide_use extends StatelessWidget {
                         Navigator.of(context).push(
                           MaterialPageRoute(
                             builder: (context) =>
-                                SeasonPesticides(seasonData: seasonData),
+                                SeasonPesticides(seasonData: widget.seasonData),
                           ),
                         );
                       },

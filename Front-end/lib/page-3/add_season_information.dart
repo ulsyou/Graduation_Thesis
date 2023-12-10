@@ -42,8 +42,8 @@ class _AddSeasonState extends State<AddSeason> {
   }
 
   Future<List<String>> fetchRiceStrainsFromMongoDB() async {
-    final mongo.Db mongoClient = await mongo.Db.create(
-        'mongodb+srv://admin:admin@cluster0.pyqy143.mongodb.net/');
+    final mongo.Db mongoClient =
+        await mongo.Db.create('mongodb://10.0.2.2:27017/Graduation_Thesis');
     await mongoClient.open();
 
     final collection = mongoClient.collection('ricestrains');
@@ -59,8 +59,8 @@ class _AddSeasonState extends State<AddSeason> {
   }
 
   Future<List<String>> fetchFieldSamplesFromMongoDB() async {
-    final mongo.Db mongoClient = await mongo.Db.create(
-        'mongodb+srv://admin:admin@cluster0.pyqy143.mongodb.net/');
+    final mongo.Db mongoClient =
+        await mongo.Db.create('mongodb://10.0.2.2:27017/Graduation_Thesis');
     await mongoClient.open();
 
     final collection = mongoClient.collection('fieldsamples');

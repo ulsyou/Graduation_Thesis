@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 
 const PredictionInputSchema = new mongoose.Schema({
+  crop: String,
   precipitation: Number,
   temperature: Number,
   humidity: Number,

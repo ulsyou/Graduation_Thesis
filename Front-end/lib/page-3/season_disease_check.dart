@@ -1,11 +1,96 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:http/http.dart' as http;
+import 'package:mongo_dart/mongo_dart.dart' as mongo;
 import 'package:myapp/page-3/season_diseases.dart';
 
-class Disease_harm extends StatelessWidget {
+class Disease_harm extends StatefulWidget {
   final Map<String, dynamic> seasonData;
-
   Disease_harm({required this.seasonData, Key? key}) : super(key: key);
+
+  @override
+  _Disease_harmState createState() => _Disease_harmState();
+}
+
+class _Disease_harmState extends State<Disease_harm> {
+  DateTime? selectedstartDate;
+  DateTime? selectedendDate;
+  List<String> diseaseNames = [];
+  String selectedDisease = '';
+  String selectedTimes = 'Trương hạt';
+
+  Future<void> _selectDate(BuildContext context, DateTime selectedDate,
+      Function(DateTime) onSelect) async {
+    final DateTime? picked = await showDatePicker(
+      context: context,
+      initialDate: selectedDate,
+      firstDate: DateTime(2000),
+      lastDate: DateTime(2101),
+    );
+    if (picked != null && picked != selectedDate) {
+      setState(() {
+        onSelect(picked);
+      });
+    }
+  }
+
+  Future<List<String>> fetchDiseaseFromMongoDB() async {
+    final mongo.Db mongoClient =
+        await mongo.Db.create('mongodb://10.0.2.2:27017/Graduation_Thesis');
+    await mongoClient.open();
+
+    final collection = mongoClient.collection('diseases');
+    final List<Map<String, dynamic>> documents =
+        await collection.find().toList();
+
+    final List<String> diseaseNames =
+        documents.map((doc) => doc['diseaseName'] as String).toSet().toList();
+
+    await mongoClient.close();
+
+    return diseaseNames;
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    fetchDiseaseFromMongoDB().then((diseases) {
+      setState(() {
+        diseaseNames = diseases;
+        selectedDisease = diseaseNames.isNotEmpty ? diseases[0] : '';
+      });
+    });
+  }
+
+  Future<void> addDiseaseSeason() async {
+    final String apiUrl = 'http://10.0.2.2:5000/harm-disease/Harm';
+    String cropSeasonCode = widget.seasonData['cropSeasonCode'];
+    String employeeCode = widget.seasonData['employeeCode'];
+    if (cropSeasonCode != null) {
+      var response = await http.post(
+        Uri.parse(apiUrl),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: jsonEncode(<String, dynamic>{
+          'cropSeasonCode': cropSeasonCode,
+          'times': selectedTimes,
+          'employeeCode': employeeCode,
+          'diseaseName': selectedDisease,
+          'startDate': selectedstartDate!.toIso8601String(),
+          'endDate': selectedendDate!.toIso8601String(),
+        }),
+      );
+      if (response.statusCode == 201) {
+        print('fertilizer use add successful');
+      } else {
+        print('Request failed with status ${response.statusCode}');
+        print('Response body: ${response.body}');
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +120,7 @@ class Disease_harm extends StatelessWidget {
                         image: AssetImage(
                           'assets/page-1/images/yuki-ho-ygqbbzemmi-unsplash-1-bg.png',
                         ),
-                        fit: BoxFit.none,
+                        fit: BoxFit.fill,
                         alignment: Alignment.centerLeft,
                         opacity: 0.7,
                         scale: 3.1,
@@ -86,7 +171,7 @@ class Disease_harm extends StatelessWidget {
                   left: 255,
                   top: 167,
                   child: Text(
-                    'RC00002',
+                    widget.seasonData['cropSeasonCode'],
                     style: GoogleFonts.getFont(
                       'Noto Sans',
                       color: Colors.black,
@@ -125,7 +210,7 @@ class Disease_harm extends StatelessWidget {
                   left: 255,
                   top: 224,
                   child: Text(
-                    'RC00002',
+                    widget.seasonData['employeeCode'] = 'RC0002',
                     style: GoogleFonts.getFont(
                       'Noto Sans',
                       color: Colors.black,
@@ -162,15 +247,45 @@ class Disease_harm extends StatelessWidget {
                 ),
                 Positioned(
                   left: 255,
-                  top: 275,
-                  child: Text(
-                    'Bệnh khô vằn',
-                    style: GoogleFonts.getFont(
-                      'Noto Sans',
-                      color: Colors.black,
-                      fontSize: 14,
-                      fontWeight: FontWeight.w500,
-                    ),
+                  top: 261,
+                  child: FutureBuilder<List<String>>(
+                    future: fetchDiseaseFromMongoDB(),
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return Container();
+                      }
+
+                      if (snapshot.hasError) {
+                        return Text('Đã xảy ra lỗi: ${snapshot.error}');
+                      }
+
+                      List<String> diseaseNamesNames = snapshot.data ?? [];
+
+                      return DropdownButton<String>(
+                        value:
+                            selectedDisease.isNotEmpty ? selectedDisease : null,
+                        onChanged: (String? newValue) {
+                          if (newValue != null) {
+                            setState(() {
+                              selectedDisease = newValue;
+                            });
+                          }
+                        },
+                        items: diseaseNamesNames
+                            .map<DropdownMenuItem<String>>((String value) {
+                          return DropdownMenuItem<String>(
+                            value: value,
+                            child: Text(
+                              value,
+                              style: TextStyle(
+                                fontSize: 14,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                          );
+                        }).toList(),
+                      );
+                    },
                   ),
                 ),
                 Positioned(
@@ -240,15 +355,39 @@ class Disease_harm extends StatelessWidget {
                 ),
                 Positioned(
                   left: 257,
-                  top: 384,
-                  child: Text(
-                    'Trổ bông',
-                    style: GoogleFonts.getFont(
-                      'Noto Sans',
-                      color: Colors.black,
-                      fontSize: 14,
-                      fontWeight: FontWeight.w500,
-                    ),
+                  top: 370,
+                  child: DropdownButton<String>(
+                    value: selectedTimes,
+                    onChanged: (String? newValue) {
+                      if (newValue != null) {
+                        setState(() {
+                          selectedTimes = newValue;
+                        });
+                      }
+                    },
+                    items: <String>[
+                      'Trương hạt',
+                      'Nảy mầm',
+                      'Đẻ nhánh',
+                      'Lóng thân',
+                      'Trổ bông',
+                      'Thụ tinh',
+                      'Chín sữa',
+                      'Chín sáp',
+                      'Chín hoàn toàn'
+                    ].map<DropdownMenuItem<String>>((String value) {
+                      return DropdownMenuItem<String>(
+                        value: value,
+                        child: Text(
+                          value,
+                          style: TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w500,
+                            color: Color(0xFF000000),
+                          ),
+                        ),
+                      );
+                    }).toList(),
                   ),
                 ),
                 Positioned(
@@ -280,13 +419,28 @@ class Disease_harm extends StatelessWidget {
                 Positioned(
                   left: 256,
                   top: 441,
-                  child: Text(
-                    '2023-12-12',
-                    style: GoogleFonts.getFont(
-                      'Noto Sans',
-                      color: Colors.black,
-                      fontSize: 14,
-                      fontWeight: FontWeight.w500,
+                  child: Material(
+                    type: MaterialType.transparency,
+                    child: GestureDetector(
+                      onTap: () {
+                        _selectDate(
+                            context, selectedstartDate ?? DateTime.now(),
+                            (DateTime newDate) {
+                          setState(() {
+                            selectedstartDate = newDate;
+                          });
+                        });
+                      },
+                      child: Text(
+                        selectedstartDate != null
+                            ? '${selectedstartDate!.day}/${selectedstartDate!.month}/${selectedstartDate!.year}'
+                            : 'Chọn ngày',
+                        style: TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w500,
+                          color: Color(0xb57e7e7e),
+                        ),
+                      ),
                     ),
                   ),
                 ),
@@ -319,13 +473,24 @@ class Disease_harm extends StatelessWidget {
                 Positioned(
                   left: 255,
                   top: 498,
-                  child: Text(
-                    '2023-12-12',
-                    style: GoogleFonts.getFont(
-                      'Noto Sans',
-                      color: Colors.black,
-                      fontSize: 14,
-                      fontWeight: FontWeight.w500,
+                  child: GestureDetector(
+                    onTap: () {
+                      _selectDate(context, selectedendDate ?? DateTime.now(),
+                          (DateTime newDate) {
+                        setState(() {
+                          selectedendDate = newDate;
+                        });
+                      });
+                    },
+                    child: Text(
+                      selectedendDate != null
+                          ? '${selectedendDate!.day}/${selectedendDate!.month}/${selectedendDate!.year}'
+                          : 'Chọn ngày',
+                      style: TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w500,
+                        color: Color(0xb57e7e7e),
+                      ),
                     ),
                   ),
                 ),
@@ -338,13 +503,15 @@ class Disease_harm extends StatelessWidget {
                     clipBehavior: Clip.antiAlias,
                     child: InkWell(
                       onTap: () {
-                        // Navigator.of(context).push(
-                        //   MaterialPageRoute(
-                        //     builder: (context) => updateSeason(
-                        //       seasonData: seasonData,
-                        //     ),
-                        //   ),
-                        // );
+                        addDiseaseSeason().then((_) {
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) =>
+                                  SeasonDiseases(seasonData: widget.seasonData),
+                            ),
+                          );
+                        });
                       },
                       overlayColor:
                           MaterialStateProperty.all<Color>(Color(0x0c7f7f7f)),
@@ -376,7 +543,15 @@ class Disease_harm extends StatelessWidget {
                     borderRadius: BorderRadius.circular(25),
                     clipBehavior: Clip.antiAlias,
                     child: InkWell(
-                      onTap: () {},
+                      onTap: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) => SeasonDiseases(
+                              seasonData: widget.seasonData,
+                            ),
+                          ),
+                        );
+                      },
                       child: Ink(
                         color: const Color(0xFFFF3838),
                         width: 141,
@@ -434,7 +609,7 @@ class Disease_harm extends StatelessWidget {
                         Navigator.of(context).push(
                           MaterialPageRoute(
                             builder: (context) =>
-                                SeasonDiseases(seasonData: seasonData),
+                                SeasonDiseases(seasonData: widget.seasonData),
                           ),
                         );
                       },

@@ -1,10 +1,103 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:http/http.dart' as http;
+import 'package:mongo_dart/mongo_dart.dart' as mongo;
 import 'package:myapp/page-3/season_fertilizer.dart';
 
-class Fertilizer_use extends StatelessWidget {
+class Fertilizer_use extends StatefulWidget {
   final Map<String, dynamic> seasonData;
   Fertilizer_use({required this.seasonData, Key? key}) : super(key: key);
+  @override
+  _Fertilizer_useState createState() => _Fertilizer_useState();
+}
+
+class _Fertilizer_useState extends State<Fertilizer_use> {
+  TextEditingController quantityFertilizer = TextEditingController();
+  DateTime? selectedstartDate;
+  DateTime? selectedendDate;
+  List<String> fertilizerNames = [];
+  String selectedFertilizer = '';
+  String selectedTimes = 'Trương hạt';
+
+  Future<void> _selectDate(BuildContext context, DateTime selectedDate,
+      Function(DateTime) onSelect) async {
+    final DateTime? picked = await showDatePicker(
+      context: context,
+      initialDate: selectedDate,
+      firstDate: DateTime(2000),
+      lastDate: DateTime(2101),
+    );
+    if (picked != null && picked != selectedDate) {
+      setState(() {
+        onSelect(picked);
+      });
+    }
+  }
+
+  Future<List<String>> fetchFertilizerFromMongoDB() async {
+    final mongo.Db mongoClient =
+        await mongo.Db.create('mongodb://10.0.2.2:27017/Graduation_Thesis');
+    await mongoClient.open();
+
+    final collection = mongoClient.collection('fertilizers');
+    final List<Map<String, dynamic>> documents =
+        await collection.find().toList();
+
+    final List<String> fertilizerNames = documents
+        .map((doc) => doc['fertilizerName'] as String)
+        .toSet()
+        .toList();
+
+    await mongoClient.close();
+
+    return fertilizerNames;
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    fetchFertilizerFromMongoDB().then((fertilizers) {
+      setState(() {
+        fertilizerNames = fertilizers;
+        selectedFertilizer = fertilizerNames.isNotEmpty ? fertilizers[0] : '';
+      });
+    });
+  }
+
+  Future<void> addFertilizerSeason() async {
+    final String apiUrl = 'http://10.0.2.2:5000/use-fertilizer/UseFertilizer';
+    String cropSeasonCode = widget.seasonData['cropSeasonCode'];
+    String employeeCode = widget.seasonData['employeeCode'];
+    if (cropSeasonCode != null) {
+      var response = await http.post(
+        Uri.parse(apiUrl),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: jsonEncode(<String, dynamic>{
+          'cropSeasonCode': cropSeasonCode,
+          'times': selectedTimes,
+          'employeeCode': employeeCode,
+          'fertilizers': [
+            {
+              'fertilizerName': selectedFertilizer,
+              'quantity': int.parse(quantityFertilizer.text),
+            },
+          ],
+          'startDate': selectedstartDate!.toIso8601String(),
+          'endDate': selectedendDate!.toIso8601String(),
+        }),
+      );
+      if (response.statusCode == 201) {
+        print('fertilizer use add successful');
+      } else {
+        print('Request failed with status ${response.statusCode}');
+        print('Response body: ${response.body}');
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -84,7 +177,7 @@ class Fertilizer_use extends StatelessWidget {
                   left: 255,
                   top: 167,
                   child: Text(
-                    'RC00002',
+                    widget.seasonData['cropSeasonCode'],
                     style: GoogleFonts.getFont(
                       'Noto Sans',
                       color: Colors.black,
@@ -123,7 +216,7 @@ class Fertilizer_use extends StatelessWidget {
                   left: 255,
                   top: 224,
                   child: Text(
-                    'RC00002',
+                    widget.seasonData['employeeCode'] = 'RC0002',
                     style: GoogleFonts.getFont(
                       'Noto Sans',
                       color: Colors.black,
@@ -198,16 +291,40 @@ class Fertilizer_use extends StatelessWidget {
                   ),
                 ),
                 Positioned(
-                  left: 257,
-                  top: 334,
-                  child: Text(
-                    'Trổ bông',
-                    style: GoogleFonts.getFont(
-                      'Noto Sans',
-                      color: Colors.black,
-                      fontSize: 14,
-                      fontWeight: FontWeight.w500,
-                    ),
+                  left: 250,
+                  top: 319,
+                  child: DropdownButton<String>(
+                    value: selectedTimes,
+                    onChanged: (String? newValue) {
+                      if (newValue != null) {
+                        setState(() {
+                          selectedTimes = newValue;
+                        });
+                      }
+                    },
+                    items: <String>[
+                      'Trương hạt',
+                      'Nảy mầm',
+                      'Đẻ nhánh',
+                      'Lóng thân',
+                      'Trổ bông',
+                      'Thụ tinh',
+                      'Chín sữa',
+                      'Chín sáp',
+                      'Chín hoàn toàn'
+                    ].map<DropdownMenuItem<String>>((String value) {
+                      return DropdownMenuItem<String>(
+                        value: value,
+                        child: Text(
+                          value,
+                          style: TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w500,
+                            color: Color(0xFF000000),
+                          ),
+                        ),
+                      );
+                    }).toList(),
                   ),
                 ),
                 Positioned(
@@ -239,13 +356,28 @@ class Fertilizer_use extends StatelessWidget {
                 Positioned(
                   left: 256,
                   top: 391,
-                  child: Text(
-                    '2023-12-12',
-                    style: GoogleFonts.getFont(
-                      'Noto Sans',
-                      color: Colors.black,
-                      fontSize: 14,
-                      fontWeight: FontWeight.w500,
+                  child: Material(
+                    type: MaterialType.transparency,
+                    child: GestureDetector(
+                      onTap: () {
+                        _selectDate(
+                            context, selectedstartDate ?? DateTime.now(),
+                            (DateTime newDate) {
+                          setState(() {
+                            selectedstartDate = newDate;
+                          });
+                        });
+                      },
+                      child: Text(
+                        selectedstartDate != null
+                            ? '${selectedstartDate!.day}/${selectedstartDate!.month}/${selectedstartDate!.year}'
+                            : 'Chọn ngày',
+                        style: TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w500,
+                          color: Color(0xb57e7e7e),
+                        ),
+                      ),
                     ),
                   ),
                 ),
@@ -278,13 +410,24 @@ class Fertilizer_use extends StatelessWidget {
                 Positioned(
                   left: 255,
                   top: 448,
-                  child: Text(
-                    '2023-12-12',
-                    style: GoogleFonts.getFont(
-                      'Noto Sans',
-                      color: Colors.black,
-                      fontSize: 14,
-                      fontWeight: FontWeight.w500,
+                  child: GestureDetector(
+                    onTap: () {
+                      _selectDate(context, selectedendDate ?? DateTime.now(),
+                          (DateTime newDate) {
+                        setState(() {
+                          selectedendDate = newDate;
+                        });
+                      });
+                    },
+                    child: Text(
+                      selectedendDate != null
+                          ? '${selectedendDate!.day}/${selectedendDate!.month}/${selectedendDate!.year}'
+                          : 'Chọn ngày',
+                      style: TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w500,
+                        color: Color(0xb57e7e7e),
+                      ),
                     ),
                   ),
                 ),
@@ -302,48 +445,6 @@ class Fertilizer_use extends StatelessWidget {
                   ),
                 ),
                 Positioned(
-                  left: 6,
-                  top: 568,
-                  child: Container(
-                    width: 400,
-                    height: 35,
-                    clipBehavior: Clip.hardEdge,
-                    decoration: BoxDecoration(
-                      color: const Color(0xE5FFFFFF),
-                      borderRadius: BorderRadius.circular(15),
-                    ),
-                  ),
-                ),
-                Positioned(
-                  left: 31,
-                  top: 575,
-                  child: Text(
-                    'DuponTMprevathon 5SC',
-                    style: GoogleFonts.getFont(
-                      'Noto Sans',
-                      color: Colors.black,
-                      fontSize: 14,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                ),
-                Positioned(
-                  left: 330,
-                  top: 575,
-                  child: SizedBox(
-                    width: 28,
-                    child: Text(
-                      '40',
-                      style: GoogleFonts.getFont(
-                        'Noto Sans',
-                        color: Colors.black,
-                        fontSize: 14,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                  ),
-                ),
-                Positioned(
                   left: -1,
                   top: 501,
                   child: Container(
@@ -354,86 +455,6 @@ class Fertilizer_use extends StatelessWidget {
                       color: Color(0xFFFDFFAA),
                       borderRadius: BorderRadius.vertical(
                         top: Radius.circular(30),
-                      ),
-                    ),
-                  ),
-                ),
-                Positioned(
-                  left: 41,
-                  top: 957,
-                  child: Container(
-                    width: 141,
-                    height: 47,
-                    clipBehavior: Clip.hardEdge,
-                    decoration: BoxDecoration(
-                      color: const Color(0xFFFFF9C7),
-                      borderRadius: BorderRadius.circular(25),
-                    ),
-                  ),
-                ),
-                Positioned(
-                  left: 41,
-                  top: 957,
-                  child: Material(
-                    type: MaterialType.transparency,
-                    borderRadius: BorderRadius.circular(25),
-                    clipBehavior: Clip.antiAlias,
-                    child: InkWell(
-                      onTap: () {
-                        // Navigator.of(context).push(
-                        //   MaterialPageRoute(
-                        //     builder: (context) => updateSeason(
-                        //       seasonData: seasonData,
-                        //     ),
-                        //   ),
-                        // );
-                      },
-                      overlayColor:
-                          MaterialStateProperty.all<Color>(Color(0x0c7f7f7f)),
-                      child: Container(
-                        width: 141,
-                        height: 47,
-                        color: const Color(0xFFFFF9C7),
-                        child: Center(
-                          child: Text(
-                            'Thêm',
-                            textAlign: TextAlign.center,
-                            style: GoogleFonts.getFont(
-                              'Noto Sans',
-                              color: Colors.black,
-                              fontSize: 16,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-                Positioned(
-                  left: 229,
-                  top: 957,
-                  child: Material(
-                    type: MaterialType.transparency,
-                    borderRadius: BorderRadius.circular(25),
-                    clipBehavior: Clip.antiAlias,
-                    child: InkWell(
-                      onTap: () {},
-                      child: Ink(
-                        color: const Color(0xFFFF3838),
-                        width: 141,
-                        height: 47,
-                        child: Center(
-                          child: Text(
-                            'Huỷ',
-                            style: GoogleFonts.getFont(
-                              'Noto Sans',
-                              color: Colors.white,
-                              fontSize: 16,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                        ),
                       ),
                     ),
                   ),
@@ -461,6 +482,82 @@ class Fertilizer_use extends StatelessWidget {
                       color: Colors.black,
                       fontSize: 16,
                       fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ),
+                Positioned(
+                  left: 6,
+                  top: 568,
+                  child: Container(
+                    width: 400,
+                    height: 35,
+                    clipBehavior: Clip.hardEdge,
+                    decoration: BoxDecoration(
+                      color: const Color(0xE5FFFFFF),
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                  ),
+                ),
+                Positioned(
+                  left: 31,
+                  top: 558,
+                  child: FutureBuilder<List<String>>(
+                    future: fetchFertilizerFromMongoDB(),
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return Container();
+                      }
+
+                      if (snapshot.hasError) {
+                        return Text('Đã xảy ra lỗi: ${snapshot.error}');
+                      }
+
+                      List<String> fertilizerNames = snapshot.data ?? [];
+
+                      return DropdownButton<String>(
+                        value: selectedFertilizer.isNotEmpty
+                            ? selectedFertilizer
+                            : null,
+                        onChanged: (String? newValue) {
+                          if (newValue != null) {
+                            setState(() {
+                              selectedFertilizer = newValue;
+                            });
+                          }
+                        },
+                        items: fertilizerNames
+                            .map<DropdownMenuItem<String>>((String value) {
+                          return DropdownMenuItem<String>(
+                            value: value,
+                            child: Text(
+                              value,
+                              style: TextStyle(
+                                fontSize: 14,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                          );
+                        }).toList(),
+                      );
+                    },
+                  ),
+                ),
+                Positioned(
+                  left: 290,
+                  top: 558,
+                  child: SizedBox(
+                    width: 100,
+                    child: TextFormField(
+                      controller: quantityFertilizer,
+                      decoration: InputDecoration(
+                        hintText: 'Nhập số lượng',
+                        hintStyle: TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w500,
+                          color: Color(0xb57e7e7e),
+                        ),
+                        border: InputBorder.none,
+                      ),
                     ),
                   ),
                 ),
@@ -513,14 +610,7 @@ class Fertilizer_use extends StatelessWidget {
                     type: MaterialType.transparency,
                     clipBehavior: Clip.antiAlias,
                     child: InkWell(
-                      onTap: () {
-                        // Navigator.of(context).push(
-                        //   MaterialPageRoute(
-                        //     builder: (context) =>
-                        //         SeasonFertilizer(seasonData: seasonData),
-                        //   ),
-                        // );
-                      },
+                      onTap: () {},
                       overlayColor: const MaterialStatePropertyAll<Color>(
                         Color(0x0c7f7f7f),
                       ),
@@ -543,6 +633,82 @@ class Fertilizer_use extends StatelessWidget {
                               ),
                             )
                           ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                Positioned(
+                  left: 41,
+                  top: 957,
+                  child: Material(
+                    type: MaterialType.transparency,
+                    borderRadius: BorderRadius.circular(25),
+                    clipBehavior: Clip.antiAlias,
+                    child: InkWell(
+                      onTap: () {
+                        addFertilizerSeason().then((_) {
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => SeasonFertilizer(
+                                  seasonData: widget.seasonData),
+                            ),
+                          );
+                        });
+                      },
+                      overlayColor:
+                          MaterialStateProperty.all<Color>(Color(0x0c7f7f7f)),
+                      child: Container(
+                        width: 141,
+                        height: 47,
+                        color: const Color(0xFFFFF9C7),
+                        child: Center(
+                          child: Text(
+                            'Thêm',
+                            textAlign: TextAlign.center,
+                            style: GoogleFonts.getFont(
+                              'Noto Sans',
+                              color: Colors.black,
+                              fontSize: 16,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                Positioned(
+                  left: 229,
+                  top: 957,
+                  child: Material(
+                    type: MaterialType.transparency,
+                    borderRadius: BorderRadius.circular(25),
+                    clipBehavior: Clip.antiAlias,
+                    child: InkWell(
+                      onTap: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) =>
+                                SeasonFertilizer(seasonData: widget.seasonData),
+                          ),
+                        );
+                      },
+                      child: Ink(
+                        color: const Color(0xFFFF3838),
+                        width: 141,
+                        height: 47,
+                        child: Center(
+                          child: Text(
+                            'Huỷ',
+                            style: GoogleFonts.getFont(
+                              'Noto Sans',
+                              color: Colors.white,
+                              fontSize: 16,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
                         ),
                       ),
                     ),
@@ -586,7 +752,7 @@ class Fertilizer_use extends StatelessWidget {
                         Navigator.of(context).push(
                           MaterialPageRoute(
                             builder: (context) =>
-                                SeasonFertilizer(seasonData: seasonData),
+                                SeasonFertilizer(seasonData: widget.seasonData),
                           ),
                         );
                       },
