@@ -2,16 +2,16 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:myapp/page-3/add_activities_infomation.dart';
 import 'package:myapp/page-3/add_desease_information.dart';
+import 'package:myapp/page-3/add_fertilizer_infomation.dart';
 import 'package:myapp/page-3/add_fieldsample_informaton.dart';
 import 'package:myapp/page-3/add_pesticide_information.dart';
 import 'package:myapp/page-3/add_ricestrain_information.dart';
+import 'package:myapp/page-3/add_season_information.dart';
+import 'package:myapp/page-3/expert-manager-page.dart';
 
 import '../utils.dart';
-import 'add_activities_infomation.dart';
-import 'add_fertilizer_infomation.dart';
-import 'add_season_information.dart';
-import 'expert-manager-page.dart';
 
 class AddPages extends StatelessWidget {
   const AddPages({super.key});
@@ -770,7 +770,8 @@ class AddPages extends StatelessWidget {
                                 onPressed: () {
                                   Navigator.of(context).push(
                                     MaterialPageRoute(
-                                      builder: (context) => ExpertManagerPage(isNavigatedFromOtherPage: true),
+                                      builder: (context) => ExpertManagerPage(
+                                          isNavigatedFromOtherPage: true),
                                     ),
                                   );
                                 },

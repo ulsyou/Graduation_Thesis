@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
-import 'diseases.dart';
+import 'package:myapp/page-3/diseases.dart';
 
 class DiseaseDetail extends StatefulWidget {
   final Map<String, dynamic> diseaseData;

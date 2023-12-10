@@ -2,9 +2,9 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:myapp/page-3/Prediction_2.dart';
+import 'package:myapp/page-3/crop_prediction.dart';
 import 'package:myapp/utils.dart';
-import 'Prediction_2.dart';
-import 'crop_prediction.dart';
 
 class Prediction_2 extends StatefulWidget {
   @override
@@ -131,7 +131,7 @@ class _Prediction_2State extends State<Prediction_2> {
                                         child: Container(
                                           decoration: BoxDecoration(
                                             borderRadius:
-                                            BorderRadius.circular(30 * fem),
+                                                BorderRadius.circular(30 * fem),
                                             gradient: LinearGradient(
                                               begin: Alignment(1.217, -0.146),
                                               end: Alignment(-1.379, 0.131),
@@ -155,7 +155,7 @@ class _Prediction_2State extends State<Prediction_2> {
                                         height: 100 * fem,
                                         child: ClipRRect(
                                           borderRadius:
-                                          BorderRadius.circular(20 * fem),
+                                              BorderRadius.circular(20 * fem),
                                           child: Image.network(
                                             prediction['image'],
                                             fit: BoxFit.fill,
@@ -276,9 +276,9 @@ class _Prediction_2State extends State<Prediction_2> {
                                             color: Color(0xff60ff00),
                                             borderRadius: BorderRadius.only(
                                               topLeft:
-                                              Radius.circular(50 * fem),
+                                                  Radius.circular(50 * fem),
                                               bottomLeft:
-                                              Radius.circular(50 * fem),
+                                                  Radius.circular(50 * fem),
                                             ),
                                           ),
                                         ),

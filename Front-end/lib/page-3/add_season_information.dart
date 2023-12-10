@@ -6,8 +6,7 @@ import 'package:http/http.dart' as http;
 import 'package:http_parser/http_parser.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:mongo_dart/mongo_dart.dart' as mongo;
-
-import 'add-pages.dart';
+import 'package:myapp/page-3/add-pages.dart';
 
 class AddSeason extends StatefulWidget {
   @override

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-
-import 'fields_samples.dart';
+import 'package:myapp/page-3/fields_samples.dart';
 
 class FieldDetail extends StatefulWidget {
   const FieldDetail({super.key});

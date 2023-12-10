@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:myapp/utils.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'main.dart';
 import 'page-1/admin-manager.dart';
@@ -57,7 +58,9 @@ class _SceneState extends State<Scene> {
         // Decode response JSON
         Map<String, dynamic> responseData = jsonDecode(response.body);
 
-        print('Response data: $responseData');
+        // Save user data to local storage
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+        prefs.setString('userData', jsonEncode(responseData));
 
         if (responseData.containsKey('role')) {
           String role = responseData['role'];
@@ -71,7 +74,9 @@ class _SceneState extends State<Scene> {
           } else if (role == 'Chuyên gia') {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => ExpertManagerPage(isNavigatedFromOtherPage: true)),
+              MaterialPageRoute(
+                  builder: (context) =>
+                      ExpertManagerPage(isNavigatedFromOtherPage: true)),
             );
           } else if (role == 'Nhân viên') {
             Navigator.push(

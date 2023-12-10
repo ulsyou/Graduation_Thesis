@@ -2,9 +2,8 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-
-import 'catatalog-list.dart';
-import 'field_detail.dart';
+import 'package:myapp/page-3/catatalog-list.dart';
+import 'package:myapp/page-3/field_detail.dart';
 
 class Fields extends StatelessWidget {
   const Fields({super.key});

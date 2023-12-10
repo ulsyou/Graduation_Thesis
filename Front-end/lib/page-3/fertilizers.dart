@@ -1,11 +1,11 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
-import 'package:myapp/utils.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'catatalog-list.dart';
-import 'fertilizer_detail.dart';
+import 'package:http/http.dart' as http;
+import 'package:myapp/page-3/catatalog-list.dart';
+import 'package:myapp/page-3/fertilizer_detail.dart';
+import 'package:myapp/utils.dart';
 
 class Fertilizer extends StatefulWidget {
   @override

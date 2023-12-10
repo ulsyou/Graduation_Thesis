@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
-import 'activities.dart';
+import 'package:myapp/page-3/activities.dart';
 
 class ActivitiesDetail extends StatefulWidget {
   final Map<String, dynamic> activitesData;
@@ -631,7 +631,7 @@ class _ActivitiesDetail extends State<ActivitiesDetail> {
                       // Add your onTap logic here
                     },
                     overlayColor:
-                    MaterialStateProperty.all<Color>(Color(0x0c7f7f7f)),
+                        MaterialStateProperty.all<Color>(Color(0x0c7f7f7f)),
                     child: Container(
                       width: 141,
                       height: 47,
@@ -752,7 +752,7 @@ class _ActivitiesDetail extends State<ActivitiesDetail> {
                                       deleteFertilizer();
                                     },
                                     overlayColor:
-                                    const MaterialStatePropertyAll<Color>(
+                                        const MaterialStatePropertyAll<Color>(
                                       Color(0x0c7f7f7f),
                                     ),
                                     child: Text(

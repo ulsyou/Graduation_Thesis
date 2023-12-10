@@ -20,10 +20,13 @@ router.post("/login", async (req, res) => {
       return res.status(401).json({ message: "Email or password incorrect" });
     }
 
+    const userObject = user.toObject();
+    delete userObject.password;
+
     return res.status(200).json({
       message: "Login successful",
       role: user.role,
-      id: user._id, 
+      user: userObject,
     });
   } catch (err) {
     res.status(500).json({ error: err.message });

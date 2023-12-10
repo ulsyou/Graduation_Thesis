@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
-import 'fertilizers.dart';
+import 'package:myapp/page-3/fertilizers.dart';
 
 class FertilizerDetail extends StatefulWidget {
   final Map<String, dynamic> fertilizerData;

@@ -1,18 +1,20 @@
+import 'dart:async';
+import 'dart:convert' as convert;
 import 'dart:convert';
 import 'dart:math';
-import 'dart:convert' as convert;
-import 'package:http/http.dart' as http;
+
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:geolocator/geolocator.dart';
 import 'package:geocoding/geocoding.dart';
+import 'package:geolocator/geolocator.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:http/http.dart' as http;
+import 'package:myapp/page-3/add-pages.dart';
+import 'package:myapp/page-3/catatalog-list.dart';
+import 'package:myapp/page-3/crop_prediction.dart';
+import 'package:myapp/page-3/profile.dart';
+import 'package:myapp/page-3/season-list.dart';
 import 'package:myapp/statistic.dart';
-import 'dart:async';
-import 'add-pages.dart';
-import 'catatalog-list.dart';
-import 'crop_prediction.dart';
-import 'profile.dart';
-import 'season-list.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ExpertManagerPage extends StatefulWidget {
   final bool isNavigatedFromOtherPage;
@@ -33,7 +35,7 @@ class _ExpertManagerPageState extends State<ExpertManagerPage> {
   String humidity = '';
   String condition = '';
   String icon = '';
-  String precipMm = ''; 
+  String precipMm = '';
   String windKph = '';
   Timer? timer;
 
@@ -109,44 +111,88 @@ class _ExpertManagerPageState extends State<ExpertManagerPage> {
   }
 
   void startFetchingData(String cityName) {
-  timer = Timer.periodic(Duration(seconds: 5), (Timer t) async {
-    try {
-      Map<String, dynamic> weatherData = await fetchWeatherData(cityName);
-      setState(() {
-        tempC = weatherData['tempC'].toString();
-        uv = weatherData['uv'].toString();
-        humidity = weatherData['humidity'].toString();
-        condition = weatherData['condition'];
-        icon = 'http:${weatherData['icon']}';
-        precipMm = weatherData['precip_mm'].toString();
-        windKph = weatherData['wind_kph'].toString();
-        isLoading = false;
-      });
-      await saveWeatherData(weatherData); 
-    } catch (e) {
-      error = e.toString();
-      setState(() {
-        isLoading = false;
-      });
+    timer = Timer.periodic(Duration(seconds: 10), (Timer t) async {
+      try {
+        Map<String, dynamic> weatherData = await fetchWeatherData(cityName);
+        setState(() {
+          tempC = weatherData['tempC'].toString();
+          uv = weatherData['uv'].toString();
+          humidity = weatherData['humidity'].toString();
+          condition = weatherData['condition'];
+          icon = 'http:${weatherData['icon']}';
+          precipMm = weatherData['precipMm'].toString();
+          windKph = weatherData['windKph'].toString();
+          isLoading = false;
+        });
+        await saveWeatherData(weatherData);
+      } catch (e) {
+        Map<String, dynamic> cachedWeatherData = await loadCachedWeatherData();
+        if (cachedWeatherData.isNotEmpty) {
+          setState(() {
+            tempC = cachedWeatherData['tempC'].toString();
+            uv = cachedWeatherData['uv'].toString();
+            humidity = cachedWeatherData['humidity'].toString();
+            condition = cachedWeatherData['condition'];
+            icon = 'http:${cachedWeatherData['icon']}';
+            precipMm = cachedWeatherData['precipMm'].toString();
+            windKph = cachedWeatherData['windKph'].toString();
+            isLoading = false;
+          });
+        } else {
+          error = e.toString();
+          setState(() {
+            isLoading = false;
+          });
+        }
+      }
+    });
+  }
+
+  Future<Map<String, dynamic>> loadCachedWeatherData() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    String? cachedData = prefs.getString('cachedWeatherData');
+
+    if (cachedData != null) {
+      // Decode the JSON string to a Map
+      Map<String, dynamic> cachedWeatherData = convert.jsonDecode(cachedData);
+      return cachedWeatherData;
+    } else {
+      // If no cached data, try loading from MongoDB collection
+      try {
+        final response = await http.get(
+          Uri.parse('http://10.0.2.2:5000/weather/weather/latest'),
+        );
+
+        if (response.statusCode == 200) {
+          Map<String, dynamic> latestWeatherData =
+              convert.jsonDecode(response.body);
+          return latestWeatherData;
+        } else {
+          throw Exception('Failed to load latest weather data from MongoDB');
+        }
+      } catch (e) {
+        print('Error loading data from MongoDB: $e');
+        return {};
+      }
     }
-  });
-}
+  }
 
   Future<void> saveWeatherData(Map<String, dynamic> weatherData) async {
-  final response = await http.post(
-    Uri.parse('http://10.0.2.2:5000/weather/weather'),
-    headers: <String, String>{
-      'Content-Type': 'application/json; charset=UTF-8',
-    },
-    body: jsonEncode(weatherData),
-  );
+    final response = await http.post(
+      Uri.parse('http://10.0.2.2:5000/weather/weather'),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(weatherData),
+    );
 
-  if (response.statusCode == 200) {
-    print('Weather data saved successfully.');
-  } else {
-    throw Exception('Failed to save weather data.');
+    if (response.statusCode == 200) {
+      print('Weather data saved successfully.');
+    } else {
+      throw Exception('Failed to save weather data.');
+    }
   }
-}
 
   @override
   void dispose() {

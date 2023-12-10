@@ -1,11 +1,11 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
-import 'package:myapp/utils.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'activites_detail.dart';
-import 'catatalog-list.dart';
+import 'package:http/http.dart' as http;
+import 'package:myapp/page-3/activites_detail.dart';
+import 'package:myapp/page-3/catatalog-list.dart';
+import 'package:myapp/utils.dart';
 
 class Activities extends StatefulWidget {
   @override
@@ -26,7 +26,7 @@ class _ActivitiesState extends State<Activities> {
 
   Future<void> fetchActivities() async {
     final response =
-    await http.get(Uri.parse('http://10.0.2.2:5000/activities/activities'));
+        await http.get(Uri.parse('http://10.0.2.2:5000/activities/activities'));
 
     if (response.statusCode == 200) {
       setState(() {
@@ -132,7 +132,7 @@ class _ActivitiesState extends State<Activities> {
                                         child: Container(
                                           decoration: BoxDecoration(
                                             borderRadius:
-                                            BorderRadius.circular(30 * fem),
+                                                BorderRadius.circular(30 * fem),
                                             gradient: LinearGradient(
                                               begin: Alignment(1.217, -0.146),
                                               end: Alignment(-1.379, 0.131),
@@ -156,7 +156,7 @@ class _ActivitiesState extends State<Activities> {
                                         height: 100 * fem,
                                         child: ClipRRect(
                                           borderRadius:
-                                          BorderRadius.circular(20 * fem),
+                                              BorderRadius.circular(20 * fem),
                                           child: Image.network(
                                             activities['image'],
                                             fit: BoxFit.fill,
@@ -237,9 +237,9 @@ class _ActivitiesState extends State<Activities> {
                                             color: Color(0xff60ff00),
                                             borderRadius: BorderRadius.only(
                                               topLeft:
-                                              Radius.circular(50 * fem),
+                                                  Radius.circular(50 * fem),
                                               bottomLeft:
-                                              Radius.circular(50 * fem),
+                                                  Radius.circular(50 * fem),
                                             ),
                                           ),
                                         ),
@@ -363,4 +363,3 @@ class _ActivitiesState extends State<Activities> {
     );
   }
 }
-

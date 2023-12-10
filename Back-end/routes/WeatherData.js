@@ -28,4 +28,20 @@ router.post('/weather', async (req, res) => {
   res.send(weatherData);
 });
 
+router.get('/weather/latest', async (req, res) => {
+  try {
+    const latestWeatherData = await WeatherData.findOne().sort({ date: -1 }).limit(1);
+    
+    if (!latestWeatherData) {
+      return res.status(404).json({ message: 'No weather data found' });
+    }
+
+    res.status(200).json(latestWeatherData);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+});
+
+
 module.exports = router;

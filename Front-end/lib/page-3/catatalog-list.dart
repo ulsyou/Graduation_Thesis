@@ -2,14 +2,13 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:myapp/page-3/activities.dart';
 import 'package:myapp/page-3/diseases.dart';
 import 'package:myapp/page-3/expert-manager-page.dart';
+import 'package:myapp/page-3/fertilizers.dart';
+import 'package:myapp/page-3/fields_samples.dart';
 import 'package:myapp/page-3/pesticides.dart';
 import 'package:myapp/page-3/rice_strains.dart';
-
-import 'activities.dart';
-import 'fertilizers.dart';
-import 'fields_samples.dart';
 
 class CatalogList extends StatelessWidget {
   const CatalogList({super.key});
@@ -531,7 +530,8 @@ class CatalogList extends StatelessWidget {
                     onTap: () {
                       Navigator.of(context).push(
                         MaterialPageRoute(
-                          builder: (context) => ExpertManagerPage(isNavigatedFromOtherPage: true),
+                          builder: (context) =>
+                              ExpertManagerPage(isNavigatedFromOtherPage: true),
                         ),
                       );
                     },

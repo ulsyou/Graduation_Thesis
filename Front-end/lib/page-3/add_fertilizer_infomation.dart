@@ -5,8 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
 import 'package:http_parser/http_parser.dart';
 import 'package:image_picker/image_picker.dart';
-
-import 'add-pages.dart';
+import 'package:myapp/page-3/add-pages.dart';
 
 class AddFertilizer extends StatefulWidget {
   @override

@@ -6,9 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
-
-import 'Prediction.dart';
-import 'crop_prediction.dart';
+import 'package:myapp/page-3/Prediction.dart';
+import 'package:myapp/page-3/crop_prediction.dart';
 
 class ImagePrediction extends StatefulWidget {
   const ImagePrediction({Key? key}) : super(key: key);

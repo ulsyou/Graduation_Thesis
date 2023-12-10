@@ -2,10 +2,9 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:myapp/page-3/expert-manager-page.dart';
 import 'package:myapp/page-3/season_detail.dart';
 import 'package:myapp/utils.dart';
-
-import 'expert-manager-page.dart';
 
 class Seasons extends StatefulWidget {
   @override

@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
+import 'package:myapp/page-3/Prediction_Decision_tree.dart';
 import 'package:myapp/page-3/season_activities_manager.dart';
-
-import 'Prediction_Decision_tree.dart';
 
 class Prediction1 extends StatefulWidget {
   final Map<String, dynamic> predictionData;

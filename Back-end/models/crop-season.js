@@ -10,16 +10,16 @@ const cropSeasonSchema = mongoose.Schema({
         type: String,
         required: true
     },
-    riceVariety: {
+    strainName: {
         type: String,
-        ref: "strainName",
+        ref: 'RiceStrain',
         required: true
-      },
-      fieldSample: {
-        type: String, 
-        ref: "fieldCode",
+    },
+    fieldCode: {
+        type: String,
+        ref: 'FieldSample',
         required: true
-      },
+    },
     seasonType: {
         type: String,
         enum: ["Đông xuân", "Hè thu", "Vụ mùa"],

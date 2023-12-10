@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:myapp/page-3/Prediction_Decision_tree.dart';
+import 'package:myapp/page-3/Prediction_Linear_Regression.dart';
+import 'package:myapp/page-3/Prediction_Random_Forest.dart';
+import 'package:myapp/page-3/crop_prediction_img.dart';
 import 'package:myapp/page-3/expert-manager-page.dart';
-
-import 'crop_prediction_img.dart';
-import 'Prediction_Decision_tree.dart';
-import 'Prediction_Linear_Regression.dart';
-import 'Prediction_Random_Forest.dart';
 
 class RicePrediction extends StatelessWidget {
   const RicePrediction({super.key});

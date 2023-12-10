@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
+import 'package:mongo_dart/mongo_dart.dart' as mongo;
+import 'package:myapp/page-3/season-list.dart';
 import 'package:myapp/page-3/season_activities_manager.dart';
-
-import 'season-list.dart';
+import 'package:myapp/page-3/season_update.dart';
 
 class SeasonDetail extends StatefulWidget {
   final Map<String, dynamic> seasonData;
@@ -26,6 +27,40 @@ class _SeasonDetailState extends State<SeasonDetail> {
     } else {
       return 'N/A';
     }
+  }
+
+  Future<List<String>> fetchRiceStrainsFromMongoDB() async {
+    final mongo.Db mongoClient =
+        await mongo.Db.create('mongodb://10.0.2.2:27017/Graduation_Thesis');
+    await mongoClient.open();
+
+    final collection = mongoClient.collection('ricestrains');
+    final List<Map<String, dynamic>> documents =
+        await collection.find().toList();
+
+    final List<String> riceStrains =
+        documents.map((doc) => doc['strainName'] as String).toSet().toList();
+
+    await mongoClient.close();
+
+    return riceStrains;
+  }
+
+  Future<List<String>> fetchFieldSamplesFromMongoDB() async {
+    final mongo.Db mongoClient =
+        await mongo.Db.create('mongodb://10.0.2.2:27017/Graduation_Thesis');
+    await mongoClient.open();
+
+    final collection = mongoClient.collection('fieldsamples');
+    final List<Map<String, dynamic>> documents =
+        await collection.find().toList();
+
+    final List<String> fieldSamples =
+        documents.map((doc) => doc['fieldCode'] as String).toSet().toList();
+
+    await mongoClient.close();
+
+    return fieldSamples;
   }
 
   bool isHidden = true;
@@ -296,7 +331,7 @@ class _SeasonDetailState extends State<SeasonDetail> {
                 left: 249,
                 top: 571,
                 child: Text(
-                  widget.seasonData['fieldSample'] ?? 'N/A',
+                  widget.seasonData['fieldCode'] ?? 'N/A',
                   style: GoogleFonts.getFont(
                     'Noto Sans',
                     color: Colors.black,
@@ -334,14 +369,31 @@ class _SeasonDetailState extends State<SeasonDetail> {
               Positioned(
                 left: 249,
                 top: 524,
-                child: Text(
-                  widget.seasonData['riceVariety'] ?? 'N/A',
-                  style: GoogleFonts.getFont(
-                    'Noto Sans',
-                    color: Colors.black,
-                    fontSize: 16,
-                    fontWeight: FontWeight.w600,
-                  ),
+                child: FutureBuilder<List<String>>(
+                  future: fetchRiceStrainsFromMongoDB(),
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return Text('Loading...');
+                    }
+                    if (snapshot.hasError) {
+                      return Text('Error: ${snapshot.error}');
+                    }
+                    List<String> riceStrains = snapshot.data ?? [];
+                    String selectedRiceVarietyId =
+                        widget.seasonData['strainName'];
+                    String selectedRiceStrainName = riceStrains.firstWhere(
+                        (strainName) => strainName == selectedRiceVarietyId,
+                        orElse: () => 'N/A');
+                    return Text(
+                      selectedRiceStrainName,
+                      style: GoogleFonts.getFont(
+                        'Noto Sans',
+                        color: Colors.black,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    );
+                  },
                 ),
               ),
               Positioned(
@@ -525,13 +577,13 @@ class _SeasonDetailState extends State<SeasonDetail> {
                   clipBehavior: Clip.antiAlias,
                   child: InkWell(
                     onTap: () {
-                      // Navigator.of(context).push(
-                      //   MaterialPageRoute(
-                      //     builder: (context) => updateSeason(
-                      //       seasonData: seasonData,
-                      //     ),
-                      //   ),
-                      // );
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => SeasonDetailUpdate(
+                            seasonData: widget.seasonData,
+                          ),
+                        ),
+                      );
                     },
                     overlayColor:
                         MaterialStateProperty.all<Color>(Color(0x0c7f7f7f)),

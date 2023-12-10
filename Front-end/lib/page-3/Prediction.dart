@@ -2,13 +2,18 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-
-import 'crop_prediction_img.dart';
+import 'package:myapp/page-3/crop_prediction_img.dart';
 
 class Prediction extends StatelessWidget {
   final File? imageFile;
   final String? predictionResult;
-  const Prediction({Key? key, required this.yieldGm2, required this.yieldTha, this.imageFile, this.predictionResult}) : super(key: key);
+  const Prediction(
+      {Key? key,
+      required this.yieldGm2,
+      required this.yieldTha,
+      this.imageFile,
+      this.predictionResult})
+      : super(key: key);
 
   final double yieldGm2;
   final double yieldTha;
@@ -101,9 +106,9 @@ class Prediction extends StatelessWidget {
                   color: Colors.white,
                   image: imageFile != null
                       ? DecorationImage(
-                    image: FileImage(imageFile!),
-                    fit: BoxFit.fill,
-                  )
+                          image: FileImage(imageFile!),
+                          fit: BoxFit.fill,
+                        )
                       : null,
                 ),
               ),

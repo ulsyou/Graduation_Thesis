@@ -61,27 +61,27 @@ router.patch("/update/crop-season/:id", upload.single('image'), getCropSeason, a
         res.cropSeason.cropSeasonName = req.body.cropSeasonName;
     }
 
-// Update riceVariety (strainName)
-if (req.body.riceVariety != null) {
+// Update strainName (strainName)
+if (req.body.strainName != null) {
     try {
-        const riceVariety = await Strain.findOne({ strainName: req.body.riceVariety });
-        if (!riceVariety) {
+        const strainName = await Strain.findOne({ strainName: req.body.strainName });
+        if (!strainName) {
             return res.status(400).json({ message: "Rice variety not found" });
         }
-        res.cropSeason.riceVariety = new mongoose.Types.ObjectId(riceVariety._id);
+        res.cropSeason.strainName = req.body.strainName;
     } catch (err) {
         return res.status(500).json({ message: err.message });
     }
 }
 
 // Update fieldSample
-if (req.body.fieldSample != null) {
+if (req.body.fieldCode != null) {
     try {
-        const fieldSample = await FieldSample.findOne({ fieldCode: req.body.fieldSample });
-        if (!fieldSample) {
+        const fieldCode = await FieldSample.findOne({ fieldCode: req.body.fieldCode });
+        if (!fieldCode) {
             return res.status(400).json({ message: "Field sample not found" });
         }
-        res.cropSeason.fieldSample = new mongoose.Types.ObjectId(fieldSample._id);
+        res.cropSeason.fieldCode = req.body.fieldCode;
     } catch (err) {
         return res.status(500).json({ message: err.message });
     }
