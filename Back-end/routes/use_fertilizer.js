@@ -49,10 +49,16 @@ router.get('/UseFertilizer/:id', async (req, res) => {
 });
 
 // Update
-router.put('/UseFertilizer/:id', async (req, res) => {
-  const useFertilizer = await UseFertilizer.findByIdAndUpdate(req.params.id, req.body, { new: true });
-  res.send(useFertilizer);
+router.patch('/UseFertilizer/:id', async (req, res) => {
+  try {
+    const useFertilizer = await UseFertilizer.findByIdAndUpdate(req.params.id, req.body, { new: true });
+    res.send(useFertilizer);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Internal Server Error');
+  }
 });
+
 
 // Delete
 router.delete('/UseFertilizer/:id', async (req, res) => {

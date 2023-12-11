@@ -6,6 +6,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 import 'package:myapp/page-3/season_activities_manager.dart';
+import 'package:myapp/page-3/season_fertilizer_update.dart';
 import 'package:myapp/page-3/season_fertilizer_use.dart';
 
 class SeasonFertilizer extends StatefulWidget {
@@ -94,16 +95,6 @@ class _SeasonFertilizerState extends State<SeasonFertilizer> {
       filteredSeasonFertilizers = seasonfertilizers;
     });
     searchFocus.unfocus();
-  }
-
-  void navigateToSeasonDetail(Map<String, dynamic> seasonData) {
-    // Navigator.of(context).push(
-    //   MaterialPageRoute(
-    //     builder: (context) => SeasonDetail(
-    //       seasonData: seasonData,
-    //     ),
-    //   ),
-    // );
   }
 
   @override
@@ -395,10 +386,18 @@ class _SeasonFertilizerState extends State<SeasonFertilizer> {
                                     child: PopupMenuButton<String>(
                                       onSelected: (String result) async {
                                         if (result == 'Update') {
-                                          // Navigator.push(
-                                          //   context,
-                                          //   MaterialPageRoute(builder: (context) => UpdatePage()),
-                                          // );
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) =>
+                                                  Fertilizer_use_update(
+                                                fertilizerId:
+                                                    seasonfertilizers[index]
+                                                        ['_id'],
+                                                seasonData: widget.seasonData,
+                                              ),
+                                            ),
+                                          );
                                         } else if (result == 'Delete') {
                                           deleteFertilizerUse(
                                               seasonfertilizers[index]['_id']);

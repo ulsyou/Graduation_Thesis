@@ -161,30 +161,30 @@ statisticsRoute.get('/', async (req, res) => {
   }
 });
 
-cron.schedule('*/5 * * * * *', async () => {
-  try {
-    const collections = [Harm, UseFertilizer, Image, UsePesticide, Activity];
-    const CropSeason = require('../Back-end/models/crop-season');
-    const cropSeasons = await CropSeason.find();
+// cron.schedule('*/5 * * * * *', async () => {
+//   try {
+//     const collections = [Harm, UseFertilizer, Image, UsePesticide, Activity];
+//     const CropSeason = require('../Back-end/models/crop-season');
+//     const cropSeasons = await CropSeason.find();
 
-    const cropSeasonCodes = cropSeasons.map(cropSeason => cropSeason.cropSeasonCode.toLowerCase());
+//     const cropSeasonCodes = cropSeasons.map(cropSeason => cropSeason.cropSeasonCode.toLowerCase());
 
-    for (let collection of collections) {
-      const cursor = collection.find();
+//     for (let collection of collections) {
+//       const cursor = collection.find();
 
-      for await (let document of cursor) {
-        const documentCropCode = document.cropSeasonCode.toLowerCase();
+//       for await (let document of cursor) {
+//         const documentCropCode = document.cropSeasonCode.toLowerCase();
 
-        if (!cropSeasonCodes.includes(documentCropCode)) {
-          console.log(`Deleting document with cropSeasonCode: ${documentCropCode} in collection: ${collection.modelName}`);
-          await collection.deleteOne({ _id: document._id }).catch(err => console.error(err));
-        }
-      }
-    }
-  } catch (err) {
-    console.error(err);
-  }
-});
+//         if (!cropSeasonCodes.includes(documentCropCode)) {
+//           console.log(`Deleting document with cropSeasonCode: ${documentCropCode} in collection: ${collection.modelName}`);
+//           await collection.deleteOne({ _id: document._id }).catch(err => console.error(err));
+//         }
+//       }
+//     }
+//   } catch (err) {
+//     console.error(err);
+//   }
+// });
 
 
 const port = process.env.PORT || 5000;
