@@ -334,7 +334,7 @@ class _Prediction3State extends State<Prediction3> {
               left: 248,
               top: 339,
               child: Text(
-                widget.predictionData['fieldSample'] ?? 'N/A',
+                widget.predictionData['fieldCode'] ?? 'N/A',
                 style: GoogleFonts.getFont(
                   'Noto Sans',
                   color: Colors.black,
@@ -373,7 +373,7 @@ class _Prediction3State extends State<Prediction3> {
               left: 248,
               top: 292,
               child: Text(
-                widget.predictionData['riceVariety'] ?? 'N/A',
+                widget.predictionData['strainName'] ?? 'N/A',
                 style: GoogleFonts.getFont(
                   'Noto Sans',
                   color: Colors.black,
@@ -527,53 +527,6 @@ class _Prediction3State extends State<Prediction3> {
                       ),
                     ),
                   ),
-                ),
-              ),
-            ),
-            Positioned(
-              left: 120,
-              top: 554,
-              child: Material(
-                type: MaterialType.transparency,
-                child: InkWell(
-                  onTap: navigateToSeasonActivitiesManager,
-                  overlayColor: const MaterialStatePropertyAll<Color>(
-                    Color(0x0c7f7f7f),
-                  ),
-                  child: Text(
-                    'Xem thêm chi tiết',
-                    style: GoogleFonts.getFont(
-                      'Noto Sans',
-                      color: Colors.black,
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                ),
-              ),
-            ),
-            Positioned(
-              left: 280,
-              top: 554,
-              child: Container(
-                width: 24,
-                height: 24,
-                clipBehavior: Clip.hardEdge,
-                decoration: const BoxDecoration(),
-                child: Stack(
-                  clipBehavior: Clip.none,
-                  children: [
-                    Positioned(
-                      left: 8,
-                      top: 5,
-                      child: Image.network(
-                        'https://storage.googleapis.com/codeless-dev.appspot.com/uploads%2Fimages%2FbBi0N1EZ1GlEm38rYJyr%2Fc37d26344f5e268f21afe308d4883e81.png',
-                        width: 8,
-                        height: 14,
-                        fit: BoxFit.contain,
-                      ),
-                    )
-                  ],
                 ),
               ),
             ),

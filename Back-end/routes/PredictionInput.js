@@ -23,7 +23,7 @@ router.post('/predict', async (req, res) => {
           temperature: avg(weatherData.map(data => data.tempC)),
           humitidity: avg(weatherData.map(data => data.humidity)),
           windSpeed: avg(weatherData.map(data => data.windKph)),
-          solarRadiation: avg(weatherData.map(data => data.uv * Math.pow(10, -4))),
+          solarRadiation: avg(weatherData.map(data => data.uv / 25)),
           area: fieldSample.area,
           N: fertilizer.nutrients.nitro,
           P: fertilizer.nutrients.phosphate,

@@ -19,7 +19,7 @@ class _AddSeasonState extends State<AddSeason> {
   DateTime? selectedGieoSaDate;
   DateTime? selectedThuHoachDate;
   List<String> riceStrains = [];
-  List<String> fieldSamples = [];
+  List<String> fieldCodes = [];
   String selectedRice = '';
   String selectedFieldSample = '';
   String? imagePath;
@@ -66,12 +66,12 @@ class _AddSeasonState extends State<AddSeason> {
     final List<Map<String, dynamic>> documents =
         await collection.find().toList();
 
-    final List<String> fieldSamples =
+    final List<String> fieldCodes =
         documents.map((doc) => doc['fieldCode'] as String).toSet().toList();
 
     await mongoClient.close();
 
-    return fieldSamples;
+    return fieldCodes;
   }
 
   @override
@@ -87,8 +87,8 @@ class _AddSeasonState extends State<AddSeason> {
 
     fetchFieldSamplesFromMongoDB().then((samples) {
       setState(() {
-        fieldSamples = samples;
-        selectedFieldSample = fieldSamples.isNotEmpty ? fieldSamples[0] : '';
+        fieldCodes = samples;
+        selectedFieldSample = fieldCodes.isNotEmpty ? fieldCodes[0] : '';
       });
     });
   }
@@ -102,8 +102,8 @@ class _AddSeasonState extends State<AddSeason> {
         ..fields['cropSeasonName'] = cropSeasonNameController.text
         ..fields['seasonType'] = selectedSeasonType
         ..fields['yield'] = yieldController.text
-        ..fields['fieldSample'] = selectedFieldSample
-        ..fields['riceVariety'] = selectedRice
+        ..fields['fieldCode'] = selectedFieldSample
+        ..fields['strainName'] = selectedRice
         ..fields['plantingDate'] = selectedGieoSaDate!.toIso8601String()
         ..fields['harvestDate'] = selectedThuHoachDate!.toIso8601String()
         ..files.add(await http.MultipartFile.fromPath(
@@ -451,7 +451,7 @@ class _AddSeasonState extends State<AddSeason> {
                               return Text('Đã xảy ra lỗi: ${snapshot.error}');
                             }
 
-                            List<String> fieldSamples = snapshot.data ?? [];
+                            List<String> fieldCodes = snapshot.data ?? [];
 
                             return DropdownButton<String>(
                               value: selectedFieldSample.isNotEmpty
@@ -464,7 +464,7 @@ class _AddSeasonState extends State<AddSeason> {
                                   });
                                 }
                               },
-                              items: fieldSamples.map<DropdownMenuItem<String>>(
+                              items: fieldCodes.map<DropdownMenuItem<String>>(
                                   (String value) {
                                 return DropdownMenuItem<String>(
                                   value: value,

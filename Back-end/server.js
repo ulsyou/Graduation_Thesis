@@ -23,6 +23,13 @@ const use_fertilizerRoute = require("./routes/use_fertilizer");
 const use_pesticideRoute = require("./routes/use_pesticide");
 const imageRoute = require("./routes/add_image");
 const predictionInputRoute = require("./routes/PredictionInput");
+const cron = require('node-cron');
+
+const Harm = require('./models/harm_disease');
+const UseFertilizer = require('./models/use_fertilizer');
+const Image = require('./models/add_image');
+const UsePesticide = require('./models/use_pesticide');
+const Activity = require('./models/do_activities');
 
 // Connect Database
 connectDB();
@@ -151,6 +158,31 @@ statisticsRoute.get('/', async (req, res) => {
   } catch (err) {
       console.error(err);
       res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
+cron.schedule('*/5 * * * * *', async () => {
+  try {
+    const collections = [Harm, UseFertilizer, Image, UsePesticide, Activity];
+    const CropSeason = require('../Back-end/models/crop-season');
+    const cropSeasons = await CropSeason.find();
+
+    const cropSeasonCodes = cropSeasons.map(cropSeason => cropSeason.cropSeasonCode.toLowerCase());
+
+    for (let collection of collections) {
+      const cursor = collection.find();
+
+      for await (let document of cursor) {
+        const documentCropCode = document.cropSeasonCode.toLowerCase();
+
+        if (!cropSeasonCodes.includes(documentCropCode)) {
+          console.log(`Deleting document with cropSeasonCode: ${documentCropCode} in collection: ${collection.modelName}`);
+          await collection.deleteOne({ _id: document._id }).catch(err => console.error(err));
+        }
+      }
+    }
+  } catch (err) {
+    console.error(err);
   }
 });
 

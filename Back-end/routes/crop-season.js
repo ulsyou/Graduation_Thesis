@@ -87,7 +87,6 @@ if (req.body.fieldCode != null) {
     }
 }
 
-
     // Update seasonType
     if (req.body.seasonType != null) {
         res.cropSeason.seasonType = req.body.seasonType;

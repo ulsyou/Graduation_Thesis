@@ -18,7 +18,6 @@ class SeasonDetail extends StatefulWidget {
 
 class _SeasonDetailState extends State<SeasonDetail> {
   List<Map<String, dynamic>> seasons = [];
-  String? selectedOption;
 
   String formatDate(String date) {
     if (date != null && date != 'N/A') {

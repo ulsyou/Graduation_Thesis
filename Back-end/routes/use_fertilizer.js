@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const UseFertilizer = require('../models/use_fertilizer');
+const CropSeason = require('../models/crop-season');
 
 // Create
 router.post('/UseFertilizer', async (req, res) => {
@@ -23,11 +24,17 @@ router.post('/UseFertilizer', async (req, res) => {
       times_do,
       fertilizers: [fertilizer]
     });
+    const cropSeason = await CropSeason.findOne({ code: rest.cropSeasonCode });
+    if (!cropSeason) {
+      await useFertilizer.delete();
+      return null;
+    }
+
     await useFertilizer.save();
     return useFertilizer;
   }));
 
-  res.status(201).send(useFertilizers);
+  res.status(201).send(useFertilizers.filter(fertilizer => fertilizer !== null));
 });
 
 // Read

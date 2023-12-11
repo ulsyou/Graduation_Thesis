@@ -55,6 +55,29 @@ class _SeasonFertilizerState extends State<SeasonPesticides> {
     }
   }
 
+  Future<void> deletePesticideUse(String id) async {
+    final apiUrl =
+        Uri.parse('http://10.0.2.2:5000/use-pesticide/UsePesticide/$id');
+
+    try {
+      final response = await http.delete(
+        apiUrl,
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+      );
+
+      if (response.statusCode == 200 || response.statusCode == 204) {
+        fetchSeasonPesticides();
+      } else {
+        print('Failed to delete pesticide use: ${response.statusCode}');
+        print('Error response body: ${response.body}');
+      }
+    } catch (error) {
+      print('Error deleting pesticide use: $error');
+    }
+  }
+
 // Update your performSearch function
   void performSearch(String searchText) {
     print("Performing search with query: $searchText");
@@ -227,8 +250,8 @@ class _SeasonFertilizerState extends State<SeasonPesticides> {
                                       height: 25,
                                       child: Text(
                                         seasonPesticide['pesticides']
-                                            .map((fertilizer) =>
-                                                fertilizer['pesticideName'])
+                                            .map((pesticide) =>
+                                                pesticide['pesticideName'])
                                             .join(', '),
                                         style: GoogleFonts.getFont(
                                           'Noto Sans',
@@ -262,8 +285,8 @@ class _SeasonFertilizerState extends State<SeasonPesticides> {
                                       height: 25,
                                       child: Text(
                                         seasonPesticide['pesticides']
-                                            .map((fertilizer) =>
-                                                fertilizer['quantity'])
+                                            .map((pesticide) =>
+                                                pesticide['quantity'])
                                             .join(', '),
                                         style: GoogleFonts.getFont(
                                           'Noto Sans',
@@ -376,34 +399,46 @@ class _SeasonFertilizerState extends State<SeasonPesticides> {
                                   Positioned(
                                     left: 280,
                                     top: 10,
-                                    child: Material(
-                                      type: MaterialType.transparency,
-                                      clipBehavior: Clip.antiAlias,
-                                      child: InkWell(
-                                        onTap: () {},
-                                        overlayColor:
-                                            const MaterialStatePropertyAll<
-                                                Color>(
-                                          Color(0x0c7f7f7f),
+                                    child: PopupMenuButton<String>(
+                                      onSelected: (String result) async {
+                                        if (result == 'Update') {
+                                          // Navigator.push(
+                                          //   context,
+                                          //   MaterialPageRoute(builder: (context) => UpdatePage()),
+                                          // );
+                                        } else if (result == 'Delete') {
+                                          deletePesticideUse(
+                                              seasonpesticides[index]['_id']);
+                                        }
+                                      },
+                                      itemBuilder: (BuildContext context) =>
+                                          <PopupMenuEntry<String>>[
+                                        const PopupMenuItem<String>(
+                                          value: 'Update',
+                                          child: Text('Cập nhật'),
                                         ),
-                                        child: Container(
-                                          width: 28,
-                                          height: 28,
-                                          clipBehavior: Clip.hardEdge,
-                                          decoration: const BoxDecoration(),
-                                          child: Stack(
-                                            clipBehavior: Clip.none,
-                                            children: [
-                                              Positioned(
-                                                child: Image.asset(
-                                                  'assets/page-1/images/Group 43.png',
-                                                  width: 24,
-                                                  height: 24,
-                                                  fit: BoxFit.contain,
-                                                ),
-                                              )
-                                            ],
-                                          ),
+                                        const PopupMenuItem<String>(
+                                          value: 'Delete',
+                                          child: Text('Xoá'),
+                                        ),
+                                      ],
+                                      child: Container(
+                                        width: 28,
+                                        height: 28,
+                                        clipBehavior: Clip.hardEdge,
+                                        decoration: const BoxDecoration(),
+                                        child: Stack(
+                                          clipBehavior: Clip.none,
+                                          children: [
+                                            Positioned(
+                                              child: Image.asset(
+                                                'assets/page-1/images/Group 43.png',
+                                                width: 24,
+                                                height: 24,
+                                                fit: BoxFit.contain,
+                                              ),
+                                            )
+                                          ],
                                         ),
                                       ),
                                     ),

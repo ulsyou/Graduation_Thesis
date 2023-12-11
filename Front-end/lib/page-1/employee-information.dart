@@ -1,10 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
-import 'package:myapp/page-1/employee-update.dart';
-import 'package:myapp/utils.dart';
 import 'package:google_fonts/google_fonts.dart';
-
-import 'employee-manager.dart';
+import 'package:http/http.dart' as http;
 
 class EmployeeInformation extends StatefulWidget {
   final Map<String, dynamic> employeeData;

@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:myapp/utils.dart';
-import 'backup-data.dart';
-import 'employee-manager.dart';
 import 'package:google_fonts/google_fonts.dart';
+
+import 'employee-manager.dart';
 
 class AdminManagerPage extends StatelessWidget {
   const AdminManagerPage({super.key});
@@ -137,10 +136,10 @@ class AdminManagerPage extends StatelessWidget {
                     height: 100,
                     decoration: const BoxDecoration(
                       image: DecorationImage(
-                        image: NetworkImage(
-                          'https://firebasestorage.googleapis.com/v0/b/codeless-app.appspot.com/o/projects%2FbBi0N1EZ1GlEm38rYJyr%2F1c460fdd84a450d306d1d768b33db4ef10252922Rectangle%2046.png?alt=media&token=74b33444-d7a9-47af-a9b5-ccc40a27a6f1',
+                        image: AssetImage(
+                          'assets/page-1/images/Manager.png',
                         ),
-                        fit: BoxFit.cover,
+                        fit: BoxFit.scaleDown,
                       ),
                     ),
                   ),
@@ -212,10 +211,10 @@ class AdminManagerPage extends StatelessWidget {
                     height: 100,
                     decoration: const BoxDecoration(
                       image: DecorationImage(
-                        image: NetworkImage(
-                          'https://firebasestorage.googleapis.com/v0/b/codeless-app.appspot.com/o/projects%2FbBi0N1EZ1GlEm38rYJyr%2F1c460fdd84a450d306d1d768b33db4ef10252922Rectangle%2058.png?alt=media&token=89305585-0e98-4cef-92ab-2d310a1ca523',
+                        image: AssetImage(
+                          'assets/page-1/images/backup.png',
                         ),
-                        fit: BoxFit.cover,
+                        fit: BoxFit.scaleDown,
                       ),
                     ),
                   ),

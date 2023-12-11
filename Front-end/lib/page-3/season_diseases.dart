@@ -57,6 +57,28 @@ class _SeasonDiseasesState extends State<SeasonDiseases> {
     }
   }
 
+  Future<void> deleteDiseaseHarm(String id) async {
+    final apiUrl = Uri.parse('http://10.0.2.2:5000/harm-disease/Harm/$id');
+
+    try {
+      final response = await http.delete(
+        apiUrl,
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+      );
+
+      if (response.statusCode == 200 || response.statusCode == 204) {
+        fetchSeasonDiseases();
+      } else {
+        print('Failed to delete disease use: ${response.statusCode}');
+        print('Error response body: ${response.body}');
+      }
+    } catch (error) {
+      print('Error deleting disease use: $error');
+    }
+  }
+
   void performSearch(String searchText) {
     setState(() {
       searchQuery = searchText;
@@ -331,34 +353,46 @@ class _SeasonDiseasesState extends State<SeasonDiseases> {
                                   Positioned(
                                     left: 280,
                                     top: 10,
-                                    child: Material(
-                                      type: MaterialType.transparency,
-                                      clipBehavior: Clip.antiAlias,
-                                      child: InkWell(
-                                        onTap: () {},
-                                        overlayColor:
-                                            const MaterialStatePropertyAll<
-                                                Color>(
-                                          Color(0x0c7f7f7f),
+                                    child: PopupMenuButton<String>(
+                                      onSelected: (String result) async {
+                                        if (result == 'Update') {
+                                          // Navigator.push(
+                                          //   context,
+                                          //   MaterialPageRoute(builder: (context) => UpdatePage()),
+                                          // );
+                                        } else if (result == 'Delete') {
+                                          deleteDiseaseHarm(
+                                              seasondiseases[index]['_id']);
+                                        }
+                                      },
+                                      itemBuilder: (BuildContext context) =>
+                                          <PopupMenuEntry<String>>[
+                                        const PopupMenuItem<String>(
+                                          value: 'Update',
+                                          child: Text('Cập nhật'),
                                         ),
-                                        child: Container(
-                                          width: 28,
-                                          height: 28,
-                                          clipBehavior: Clip.hardEdge,
-                                          decoration: const BoxDecoration(),
-                                          child: Stack(
-                                            clipBehavior: Clip.none,
-                                            children: [
-                                              Positioned(
-                                                child: Image.asset(
-                                                  'assets/page-1/images/Group 43.png',
-                                                  width: 24,
-                                                  height: 24,
-                                                  fit: BoxFit.contain,
-                                                ),
-                                              )
-                                            ],
-                                          ),
+                                        const PopupMenuItem<String>(
+                                          value: 'Delete',
+                                          child: Text('Xoá'),
+                                        ),
+                                      ],
+                                      child: Container(
+                                        width: 28,
+                                        height: 28,
+                                        clipBehavior: Clip.hardEdge,
+                                        decoration: const BoxDecoration(),
+                                        child: Stack(
+                                          clipBehavior: Clip.none,
+                                          children: [
+                                            Positioned(
+                                              child: Image.asset(
+                                                'assets/page-1/images/Group 43.png',
+                                                width: 24,
+                                                height: 24,
+                                                fit: BoxFit.contain,
+                                              ),
+                                            )
+                                          ],
                                         ),
                                       ),
                                     ),

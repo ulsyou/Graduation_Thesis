@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
 const router = express.Router();
 const User = require("../models/user");
+const upload = require('../config/upload');
 const { checkAdminRole } = require("../middleware/authMiddleware");
 
 router.post("/login", async (req, res) => {
@@ -33,9 +34,13 @@ router.post("/login", async (req, res) => {
   }
 });
 
-router.post("/create/users", checkAdminRole, async (req, res) => {
+router.post("/create/users", checkAdminRole, upload.single('image'), async (req, res) => {
   try {
     const { email, password, ...userData } = req.body;
+
+    if (req.file) {
+      userData.image = req.file.filename;
+    }
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
@@ -55,35 +60,41 @@ router.post("/create/users", checkAdminRole, async (req, res) => {
 
 router.get("/users", checkAdminRole, async (req, res) => {
   try {
-    const users = await User.find();
-    res.status(200).json(users);
-  } catch (err) {
-    res.status(500).json({ error: "Error retrieving users" });
-  }
+    let Users = await User.find();
+    Users = Users.map(User => {
+        User = User.toObject();
+        if (User.image) {
+            User.image = `${req.protocol}://${req.get('host')}/uploads/${User.image}`;
+        }
+        return User;
+    });
+    res.json(Users);
+} catch (err) {
+    handleErrors(res, err);
+}
 });
 
 router.get("/users/:id", checkAdminRole, async (req, res) => {
-  try {
-    const user = await User.findById(req.params.id);
-    if (!user) {
-      return res.status(404).json({ error: "User not found" });
-    }
-    res.status(200).json(user);
-  } catch (err) {
-    res.status(500).json({ error: "Error retrieving user" });
-  }
+  if (res.User.image) {
+    res.User.image = `${req.protocol}://${req.get('host')}/uploads/${res.User.image}`;
+}
+res.json(res.User);
 });
 
-router.patch("/update/users/:id", checkAdminRole, async (req, res) => {
+router.patch("/update/users/:id", checkAdminRole, upload.single('image'), async (req, res) => {
   try {
-    const updatedUser = await User.findByIdAndUpdate(
-      req.params.id,
-      req.body,
-      { new: true }
-    );
-    if (!updatedUser) {
+    let userData = await User.findById(req.params.id);
+    if (!userData) {
       return res.status(404).json({ error: "User not found" });
     }
+
+    if (req.file) {
+      userData.image = req.file.filename;
+    }
+
+    for (let prop in req.body) userData[prop] = req.body[prop];
+
+    const updatedUser = await userData.save();
     res.status(200).json(updatedUser);
   } catch (err) {
     res.status(500).json({ error: "Error updating user" });

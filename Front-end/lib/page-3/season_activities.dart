@@ -55,6 +55,28 @@ class _SeasonActivitiesState extends State<SeasonActivities> {
     }
   }
 
+  Future<void> deleteActvitiesDo(String id) async {
+    final apiUrl = Uri.parse('http://10.0.2.2:5000/do-activities/Activity/$id');
+
+    try {
+      final response = await http.delete(
+        apiUrl,
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+      );
+
+      if (response.statusCode == 200 || response.statusCode == 204) {
+        fetchSeasonActivities();
+      } else {
+        print('Failed to delete fertilizer use: ${response.statusCode}');
+        print('Error response body: ${response.body}');
+      }
+    } catch (error) {
+      print('Error deleting fertilizer use: $error');
+    }
+  }
+
   void performSearch(String searchText) {
     setState(() {
       searchQuery = searchText;
@@ -79,7 +101,6 @@ class _SeasonActivitiesState extends State<SeasonActivities> {
   Widget build(BuildContext context) {
     double baseWidth = 412;
     double fem = MediaQuery.of(context).size.width / baseWidth;
-    double ffem = fem * 0.97;
     return Material(
       child: SingleChildScrollView(
         child: Container(
@@ -306,34 +327,46 @@ class _SeasonActivitiesState extends State<SeasonActivities> {
                                   Positioned(
                                     left: 280,
                                     top: 10,
-                                    child: Material(
-                                      type: MaterialType.transparency,
-                                      clipBehavior: Clip.antiAlias,
-                                      child: InkWell(
-                                        onTap: () {},
-                                        overlayColor:
-                                            const MaterialStatePropertyAll<
-                                                Color>(
-                                          Color(0x0c7f7f7f),
+                                    child: PopupMenuButton<String>(
+                                      onSelected: (String result) async {
+                                        if (result == 'Update') {
+                                          // Navigator.push(
+                                          //   context,
+                                          //   MaterialPageRoute(builder: (context) => UpdatePage()),
+                                          // );
+                                        } else if (result == 'Delete') {
+                                          deleteActvitiesDo(
+                                              seasonactivties[index]['_id']);
+                                        }
+                                      },
+                                      itemBuilder: (BuildContext context) =>
+                                          <PopupMenuEntry<String>>[
+                                        const PopupMenuItem<String>(
+                                          value: 'Update',
+                                          child: Text('Cập nhật'),
                                         ),
-                                        child: Container(
-                                          width: 28,
-                                          height: 28,
-                                          clipBehavior: Clip.hardEdge,
-                                          decoration: const BoxDecoration(),
-                                          child: Stack(
-                                            clipBehavior: Clip.none,
-                                            children: [
-                                              Positioned(
-                                                child: Image.asset(
-                                                  'assets/page-1/images/Group 43.png',
-                                                  width: 24,
-                                                  height: 24,
-                                                  fit: BoxFit.contain,
-                                                ),
-                                              )
-                                            ],
-                                          ),
+                                        const PopupMenuItem<String>(
+                                          value: 'Delete',
+                                          child: Text('Xoá'),
+                                        ),
+                                      ],
+                                      child: Container(
+                                        width: 28,
+                                        height: 28,
+                                        clipBehavior: Clip.hardEdge,
+                                        decoration: const BoxDecoration(),
+                                        child: Stack(
+                                          clipBehavior: Clip.none,
+                                          children: [
+                                            Positioned(
+                                              child: Image.asset(
+                                                'assets/page-1/images/Group 43.png',
+                                                width: 24,
+                                                height: 24,
+                                                fit: BoxFit.contain,
+                                              ),
+                                            )
+                                          ],
                                         ),
                                       ),
                                     ),

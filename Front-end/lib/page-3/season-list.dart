@@ -37,26 +37,6 @@ class _SeasonsState extends State<Seasons> {
     }
   }
 
-  void performSearch(String searchText) {
-    setState(() {
-      searchQuery = searchText;
-      filteredSeasons = seasons.where((season) {
-        return season['cropSeasonName']
-            .toLowerCase()
-            .contains(searchQuery.toLowerCase());
-      }).toList();
-    });
-    searchFocus.requestFocus();
-  }
-
-  void resetSearch() {
-    setState(() {
-      searchQuery = '';
-      filteredSeasons = seasons;
-    });
-    searchFocus.unfocus();
-  }
-
   void navigateToSeasonDetail(Map<String, dynamic> seasonData) {
     Navigator.of(context).push(
       MaterialPageRoute(

@@ -47,9 +47,32 @@ class _SeasonFertilizerState extends State<SeasonFertilizer> {
         seasonfertilizers = json.decode(response.body);
         filteredSeasonFertilizers = seasonfertilizers;
       });
-      print('Season diseases: $seasonfertilizers');
+      print('Season ferilizer: $seasonfertilizers');
     } else {
       print('Failed to fetch season: ${response.statusCode}');
+    }
+  }
+
+  Future<void> deleteFertilizerUse(String id) async {
+    final apiUrl =
+        Uri.parse('http://10.0.2.2:5000/use-fertilizer/UseFertilizer/$id');
+
+    try {
+      final response = await http.delete(
+        apiUrl,
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+      );
+
+      if (response.statusCode == 200 || response.statusCode == 204) {
+        fetchSeasonFertilizers();
+      } else {
+        print('Failed to delete fertilizer use: ${response.statusCode}');
+        print('Error response body: ${response.body}');
+      }
+    } catch (error) {
+      print('Error deleting fertilizer use: $error');
     }
   }
 
@@ -82,6 +105,7 @@ class _SeasonFertilizerState extends State<SeasonFertilizer> {
     //   ),
     // );
   }
+
   @override
   Widget build(BuildContext context) {
     double baseWidth = 412;
@@ -353,7 +377,9 @@ class _SeasonFertilizerState extends State<SeasonFertilizer> {
                                     child: SizedBox(
                                       height: 25,
                                       child: Text(
-                                        'Võ Văn Hướng',
+                                        seasonFertilizer['employeeCode']
+                                                ?.toString() ??
+                                            'N/A',
                                         style: GoogleFonts.getFont(
                                           'Noto Sans',
                                           color: Colors.black,
@@ -366,34 +392,46 @@ class _SeasonFertilizerState extends State<SeasonFertilizer> {
                                   Positioned(
                                     left: 280,
                                     top: 10,
-                                    child: Material(
-                                      type: MaterialType.transparency,
-                                      clipBehavior: Clip.antiAlias,
-                                      child: InkWell(
-                                        onTap: () {},
-                                        overlayColor:
-                                            const MaterialStatePropertyAll<
-                                                Color>(
-                                          Color(0x0c7f7f7f),
+                                    child: PopupMenuButton<String>(
+                                      onSelected: (String result) async {
+                                        if (result == 'Update') {
+                                          // Navigator.push(
+                                          //   context,
+                                          //   MaterialPageRoute(builder: (context) => UpdatePage()),
+                                          // );
+                                        } else if (result == 'Delete') {
+                                          deleteFertilizerUse(
+                                              seasonfertilizers[index]['_id']);
+                                        }
+                                      },
+                                      itemBuilder: (BuildContext context) =>
+                                          <PopupMenuEntry<String>>[
+                                        const PopupMenuItem<String>(
+                                          value: 'Update',
+                                          child: Text('Cập nhật'),
                                         ),
-                                        child: Container(
-                                          width: 28,
-                                          height: 28,
-                                          clipBehavior: Clip.hardEdge,
-                                          decoration: const BoxDecoration(),
-                                          child: Stack(
-                                            clipBehavior: Clip.none,
-                                            children: [
-                                              Positioned(
-                                                child: Image.asset(
-                                                  'assets/page-1/images/Group 43.png',
-                                                  width: 24,
-                                                  height: 24,
-                                                  fit: BoxFit.contain,
-                                                ),
-                                              )
-                                            ],
-                                          ),
+                                        const PopupMenuItem<String>(
+                                          value: 'Delete',
+                                          child: Text('Xoá'),
+                                        ),
+                                      ],
+                                      child: Container(
+                                        width: 28,
+                                        height: 28,
+                                        clipBehavior: Clip.hardEdge,
+                                        decoration: const BoxDecoration(),
+                                        child: Stack(
+                                          clipBehavior: Clip.none,
+                                          children: [
+                                            Positioned(
+                                              child: Image.asset(
+                                                'assets/page-1/images/Group 43.png',
+                                                width: 24,
+                                                height: 24,
+                                                fit: BoxFit.contain,
+                                              ),
+                                            )
+                                          ],
                                         ),
                                       ),
                                     ),
