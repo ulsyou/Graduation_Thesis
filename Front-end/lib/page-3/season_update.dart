@@ -257,19 +257,12 @@ class _SeasonDetailUpdateState extends State<SeasonDetailUpdate> {
                               height: 180,
                               fit: BoxFit.cover,
                             )
-                          : widget.seasonData['image'] != null
-                              ? Image.network(
-                                  widget.seasonData['image'],
-                                  width: 318,
-                                  height: 180,
-                                  fit: BoxFit.fill,
-                                )
-                              : Image.asset(
-                                  'assets/page-1/images/Group 46.png',
-                                  width: 318,
-                                  height: 180,
-                                  fit: BoxFit.cover,
-                                ),
+                          : Image.asset(
+                              'assets/page-1/images/Group 46.png',
+                              width: 318,
+                              height: 180,
+                              fit: BoxFit.cover,
+                            ),
                     ),
                   ),
                 ),
@@ -422,9 +415,7 @@ class _SeasonDetailUpdateState extends State<SeasonDetailUpdate> {
                   child: Container(
                     width: 200,
                     child: TextFormField(
-                      controller: yieldController
-                        ..text =
-                            (widget.seasonData['yield'] ?? 'N/A').toString(),
+                      controller: yieldController,
                       decoration: InputDecoration(
                         hintStyle: TextStyle(
                           fontSize: 14,
@@ -670,8 +661,7 @@ class _SeasonDetailUpdateState extends State<SeasonDetailUpdate> {
                   child: Container(
                     width: 200,
                     child: TextFormField(
-                      controller: cropSeasonNameController
-                        ..text = widget.seasonData['cropSeasonName'] ?? 'N/A',
+                      controller: cropSeasonNameController,
                       decoration: InputDecoration(
                         hintStyle: TextStyle(
                           fontSize: 14,

@@ -19,7 +19,7 @@ router.get("/crop-season", async (req, res) => {
         cropSeasons = cropSeasons.map(cropSeason => {
             cropSeason = cropSeason.toObject();
             if (cropSeason.image) {
-                cropSeason.image = `${req.protocol}://${req.get('host')}/uploads/${cropSeason.image}`;
+                cropSeason.image = `${req.protocol}://${req.get('host')}/${cropSeason.image}`;
             }
             return cropSeason;
         });
@@ -59,6 +59,10 @@ router.patch("/update/crop-season/:id", upload.single('image'), getCropSeason, a
     }
     if (req.body.cropSeasonName != null) {
         res.cropSeason.cropSeasonName = req.body.cropSeasonName;
+    }
+
+    if (req.file != null) {
+        res.cropSeason.image = req.file.path;
     }
 
 // Update strainName (strainName)

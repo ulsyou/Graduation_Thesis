@@ -1,5 +1,8 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 import 'package:myapp/page-3/Prediction_Decision_tree.dart';
 import 'package:myapp/page-3/season_activities_manager.dart';
@@ -16,6 +19,7 @@ class Prediction1 extends StatefulWidget {
 class _Prediction1State extends State<Prediction1> {
   List<Map<String, dynamic>> predictions = [];
   String? selectedOption;
+  String yieldValue = '';
 
   String formatDate(String date) {
     if (date != null && date != 'N/A') {
@@ -171,10 +175,10 @@ class _Prediction1State extends State<Prediction1> {
               ),
             ),
             Positioned(
-              left: 252,
+              left: 200,
               top: 848,
               child: Text(
-                '100000',
+                yieldValue,
                 textAlign: TextAlign.center,
                 style: GoogleFonts.getFont(
                   'Noto Sans',
@@ -507,7 +511,38 @@ class _Prediction1State extends State<Prediction1> {
                 borderRadius: BorderRadius.circular(40),
                 clipBehavior: Clip.antiAlias,
                 child: InkWell(
-                  onTap: () {},
+                  onTap: () async {
+                    final response = await http.post(
+                      Uri.parse('http://10.0.2.2:3000/predict'),
+                      headers: <String, String>{
+                        'Content-Type': 'application/json; charset=UTF-8',
+                      },
+                      body: jsonEncode(<String, dynamic>{
+                        "temp": {
+                          "crop": "YourCrop",
+                          "precipitation": 46.584,
+                          "temperature": 26.29,
+                          "humitidity": 70.0,
+                          "windSpeed": 10.0,
+                          "solarRadiation": 5,
+                          "area": 10.0,
+                          "N": 104.814,
+                          "P": 104.814,
+                          "K": 46.584
+                        },
+                        "model_type": "1"
+                      }),
+                    );
+
+                    if (response.statusCode == 200) {
+                      setState(() {
+                        yieldValue = jsonDecode(response.body)['Yield_DTR'][0]
+                            .toString();
+                      });
+                    } else {
+                      throw Exception('Failed to load yield');
+                    }
+                  },
                   overlayColor: MaterialStateProperty.all<Color>(
                     Color(0x0c7f7f7f),
                   ),

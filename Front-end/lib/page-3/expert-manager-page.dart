@@ -1140,7 +1140,7 @@ class _ExpertManagerPageState extends State<ExpertManagerPage> {
                 child: SizedBox(
                   width: 147,
                   child: Text(
-                    'Thực hiện bla bla lần đo',
+                    'Thực hiện kiểm tra nước',
                     style: GoogleFonts.getFont(
                       'Noto Sans',
                       color: Colors.black,
